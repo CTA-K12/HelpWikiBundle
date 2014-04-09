@@ -1,0 +1,49 @@
+{% extends 'MESDORCaseCoreBundle:Index:index.html.twig' %}
+
+{% block sidebar %}
+    {{ render(controller('MESDPresentationPresentationBundle:Default:sidebar',
+        { 'route': app.request.get('_route'),
+          'options': { 'type': '' },
+          'menu': {
+            'Help Wiki Home': {
+                'path': path('MESDHelpWikiBundle_home'),
+                'title': 'Help Wiki Home',
+                'icon': 'fa-dashboard'
+            },
+            'Pages': {
+                'path': path('page'),
+                'title': 'Help Wiki Pages',
+                'icon': 'fa-files-o'
+            },
+            'Comments': {
+                'path': path('comment'),
+                'title': 'Help Wiki Comments',
+                'icon': 'fa-comments-o'
+            },
+            'Links': {
+                'path': path('link'),
+                'title': 'Help Wiki Links',
+                'icon': 'fa-link'
+            },
+            'History': {
+                'path': path('history'),
+                'title': 'Help Wiki History',
+                'icon': 'fa-clock-o'
+            },
+            'Permissions': {
+                'path': path('permission'),
+                'title': 'Help Wiki Permissions',
+                'icon': 'fa-ban'
+            },
+            'Permission Types': {
+                'path': path('permissiontype'),
+                'title': 'Help Wiki Permission Types',
+                'icon': 'fa-tags'
+            },
+        }
+    })) }}
+{% endblock sidebar %}
+
+{% block main %}
+This is the help wiki main page
+{% endblock main %}

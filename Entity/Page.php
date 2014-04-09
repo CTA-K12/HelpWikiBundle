@@ -1,0 +1,571 @@
+<?php
+
+namespace MESD\HelpWikiBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use MESD\HelpWikiBundle\Entity\History;
+
+/**
+ * Page
+ */
+class Page
+{
+    /**
+     * @var integer
+     */
+    private $id;
+
+    /**
+     * @var string
+     */
+    private $title;
+
+    /**
+     * @var string
+     */
+    private $body;
+
+    /**
+     * @var string
+     */
+    private $slug;
+
+    /**
+     * @var integer
+     */
+    private $revision;
+
+    /**
+     * @var integer
+     */
+    private $printOrder;
+
+    /**
+     * @var \DateTime
+     */
+    private $dateTime;
+
+    /**
+     * @var boolean
+     */
+    private $isPageLocked;
+
+    /**
+     * @var boolean
+     */
+    private $isCommentLocked;
+
+    /**
+     * @var boolean
+     */
+    private $isEditInProgress;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $children;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $comments;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $permissions;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $histories;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $links;
+
+    /**
+     * @var \MESD\HelpWikiBundle\Entity\Page
+     */
+    private $parent;
+
+    /**
+     * @var \MESD\ORCase\CoreBundle\Entity\ORCaseUser
+     */
+    private $user;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->permissions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->histories = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->links = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     * @return Page
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string 
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set body
+     *
+     * @param string $body
+     * @return Page
+     */
+    public function setBody($body)
+    {
+        $this->body = $body;
+    
+        return $this;
+    }
+
+    /**
+     * Get body
+     *
+     * @return string 
+     */
+    public function getBody()
+    {
+        return $this->body;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Page
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+    
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string 
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Set revision
+     *
+     * @param integer $revision
+     * @return Page
+     */
+    public function setRevision($revision)
+    {
+        $this->revision = $revision;
+    
+        return $this;
+    }
+
+    /**
+     * Get revision
+     *
+     * @return integer 
+     */
+    public function getRevision()
+    {
+        return $this->revision;
+    }
+
+    /**
+     * Set printOrder
+     *
+     * @param integer $printOrder
+     * @return Page
+     */
+    public function setPrintOrder($printOrder)
+    {
+        $this->printOrder = $printOrder;
+    
+        return $this;
+    }
+
+    /**
+     * Get printOrder
+     *
+     * @return integer 
+     */
+    public function getPrintOrder()
+    {
+        return $this->printOrder;
+    }
+
+    /**
+     * Set dateTime
+     *
+     * @param \DateTime $dateTime
+     * @return Page
+     */
+    public function setDateTime($dateTime)
+    {
+        $this->dateTime = $dateTime;
+    
+        return $this;
+    }
+
+    /**
+     * Get dateTime
+     *
+     * @return \DateTime 
+     */
+    public function getDateTime()
+    {
+        return $this->dateTime;
+    }
+
+    /**
+     * Set isPageLocked
+     *
+     * @param boolean $isPageLocked
+     * @return Page
+     */
+    public function setIsPageLocked($isPageLocked)
+    {
+        $this->isPageLocked = $isPageLocked;
+    
+        return $this;
+    }
+
+    /**
+     * Get isPageLocked
+     *
+     * @return boolean 
+     */
+    public function getIsPageLocked()
+    {
+        return $this->isPageLocked;
+    }
+
+    /**
+     * Set isCommentLocked
+     *
+     * @param boolean $isCommentLocked
+     * @return Page
+     */
+    public function setIsCommentLocked($isCommentLocked)
+    {
+        $this->isCommentLocked = $isCommentLocked;
+    
+        return $this;
+    }
+
+    /**
+     * Get isCommentLocked
+     *
+     * @return boolean 
+     */
+    public function getIsCommentLocked()
+    {
+        return $this->isCommentLocked;
+    }
+
+    /**
+     * Set isEditInProgress
+     *
+     * @param boolean $isEditInProgress
+     * @return Page
+     */
+    public function setIsEditInProgress($isEditInProgress)
+    {
+        $this->isEditInProgress = $isEditInProgress;
+    
+        return $this;
+    }
+
+    /**
+     * Get isEditInProgress
+     *
+     * @return boolean 
+     */
+    public function getIsEditInProgress()
+    {
+        return $this->isEditInProgress;
+    }
+
+    /**
+     * Add children
+     *
+     * @param \MESD\HelpWikiBundle\Entity\Page $children
+     * @return Page
+     */
+    public function addChildren(\MESD\HelpWikiBundle\Entity\Page $children)
+    {
+        $this->children[] = $children;
+    
+        return $this;
+    }
+
+    /**
+     * Remove children
+     *
+     * @param \MESD\HelpWikiBundle\Entity\Page $children
+     */
+    public function removeChildren(\MESD\HelpWikiBundle\Entity\Page $children)
+    {
+        $this->children->removeElement($children);
+    }
+
+    /**
+     * Get children
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getChildren()
+    {
+        return $this->children;
+    }
+
+    /**
+     * Add comments
+     *
+     * @param \MESD\HelpWikiBundle\Entity\Comment $comments
+     * @return Page
+     */
+    public function addComment(\MESD\HelpWikiBundle\Entity\Comment $comments)
+    {
+        $this->comments[] = $comments;
+    
+        return $this;
+    }
+
+    /**
+     * Remove comments
+     *
+     * @param \MESD\HelpWikiBundle\Entity\Comment $comments
+     */
+    public function removeComment(\MESD\HelpWikiBundle\Entity\Comment $comments)
+    {
+        $this->comments->removeElement($comments);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    /**
+     * Add permissions
+     *
+     * @param \MESD\HelpWikiBundle\Entity\Permission $permissions
+     * @return Page
+     */
+    public function addPermission(\MESD\HelpWikiBundle\Entity\Permission $permissions)
+    {
+        $this->permissions[] = $permissions;
+    
+        return $this;
+    }
+
+    /**
+     * Remove permissions
+     *
+     * @param \MESD\HelpWikiBundle\Entity\Permission $permissions
+     */
+    public function removePermission(\MESD\HelpWikiBundle\Entity\Permission $permissions)
+    {
+        $this->permissions->removeElement($permissions);
+    }
+
+    /**
+     * Get permissions
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPermissions()
+    {
+        return $this->permissions;
+    }
+
+    /**
+     * Add histories
+     *
+     * @param \MESD\HelpWikiBundle\Entity\History $histories
+     * @return Page
+     */
+    public function addHistory(\MESD\HelpWikiBundle\Entity\History $history)
+    {
+        $this->histories[] = $history;
+    
+        return $this;
+    }
+
+    /**
+     * Remove histories
+     *
+     * @param \MESD\HelpWikiBundle\Entity\History $histories
+     */
+    public function removeHistory(\MESD\HelpWikiBundle\Entity\History $history)
+    {
+        $this->histories->removeElement($history);
+    }
+
+    /**
+     * Get histories
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getHistories()
+    {
+        return $this->histories;
+    }
+
+    /**
+     * Add links
+     *
+     * @param \MESD\HelpWikiBundle\Entity\Link $links
+     * @return Page
+     */
+    public function addLink(\MESD\HelpWikiBundle\Entity\Link $links)
+    {
+        $this->links[] = $links;
+    
+        return $this;
+    }
+
+    /**
+     * Remove links
+     *
+     * @param \MESD\HelpWikiBundle\Entity\Link $links
+     */
+    public function removeLink(\MESD\HelpWikiBundle\Entity\Link $links)
+    {
+        $this->links->removeElement($links);
+    }
+
+    /**
+     * Get links
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getLinks()
+    {
+        return $this->links;
+    }
+
+    /**
+     * Set parent
+     *
+     * @param \MESD\HelpWikiBundle\Entity\Page $parent
+     * @return Page
+     */
+    public function setParent(\MESD\HelpWikiBundle\Entity\Page $parent = null)
+    {
+        $this->parent = $parent;
+    
+        return $this;
+    }
+
+    /**
+     * Get parent
+     *
+     * @return \MESD\HelpWikiBundle\Entity\Page 
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \MESD\ORCase\CoreBundle\Entity\ORCaseUser $user
+     * @return Page
+     */
+    public function setUser(\MESD\ORCase\CoreBundle\Entity\ORCaseUser $user = null)
+    {
+        $this->user = $user;
+    
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \MESD\ORCase\CoreBundle\Entity\ORCaseUser 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * To string
+     *
+     * @return string shortName
+     */
+    public function __toString()
+    {
+        return $this->getTitle();
+    }
+
+
+    /**
+     * Add histories
+     *
+     * @param \MESD\HelpWikiBundle\Entity\History $histories
+     * @return Page
+     */
+    public function addHistorie(\MESD\HelpWikiBundle\Entity\History $histories)
+    {
+        $this->histories[] = $histories;
+    
+        return $this;
+    }
+
+    /**
+     * Remove histories
+     *
+     * @param \MESD\HelpWikiBundle\Entity\History $histories
+     */
+    public function removeHistorie(\MESD\HelpWikiBundle\Entity\History $histories)
+    {
+        $this->histories->removeElement($histories);
+    }
+}

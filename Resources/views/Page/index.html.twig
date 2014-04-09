@@ -1,0 +1,56 @@
+{% extends 'MESDHelpWikiBundle:Default:index.html.twig' %}
+{% set subtitle = 'List Pages' %}
+
+{% block main %}
+
+    <h2>Table of Contents</h2>
+    {{ _self.tree(entities) }}
+
+    <div class="row">
+        <div class="col-md-2 col-md-offset-10">
+            <a href="{{ path('page_new') }}" class="btn btn-default form-control">
+                <span class="fa fa-plus"></span>
+                New
+            </a>
+        </div>
+    </div>
+{% endblock main %}
+
+{% block toolbarTopRightContent %}
+    <div class="btn-group pull-right">
+        <a href="{{ path('page_edit_order') }}" class="btn btn-xs btn-default">
+            <span class="fa fa-align-justify"></span>
+            Order Pages
+        </a>
+    </div>
+{% endblock toolbarTopRightContent %}
+
+{% block toolbarBottomContent %}
+    <div class="row hidden-xs">
+        <div class="col-sm-4 text-left">
+            <a href="#" class="btn btn-default btn-xs disabled"><span class="fa fa-arrow-circle-left"></span> Prev</a>
+        </div>
+        <div class="col-sm-4 text-center">
+            <a href="#" class="btn btn-default btn-xs disabled"><span class="fa fa-arrow-circle-up"></span> Up</a>
+        </div>
+        <div class="col-sm-4 text-right">
+            <a href="{{ path('page_show', { 'slug': entities[0].slug }) }}" title="Next Page: {{ entities[0].title }}" class="btn btn-default btn-xs">Next <span class="fa fa-arrow-circle-right"></span></a>
+        </div>
+    </div>
+    <div class="btn-group btn-group-justified visible-xs">
+        <a href="#" class="btn btn-default btn-xs disabled" title="Previous"><span class="fa fa-arrow-circle-left"></span></a>
+        <a href="#" class="btn btn-default btn-xs disabled" title="Up"><span class="fa fa-arrow-circle-up"></span></a>
+        <a href="{{ path('page_show', { 'slug': entities[0].slug }) }}" title="Next Page: {{ entities[0].title }}" class="btn btn-default btn-xs" title="Next"><span class="fa fa-arrow-circle-right"></span></a>
+    </div>
+{% endblock toolbarBottomContent %}
+
+{% macro tree(twigs) %}
+<ul class="list-chaptered">
+    {% for twig in twigs %}
+        <li>
+            <a href="{{ path('page_show', { 'slug': twig.slug }) }}" title="{{ twig.title }}">{{ twig.title }}</a>
+            {% if twig.children|length > 0 %}{{ _self.tree(twig.children) }}{% endif %}
+        </li>
+    {% endfor %}
+</ul>
+{% endmacro %}

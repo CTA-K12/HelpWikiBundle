@@ -1,0 +1,32 @@
+{% extends 'MESDHelpWikiBundle:Default:index.html.twig' %}
+
+{% block main %}
+    <h1>Link</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Page</th>
+                <td>{{ entity.page }}</td>
+            </tr>
+            <tr>
+                <th>Routealias</th>
+                <td>{{ entity.routeAlias }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('link') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('link_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock main %}

@@ -1,0 +1,35 @@
+MESD\HelpWikiBundle\Entity\Comment:
+    type: entity
+    table: helpwiki_comment
+    repositoryClass: MESD\HelpWikiBundle\Entity\CommentRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            sequenceGenerator:
+                sequenceName: helpwiki_comment_id_seq
+                initialValue: 1
+        body:
+            column: body
+            type: text
+            nullable: false
+            unique: false
+        dateTime:
+            column: date_time
+            type: datetime
+            nullable: false
+            unique: false
+    manyToOne:
+        user:
+            targetEntity: MESD\HelpWikiBundle\Model\UserSubjectInterface
+            joinColumn:
+                name: user_id
+                referencedColumnName: id
+        page:
+            targetEntity: Page
+            inversedBy: comments
+            joinColumn:
+                name: page_id
+                referencedColumnName: id

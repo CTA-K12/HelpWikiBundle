@@ -1,0 +1,30 @@
+permissiontype:
+    pattern:  /
+    defaults: { _controller: "MESDHelpWikiBundle:PermissionType:index" }
+
+permissiontype_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "MESDHelpWikiBundle:PermissionType:show" }
+
+permissiontype_new:
+    pattern:  /new
+    defaults: { _controller: "MESDHelpWikiBundle:PermissionType:new" }
+
+permissiontype_create:
+    pattern:  /create
+    defaults: { _controller: "MESDHelpWikiBundle:PermissionType:create" }
+    requirements: { _method: post }
+
+permissiontype_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "MESDHelpWikiBundle:PermissionType:edit" }
+
+permissiontype_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "MESDHelpWikiBundle:PermissionType:update" }
+    requirements: { _method: post|put }
+
+permissiontype_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "MESDHelpWikiBundle:PermissionType:delete" }
+    requirements: { _method: post|delete }

@@ -1,0 +1,87 @@
+{% extends 'MESDHelpWikiBundle:Default:index.html.twig' %}
+
+{% block main %}
+
+    {{ form_start(edit_form) }}
+        {{ form_errors(edit_form) }}
+
+        <div class="row">
+            <div class="form-group col-md-12">
+                {{ form_label(edit_form.title, 'Title') }}
+                {{ form_errors(edit_form.title) }}
+                {{ form_widget(edit_form.title, { 'attr': {
+                    'class': 'form-control',
+                    'placeholder': 'Title',
+                    'tabindex': 1,
+                } }) }}
+            </div>
+        </div>
+
+        <div>
+            <p>
+                <strong>Slug</strong>
+                {{ path('page_show', {'slug': entity.slug})|highlight(entity.slug) }}
+                <button class="btn btn-xs btn-default">
+                    <span class="fa fa-pencil"></span>
+                    edit
+                </button>
+            </p>
+        </div>
+
+        <div style="display:none;">
+            {{ form_row(edit_form.slug, {'attr': {
+                'class': 'form-control',
+                'style': 'display:none;',
+            } }) }}
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-12">
+                {{ form_label(edit_form.body, 'Body') }}
+                {{ form_errors(edit_form.body) }}
+                {{ form_widget(edit_form.body, { 'attr': {
+                    'tabindex': 2,
+                } }) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-12">
+                {{ form_label(edit_form.parent, 'Parent Page') }}
+                {{ form_errors(edit_form.parent) }}
+                {{ form_widget(edit_form.parent, {
+                    'empty_value' : 'Choose a parent page',
+                    'attr': {
+                        'class': 'form-control',
+                        'placeholder': 'Page Title',
+                        'tabindex': 3,
+                    }
+                }) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-2 col-md-offset-10">
+                {{ form_widget(edit_form.save, { 'attr': {
+                    'class': 'form-control btn btn-default',
+                    'tabindex': 4,
+                } }) }}
+            </div>
+        </div>
+
+    {{ form_end(edit_form) }}
+
+{% endblock main %}
+
+{% block toolbarBottomContent %}
+    {{ form_start(delete_form) }}
+        {{ form_widget(delete_form.submit, { 'attr': {
+            'class': 'btn btn-danger btn-xs',
+            'tabindex': 5,
+        } })|raw }}
+        <a href="{{ path('page_show', { 'slug': entity.slug }) }}" class="btn btn-xs btn-default pull-right">
+            <span class="fa fa-search"></span>
+            View
+        </a>
+    {{ form_end(delete_form) }}
+{% endblock toolbarBottomContent %}

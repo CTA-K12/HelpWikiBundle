@@ -1,0 +1,97 @@
+{% extends 'MESDHelpWikiBundle:Default:index.html.twig' %}
+{% set subtitle = 'Order Pages' %}
+
+{% block main %}
+
+    <h2>Table of Contents</h2>
+    <div id="foobar" class="dd">
+        {% set i = 0 %}
+        {{ _self.tree(entities) }}
+    </div>
+
+    <div class="row">
+        <div class="col-md-2 col-md-offset-10">
+            <a href="{{ path('page_new') }}" class="btn btn-default form-control">
+                <span class="fa fa-plus"></span>
+                New
+            </a>
+        </div>
+    </div>
+
+    <h2>Test Tabindex</h2>
+    <p>
+        The move up and down items will only be displayed when javascript is disabled.
+        This requires the use of the .no-js class on the parent.
+    </p>
+    <ul>
+        <li tabindex="1">foo
+            <div class="no-js">
+                <a href="#" tabindex="2">up</a>
+                <a href="#" tabindex="3">dn</a>
+            </div>
+        </li>
+        <li tabindex="4">bar
+            <div class="no-js">
+                <a href="#" tabindex="5">up</a>
+                <a href="#" tabindex="6">dn</a>
+            </div>
+        </li>
+        <li tabindex="7">foo</li>
+        <li tabindex="8">bar</li>
+        <li tabindex="9">foo</li>
+        <li tabindex="10">bar</li>
+    </ul>
+
+{% endblock main %}
+
+{% block toolbarBottomContent %}
+    <div class="row hidden-xs">
+        <div class="col-sm-4 text-left">
+            <a href="#" class="btn btn-default btn-xs disabled"><span class="fa fa-arrow-circle-left"></span> Prev</a>
+        </div>
+        <div class="col-sm-4 text-center">
+            <a href="#" class="btn btn-default btn-xs disabled"><span class="fa fa-arrow-circle-up"></span> Up</a>
+        </div>
+        <div class="col-sm-4 text-right">
+            <a href="{{ path('page_show', { 'slug': entities[0].slug }) }}" title="Next Page: {{ entities[0].title }}" class="btn btn-default btn-xs">Next <span class="fa fa-arrow-circle-right"></span></a>
+        </div>
+    </div>
+    <div class="btn-group btn-group-justified visible-xs">
+        <a href="#" class="btn btn-default btn-xs disabled" title="Previous"><span class="fa fa-arrow-circle-left"></span></a>
+        <a href="#" class="btn btn-default btn-xs disabled" title="Up"><span class="fa fa-arrow-circle-up"></span></a>
+        <a href="{{ path('page_show', { 'slug': entities[0].slug }) }}" title="Next Page: {{ entities[0].title }}" class="btn btn-default btn-xs" title="Next"><span class="fa fa-arrow-circle-right"></span></a>
+    </div>
+{% endblock toolbarBottomContent %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/mesdhelpwiki/js/jquery.nestable.js') }}"></script>
+    {#<script type="text/javascript" src="{{ asset('bundles/mesdhelpwiki/js/main.js') }}"></script>#}
+    <script type="text/javascript">
+        $('#foobar').nestable('serialize');
+    </script>
+
+{% endblock javascripts %}
+
+{% block stylesheets %}
+
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/mesdhelpwiki/css/main.css') }}">
+    <style>
+        .js ul > li .no-js { display: none; }
+    </style>
+
+{% endblock stylesheets %}
+
+
+{% macro tree(twigs) %}
+<ol class="dd-list">
+    {% for twig in twigs %}
+        <li class="dd-item" data-id="{{ twig.slug }}">
+            <div class="dd-handle"></div><div class="dd-content">{{ twig.title }} <a href="{{ path('page_show', { 'slug': twig.slug }) }}" title="{{ twig.title }}">view</a></div>
+            {% if twig.children|length > 0 %}{{ _self.tree(twig.children) }}{% endif %}
+        </li>
+    {% endfor %}
+</ol>
+{% endmacro %}

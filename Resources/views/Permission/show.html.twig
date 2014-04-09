@@ -1,0 +1,24 @@
+{% extends 'MESDHelpWikiBundle:Default:index.html.twig' %}
+{% set subtitle = entity.page ~ ' Permission' %}
+
+{% block main %}
+    <dl class="horizontal">
+        <dt>ID</dt>
+        <dd><span class="label label-default">{{ entity.id }}</span></dd>
+        <dt>Role</dt>
+        <dd>{{ entity.longName }}</dd>
+    </dl>
+{% endblock main %}
+
+{% block toolbarBottomContent %}
+    {{ form_start(delete_form) }}
+        {{ form_widget(delete_form.submit, { 'attr': {
+            'class': 'btn btn-danger btn-xs',
+            'tabindex': 5,
+        } }) }}
+        <a href="{{ path('permission_edit', { 'id': entity.id }) }}" class="btn btn-xs btn-default pull-right">
+            <span class="fa fa-pencil"></span>
+            Edit
+        </a>
+    {{ form_end(delete_form) }}
+{% endblock toolbarBottomContent %}

@@ -1,0 +1,58 @@
+{% extends 'MESDHelpWikiBundle:Default:index.html.twig' %}
+{% set subtitle = 'New Permission Type' %}
+
+{% block main %}
+
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    <div class="row">
+        <div class="form-group col-md-2">
+            <label for="permissionTypeId">ID</label>
+            <div class="form-control">
+                <em class="text-muted">New</em>
+            </div>
+        </div>
+
+        <div class="form-group col-md-3">
+            {{ form_label(form.shortName, 'Short Name') }}
+            {{ form_errors(form.shortName) }}
+            {{ form_widget(form.shortName, { 'attr': {
+                'class': 'form-control',
+                'placeholder': 'Short Name',
+                'tabindex': 1,
+            } }) }}
+        </div>
+
+        <div class="form-group col-md-7">
+            {{ form_label(form.longName, 'Long Name') }}
+            {{ form_errors(form.longName) }}
+            {{ form_widget(form.longName, { 'attr': {
+                'class': 'form-control',
+                'placeholder': 'Long Name',
+                'tabindex': 2,
+            } }) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-12">
+            {{ form_label(form.description, 'Description') }}
+            {{ form_errors(form.description) }}
+            {{ form_widget(form.description, { 'attr': {
+                'class': 'form-control',
+                'placeholder': 'Permission Description',
+                'tabindex': 3,
+            } }) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-2 col-md-offset-10">
+            {{ form_widget(form.submit, { 'attr': {
+                'class': 'form-control btn btn-default',
+                'tabindex': 4,
+            } }) }}
+        </div>
+    </div>
+    {{ form_end(form) }}
+
+{% endblock main %}

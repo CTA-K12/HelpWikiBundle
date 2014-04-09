@@ -1,0 +1,27 @@
+MESD\HelpWikiBundle\Entity\Link:
+    type:            entity
+    table:           helpwiki_link
+    repositoryClass: MESD\HelpWikiBundle\Entity\LinkRepository
+    fields:
+        id:
+            type: integer
+            id:   true
+            generator:
+                strategy: AUTO
+            sequenceGenerator:
+                sequenceName: helpwiki_link_id_seq
+                initialValue: 1
+        routeAlias:
+            column:   route_alias
+            type:     string
+            length:   255
+            nullable: false
+            unique:   true
+    manyToOne:
+        page:
+            targetEntity: Page
+            inversedBy:   links
+            joinColumn:
+                name:                 page_id
+                referencedColumnName: id
+                nullable:             false

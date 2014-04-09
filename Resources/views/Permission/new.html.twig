@@ -1,0 +1,66 @@
+{% extends 'MESDHelpWikiBundle:Default:index.html.twig' %}
+{% set subtitle = 'New Permission' %}
+
+{% block main %}
+
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    <div class="row">
+        <div class="form-group col-md-2">
+            <label for="permissionId">ID</label>
+            <div class="form-control">
+                <em class="text-muted">New</em>
+            </div>
+        </div>
+        <div class="form-group col-md-10">
+            {{ form_label(form.page, 'Page Title') }}
+            {{ form_errors(form.page) }}
+            {{ form_widget(form.page, {
+                'empty_value' : 'Choose a page',
+                'attr': {
+                    'class': 'form-control',
+                    'placeholder': 'Page Title',
+                    'tabindex': 1,
+                }
+            }) }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-md-6">
+            {{ form_label(form.role, 'Role') }}
+            {{ form_errors(form.role) }}
+            {{ form_widget(form.role, {
+                'empty_value' : 'Choose a role',
+                'attr': {
+                    'class': 'form-control',
+                    'placeholder': 'Role Name',
+                    'tabindex': 2,
+                }
+            }) }}
+        </div>
+        <div class="form-group col-md-6">
+            {{ form_label(form.permissionType, 'Permission Type') }}
+            {{ form_errors(form.permissionType) }}
+            {{ form_widget(form.permissionType, {
+                'empty_value' : 'Choose a permission type',
+                'attr': {
+                    'class': 'form-control',
+                    'placeholder': 'Permission Type Name',
+                    'tabindex': 3,
+                }
+            }) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-2 col-md-offset-10">
+            {{ form_widget(form.submit, { 'attr': {
+                'class': 'form-control btn btn-default',
+                'tabindex': 4,
+            } }) }}
+        </div>
+    </div>
+    {{ form_end(form) }}
+
+{% endblock main %}

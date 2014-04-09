@@ -1,0 +1,38 @@
+{% extends 'MESDHelpWikiBundle:Default:index.html.twig' %}
+
+{% block main %}
+
+    <table class="table table-bordered table-condensed table-hover table-striped">
+        <thead>
+            <tr>
+                <th>Actions</th>
+                <th>Page</th>
+                <th>Title</th>
+                <th>Slug</th>
+                <th>Revision</th>
+                <th>User</th>
+                <th>Datetime</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td data-role-th="Actions">
+                    <div class="btn-group">
+                        <a class="btn btn-default btn-xs" href="{{ path('history_show', { 'id': entity.id }) }}" title="view historical page">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                </td>
+                <td data-role-th="Page" title="view page"><a href="{{ path('page_show', { 'slug': entity.page.slug }) }}">{{ entity.page }}</a></td>
+                <td data-role-th="Title">{{ entity.title }}</td>
+                <td data-role-th="Slug">{{ entity.slug }}</td>
+                <td data-role-th="Revision">{{ entity.revision }}</td>
+                <td data-role-th="User" title="view page history by user"><a href="{{ path('history_user', { 'id': entity.user.id }) }}">{{ entity.user }}</a></td>
+                <td data-role-th="Date/Time">{% if entity.dateTime %}{{ entity.dateTime|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock main %}

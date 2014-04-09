@@ -1,0 +1,42 @@
+page:
+    pattern:  /
+    defaults: { _controller: "MESDHelpWikiBundle:Page:index" }
+
+page_new:
+    pattern:  /new
+    defaults: { _controller: "MESDHelpWikiBundle:Page:new" }
+
+page_create:
+    pattern:  /create
+    defaults: { _controller: "MESDHelpWikiBundle:Page:create" }
+    requirements: { _method: post }
+
+page_show:
+    pattern:  /{slug}/show
+    defaults: { _controller: "MESDHelpWikiBundle:Page:show" }
+
+page_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "MESDHelpWikiBundle:Page:edit" }
+
+page_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "MESDHelpWikiBundle:Page:update" }
+    requirements: { _method: post|put }
+
+page_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "MESDHelpWikiBundle:Page:delete" }
+    requirements: { _method: post|delete }
+
+page_edit_order:
+    pattern:  /order
+    defaults: { _controller: "MESDHelpWikiBundle:Page:editOrder" }
+
+page_update_order:
+    pattern:  /orderUpdate
+    defaults: { _controller: "MESDHelpWikiBundle:Page:updateOrder" }
+
+page_comments:
+    pattern: /{id}/comments/show
+    defaults: { _controller: "MESDHelpWikiBundle:Page:commentsShow" }

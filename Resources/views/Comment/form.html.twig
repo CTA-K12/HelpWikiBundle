@@ -1,0 +1,27 @@
+{# src/MESD/HelpWikiBundle/Resources/views/Comment/form.html.twig #}
+
+{{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    <div class="row">
+        <div class="form-group col-md-12">
+            {{ form_label(form.body, 'Comment') }}
+            {{ form_errors(form.body) }}
+            {{ form_widget(form.body, { 'attr': {
+                'class': 'form-control',
+                'placeholder': 'Add Comment',
+                'tabindex': 1,
+            } }) }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-md-2 col-md-offset-10">
+            {{ form_widget(form.submit, { 'attr': {
+                'class': 'form-control btn btn-default',
+                'tabindex': 2,
+            } }) }}
+        </div>
+    </div>
+
+{{ form_end(form) }}

@@ -1,0 +1,68 @@
+{% extends 'MESDHelpWikiBundle:Default:index.html.twig' %}
+{% set subtitle = 'New Page' %}
+
+{% block main %}
+
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
+
+        <div class="row">
+            <div class="form-group col-md-12">
+                {{ form_label(form.title, 'Title') }}
+                {{ form_errors(form.title) }}
+                {{ form_widget(form.title, { 'attr': {
+                    'class': 'form-control',
+                    'placeholder': 'Title',
+                    'tabindex': 1,
+                } }) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-12">
+                {{ form_label(form.slug, 'Slug') }}
+                {{ form_errors(form.slug) }}
+                {{ form_widget(form.slug, { 'attr': {
+                    'class': 'form-control',
+                    'placeholder': 'Slug',
+                    'tabindex': 1,
+                } }) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-12">
+                {{ form_label(form.body, 'Body') }}
+                {{ form_errors(form.body) }}
+                {{ form_widget(form.body) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-12">
+                {{ form_label(form.parent, 'Parent Page') }}
+                {{ form_errors(form.parent) }}
+                {{ form_widget(form.parent, {
+                    'empty_value' : 'Choose a parent page',
+                    'attr': {
+                        'class': 'form-control',
+                        'placeholder': 'Page Title',
+                        'tabindex': 1,
+                    }
+                }) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-2 col-md-offset-10">
+                {{ form_widget(form.save, { 'attr': {
+                    'class': 'form-control btn btn-default',
+                    'tabindex': 4,
+                } }) }}
+            </div>
+        </div>
+
+        {{ form_rest(form) }}
+    {{ form_end(form) }}
+
+{% endblock main %}

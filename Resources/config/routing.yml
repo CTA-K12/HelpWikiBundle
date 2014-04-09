@@ -1,0 +1,22 @@
+MESDHelpWikiBundle_home:
+    pattern:  /
+    defaults: { _controller: MESDHelpWikiBundle:Default:index }
+
+MESDHelpWikiBundle_page:
+    resource: "@MESDHelpWikiBundle/Resources/config/routing/page.yml"
+    prefix:   /page
+MESDHelpWikiBundle_comment:
+    resource: "@MESDHelpWikiBundle/Resources/config/routing/comment.yml"
+    prefix:   /comment
+MESDHelpWikiBundle_history:
+    resource: "@MESDHelpWikiBundle/Resources/config/routing/history.yml"
+    prefix:   /history
+MESDHelpWikiBundle_link:
+    resource: "@MESDHelpWikiBundle/Resources/config/routing/link.yml"
+    prefix:   /link
+MESDHelpWikiBundle_permission:
+    resource: "@MESDHelpWikiBundle/Resources/config/routing/permission.yml"
+    prefix:   /permission
+MESDHelpWikiBundle_permissiontype:
+    resource: "@MESDHelpWikiBundle/Resources/config/routing/permissiontype.yml"
+    prefix:   /permissiontype

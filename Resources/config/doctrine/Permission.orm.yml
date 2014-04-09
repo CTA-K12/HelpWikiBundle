@@ -1,0 +1,30 @@
+MESD\HelpWikiBundle\Entity\Permission:
+    type: entity
+    table: helpwiki_permission
+    repositoryClass: MESD\HelpWikiBundle\Entity\PermissionRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            sequenceGenerator:
+                sequenceName: helpwiki_permission_id_seq
+                initialValue: 1
+    manyToOne:
+        page:
+            targetEntity: Page
+            inversedBy: permissions
+            joinColumn:
+                name: page_id
+                referencedColumnName: id
+        role:
+            targetEntity: MESD\AuthenticationBundle\Entity\AuthRole
+            joinColumn:
+                name: role_id
+                referencedColumnName: id
+        permissionType:
+            targetEntity: PermissionType
+            joinColumn:
+                name: permission_type_id
+                referencedColumnName: id

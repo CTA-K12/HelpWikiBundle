@@ -1,0 +1,40 @@
+{% extends 'MESDHelpWikiBundle:Default:index.html.twig' %}
+
+{% block main %}
+
+    <table class="table table-bordered table-condensed table-hover table-striped">
+        <thead>
+            <tr>
+                <th>Actions</th>
+                <th>Page</th>
+                <th>Routealias</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('link_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('link_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+                <td>{{ entity.page }}</td>
+                <td>{{ entity.routeAlias }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('link_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock main %}

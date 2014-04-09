@@ -1,0 +1,47 @@
+{% extends 'MESDHelpWikiBundle:Default:index.html.twig' %}
+{% set subtitle = 'New Link' %}
+
+{% block main %}
+
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
+            <div class="row">
+                <div class="form-group col-md-12">
+                    {{ form_label(form.routeAlias, 'Route') }}
+                    {{ form_errors(form.routeAlias) }}
+                    {{ form_widget(form.routeAlias, { 'attr': {
+                        'class': 'form-control',
+                        'placeholder': 'Slug',
+                        'tabindex': 1,
+                    } }) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-12">
+                    {{ form_label(form.page, 'Page') }}
+                    {{ form_errors(form.page) }}
+                    {{ form_widget(form.page, {
+                        'empty_value' : 'Choose a page',
+                        'attr': {
+                            'class': 'form-control',
+                            'placeholder': 'Page Title',
+                            'tabindex': 2,
+                        }
+                    }) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-2 col-md-offset-10">
+                    {{ form_widget(form.submit, { 'attr': {
+                        'class': 'form-control btn btn-default',
+                        'tabindex': 3,
+                    } }) }}
+                </div>
+            </div>
+        {{ form_rest(form) }}
+    {{ form_end(form) }}
+
+        <a href="{{ path('link') }}">
+            Back to the list
+        </a>
+{% endblock main %}

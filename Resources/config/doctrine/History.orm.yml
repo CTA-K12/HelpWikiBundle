@@ -1,0 +1,54 @@
+MESD\HelpWikiBundle\Entity\History:
+    type: entity
+    table: helpwiki_history
+    repositoryClass: MESD\HelpWikiBundle\Entity\HistoryRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            sequenceGenerator:
+                sequenceName: helpwiki_history_id_seq
+                initialValue: 1
+        title:
+            column:   title
+            type:     string
+            length:   255
+            nullable: false
+            unique:   false
+        body:
+            column:   body
+            type:     text
+            nullable: false
+            unique:   false
+        slug:
+            column:   slug
+            type:     string
+            length:   255
+            nullable: false
+            unique:   false
+        revision:
+            column:   revision
+            type:     integer
+            nullable: false
+            unique:   false
+        dateTime:
+            column:   date_time
+            type:     datetime
+            nullable: false
+            unique:   false
+    manyToOne:
+        page:
+            targetEntity: Page
+            inversedBy:   histories
+            joinColumn:
+                name:                 page_id
+                referencedColumnName: id
+                nullable:             false
+        user:
+            targetEntity: MESD\HelpWikiBundle\Model\UserSubjectInterface
+            joinColumn:
+                name:                 user_id
+                referencedColumnName: id
+                nullable:             false

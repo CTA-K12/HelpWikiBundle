@@ -1,0 +1,2 @@
+{# src/MESD/HelpWikiBundle/Resources/views/Link/router.html.twig #}
+{{ render(controller('MESDHelpWikiBundle:Link:isLinked', { 'route': app.request.attributes.get('_route')|lower })) }}

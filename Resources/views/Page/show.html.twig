@@ -1,0 +1,76 @@
+{% extends 'MESDHelpWikiBundle:Default:index.html.twig' %}
+
+{% block main %}
+
+    {{ dump(next) }}
+    <hr />
+    {{ entity.body|raw }}
+
+    <hr />
+    <section class="page-detail" id ="page-detail">
+        <h2>Page Details</h2>
+        <dl class="dl-horizontal">
+            <dt>Last Updated</dt>
+            <dd>{{ entity.dateTime|date('m/d/Y') ~ ' at ' ~ entity.dateTime|date('h:i a') }}</dd>
+            <dt>Updated By</dt>
+            <dd>{{ entity.user }}</dd>
+            <dt>Revision</dt>
+            <dd>{{ entity.revision }}</dd>
+            <dt>Chapter Page</dt>
+            <dd>{{ entity.parent }}</dd>
+            <dt>Page Number</dt>
+            <dd>{{ entity.printOrder }}</dd>
+        </dl>
+    </section>
+    <hr />
+    <section class="comments" id="comments">
+        <div class="comments-list" id="comments-list">
+            {{ render(controller('MESDHelpWikiBundle:Comment:indexByPage', {
+                'pageId': entity.id
+            })) }}
+        </div>
+        <hr />
+        <div class="comments-form" id="comments-form">
+            {{ render(controller('MESDHelpWikiBundle:Comment:new', {
+                'pageId': entity.id
+            })) }}
+        </div>
+    </section>
+
+{% endblock main %}
+
+{% block toolbarTopRightContent %}
+    <div class="btn-group pull-right">
+        <a href="#" class="btn btn-xs btn-default">
+            <span class="fa fa-search"></span>
+            Detail
+        </a>
+        <a href="{{ path('history_page', { 'id': entity.id }) }}" class="btn btn-xs btn-default">
+            <span class="fa fa-clock-o"></span>
+            History
+        </a>
+        <a href="{{ path('page_edit', { 'id': entity.id }) }}" class="btn btn-xs btn-default">
+            <span class="fa fa-pencil"></span>
+            Edit
+        </a>
+    </div>
+{% endblock toolbarTopRightContent %}
+
+{% block toolbarBottomContent %}
+    <div class="row hidden-xs">
+        <div class="col-sm-4 text-left">
+            <a href="#" class="btn btn-default btn-xs"><span class="fa fa-arrow-circle-left"></span> Prev</a>
+        </div>
+        <div class="col-sm-4 text-center">
+            <a href="#" class="btn btn-default btn-xs"><span class="fa fa-arrow-circle-up"></span> Up</a>
+        </div>
+        <div class="col-sm-4 text-right">
+            <a href="#" title="" class="btn btn-default btn-xs">Next <span class="fa fa-arrow-circle-right"></span></a>
+        </div>
+    </div>
+    <div class="btn-group btn-group-justified visible-xs">
+        <a href="#" class="btn btn-default btn-xs" title="Previous"><span class="fa fa-arrow-circle-left"></span></a>
+        <a href="#" class="btn btn-default btn-xs" title="Up"><span class="fa fa-arrow-circle-up"></span></a>
+        <a href="" title="" class="btn btn-default btn-xs" title="Next"><span class="fa fa-arrow-circle-right"></span></a>
+    </div>
+{% endblock toolbarBottomContent %}

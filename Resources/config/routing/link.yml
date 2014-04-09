@@ -1,0 +1,38 @@
+link:
+    pattern:  /
+    defaults: { _controller: "MESDHelpWikiBundle:Link:index" }
+
+link_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "MESDHelpWikiBundle:Link:show" }
+
+link_new_by_route:
+    pattern:  /new/{route}/new
+    defaults: { _controller: "MESDHelpWikiBundle:Link:newByRoute" }
+
+link_new_by_page:
+    pattern:  /page/new
+    defaults: { _controller: "MESDHelpWikiBundle:Link:createNewLinkPage" }
+
+link_new:
+    pattern:  /new
+    defaults: { _controller: "MESDHelpWikiBundle:Link:new" }
+
+link_create:
+    pattern:  /create
+    defaults: { _controller: "MESDHelpWikiBundle:Link:create" }
+    requirements: { _method: post }
+
+link_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "MESDHelpWikiBundle:Link:edit" }
+
+link_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "MESDHelpWikiBundle:Link:update" }
+    requirements: { _method: post|put }
+
+link_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "MESDHelpWikiBundle:Link:delete" }
+    requirements: { _method: post|delete }

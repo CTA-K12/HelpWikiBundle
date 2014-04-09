@@ -1,0 +1,23 @@
+parameters:
+    MESDHelpWikiBundle.pagelistener.class: MESD\HelpWikiBundle\Listener\PageListener
+    MESDHelpWikiBundle.commentlistener.class: MESD\HelpWikiBundle\Listener\CommentListener
+
+services:
+    help_wiki.page_listener:
+        class: %MESDHelpWikiBundle.pagelistener.class%
+        arguments:
+            - @service_container
+        tags:
+            - { name: kernel.event_listener,   event: kernel.controller, method: onKernelController, priority: 64 }
+            - { name: doctrine.event_listener, event: prePersist  }
+            - { name: doctrine.event_listener, event: preUpdate   }
+            - { name: doctrine.event_listener, event: postUpdate  }
+            - { name: doctrine.event_listener, event: postPersist }
+            - { name: doctrine.event_listener, event: preRemove   }
+    help_wiki.comment_listener:
+        class: %MESDHelpWikiBundle.commentlistener.class%
+        arguments:
+            - @service_container
+        tags:
+            - { name: doctrine.event_listener, event: prePersist  }
+            - { name: doctrine.event_listener, event: preUpdate   }

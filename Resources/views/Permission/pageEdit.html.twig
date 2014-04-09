@@ -1,0 +1,62 @@
+{% extends 'MESDHelpWikiBundle:Default:index.html.twig' %}
+{% set subtitle = 'Edit Page Permissions' %}
+
+{% block main %}
+
+    <section>
+        <form>
+            <table>
+                <thead>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th>Create</th>
+                        <th>View</th>
+                        <th>Edit</th>
+                        <th>Remove</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>Page</th>
+                        <td><input type="checkbox" id="create-page" name="page" /></td>
+                        <td><input type="checkbox" id="view-page" name="page" /></td>
+                        <td><input type="checkbox" id="edit-page" name="page" /></td>
+                        <td><input type="checkbox" id="remove-page" name="page" /></td>
+                    </tr>
+                    <tr>
+                        <th>Comment</th>
+                        <td><input type="checkbox" id="create-comment" name="comment" /></td>
+                        <td><input type="checkbox" id="view-comment" name="comment" /></td>
+                        <td><input type="checkbox" id="edit-comment" name="comment" /></td>
+                        <td><input type="checkbox" id="remove-comment" name="comment" /></td>
+                    </tr>
+                    <tr>
+                        <th>Link</th>
+                        <td><input type="checkbox" id="create-link" name="link" /></td>
+                        <td><input type="checkbox" id="view-link" name="link" /></td>
+                        <td><input type="checkbox" id="edit-link" name="link" /></td>
+                        <td><input type="checkbox" id="remove-link" name="link" /></td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </section>
+
+{% endblock main %}
+
+{% block toolbarTopRightContent %}
+    <div class="btn-group pull-right">
+        <a href="#" class="btn btn-xs btn-default">
+            <span class="fa fa-search"></span>
+            Detail
+        </a>
+        <a href="{{ path('history_page', { 'id': entity.id }) }}" class="btn btn-xs btn-default">
+            <span class="fa fa-clock-o"></span>
+            History
+        </a>
+        <a href="{{ path('page_edit', { 'id': entity.id }) }}" class="btn btn-xs btn-default">
+            <span class="fa fa-pencil"></span>
+            Edit
+        </a>
+    </div>
+{% endblock toolbarTopRightContent %}

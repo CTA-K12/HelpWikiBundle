@@ -1,0 +1,25 @@
+<h2>Comments <small>({{ comments|length }})</small></h2>
+<ul class="media-list">
+    {% for comment in comments %}
+        <li class="media comment">
+            <img src="{{ comment.user.email|gravatar }}" alt="comment.user.email" class="pull-left" />
+            <div class="media-body">
+                <div class="media-heading">
+                    <strong>{{ comment.user }}</strong>
+                    <span class="text-muted">{{ comment.dateTime|date('Y-m-d \\a\\t H:i') }}</span>
+                    <div class="pull-right text-muted show-on-hover">
+                        <span class="fa fa-pencil"></span>
+                        {% form_theme deleteForms[comment.id] 'MESDHelpWikiBundle:Form:fields.html.twig' %}
+                        {{ form_start(deleteForms[comment.id]) }}
+                            {{ form_widget(deleteForms[comment.id].submit, {
+                                'icon':  'fa fa-times',
+                                'label': ' ',
+                                'attr':  {'class': 'btn btn-link text-danger'}
+                            }) }}
+                        {{ form_end(deleteForms[comment.id]) }}
+                    </div>
+                </div>
+                <p>{{ comment.id }} - {{ comment.body }}</p>
+            </div>
+        </li>
+    {% endfor %}

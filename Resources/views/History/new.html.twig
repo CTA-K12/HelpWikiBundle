@@ -1,0 +1,15 @@
+{% extends 'MESDHelpWikiBundle:Default:index.html.twig' %}
+
+{% block main %}
+    <h1>History creation</h1>
+
+    {{ form(form) }}
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('history') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+{% endblock main %}

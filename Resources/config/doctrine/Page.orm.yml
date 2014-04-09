@@ -1,0 +1,89 @@
+MESD\HelpWikiBundle\Entity\Page:
+    type:            entity
+    table:           helpwiki_page
+    repositoryClass: MESD\HelpWikiBundle\Entity\PageRepository
+    fields:
+        id:
+            type: integer
+            id:   true
+            generator:
+                strategy: AUTO
+            sequenceGenerator:
+                sequenceName: helpwiki_page_id_seq
+                initialValue: 1
+        title:
+            column:   title
+            type:     string
+            length:   255
+            nullable: false
+            unique:   true
+        body:
+            column:   body
+            type:     text
+            nullable: true
+            unique:   false
+        slug:
+            column:   slug
+            type:     string
+            length:   255
+            nullable: false
+            unique:   true
+        revision:
+            column:   revision
+            type:     integer
+            nullable: false
+            unique:   false
+        printOrder:
+            column:   print_order
+            type:     integer
+            nullable: true
+            unique:   false
+        dateTime:
+            column:   date_time
+            type:     datetime
+            nullable: false
+            unique:   false
+        isPageLocked:
+            column:   is_page_locked
+            type:     boolean
+            nullable: false
+            unique:   false
+        isCommentLocked:
+            column:   is_comment_locked
+            type:     boolean
+            nullable: false
+            unique:   false
+        isEditInProgress:
+            column:   is_edit_in_progress
+            type:     boolean
+            nullable: false
+            unique:   false
+    oneToMany:
+        children:
+            targetEntity: Page
+            mappedBy:     parent
+        comments:
+            targetEntity: Comment
+            mappedBy:     page
+        permissions:
+            targetEntity: Permission
+            mappedBy:     page
+        histories:
+            targetEntity: History
+            mappedBy:     page
+        links:
+            targetEntity: Link
+            mappedBy:     page
+    manyToOne:
+        user:
+            targetEntity: MESD\HelpWikiBundle\Model\UserSubjectInterface
+            joinColumn:
+                name:                 user_id
+                referencedColumnName: id
+        parent:
+            targetEntity: Page
+            inversedBy:   children
+            joinColumn:
+                name:                 parent_id
+                referencedColumnName: id
+    lifecycleCallbacks:
