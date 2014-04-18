@@ -1,0 +1,10 @@
+{
+    "name": "mesd/help-wiki-bundle",
+    "license": "MIT",
+    "type": "symfony-bundle",
+    "description": "MESD Help Wiki Bundle",
+    "autoload": {
+        "psr-0": { "Mesd\\HelpWikiBundle": "" }
+    },
+    "target-dir": "Mesd/HelpWikiBundle"
+}
