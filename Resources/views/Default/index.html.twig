@@ -1,12 +1,12 @@
-{% extends 'MESDORCaseCoreBundle:Index:index.html.twig' %}
+{% extends 'MesdOrcaseAppBundle:Index:index.html.twig' %}
 
 {% block sidebar %}
-    {{ render(controller('MESDPresentationPresentationBundle:Default:sidebar',
+    {{ render(controller('MesdPresentationBundle:Default:sidebar',
         { 'route': app.request.get('_route'),
           'options': { 'type': '' },
           'menu': {
             'Help Wiki Home': {
-                'path': path('MESDHelpWikiBundle_home'),
+                'path': path('MesdHelpWikiBundle_home'),
                 'title': 'Help Wiki Home',
                 'icon': 'fa-dashboard'
             },

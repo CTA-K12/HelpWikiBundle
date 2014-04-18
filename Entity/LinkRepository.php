@@ -1,7 +1,7 @@
 <?php
-// src/MESD/HelpWikiBundle/Entity/LinkRepository
+// src/Mesd/HelpWikiBundle/Entity/LinkRepository
 
-namespace MESD\HelpWikiBundle\Entity;
+namespace Mesd\HelpWikiBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 

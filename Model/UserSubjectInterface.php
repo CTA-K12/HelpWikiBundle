@@ -1,7 +1,7 @@
 <?php
-// src/MESD/HelpWikiBundle/Model/UserSubjectInterface.php
+// src/Mesd/HelpWikiBundle/Model/UserSubjectInterface.php
 
-namespace MESD\HelpWikiBundle\Model;
+namespace Mesd\HelpWikiBundle\Model;
 
 /**
  * An interface that the invoice Subject object should implement.

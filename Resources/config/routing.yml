@@ -1,22 +1,27 @@
-MESDHelpWikiBundle_home:
+MesdHelpWikiBundle_home:
     pattern:  /
-    defaults: { _controller: MESDHelpWikiBundle:Default:index }
+    defaults: { _controller: MesdHelpWikiBundle:Default:index }
 
-MESDHelpWikiBundle_page:
-    resource: "@MESDHelpWikiBundle/Resources/config/routing/page.yml"
+MesdHelpWikiBundle_page:
+    resource: "@MesdHelpWikiBundle/Resources/config/routing/page.yml"
     prefix:   /page
-MESDHelpWikiBundle_comment:
-    resource: "@MESDHelpWikiBundle/Resources/config/routing/comment.yml"
+
+MesdHelpWikiBundle_comment:
+    resource: "@MesdHelpWikiBundle/Resources/config/routing/comment.yml"
     prefix:   /comment
-MESDHelpWikiBundle_history:
-    resource: "@MESDHelpWikiBundle/Resources/config/routing/history.yml"
+
+MesdHelpWikiBundle_history:
+    resource: "@MesdHelpWikiBundle/Resources/config/routing/history.yml"
     prefix:   /history
-MESDHelpWikiBundle_link:
-    resource: "@MESDHelpWikiBundle/Resources/config/routing/link.yml"
+
+MesdHelpWikiBundle_link:
+    resource: "@MesdHelpWikiBundle/Resources/config/routing/link.yml"
     prefix:   /link
-MESDHelpWikiBundle_permission:
-    resource: "@MESDHelpWikiBundle/Resources/config/routing/permission.yml"
+
+MesdHelpWikiBundle_permission:
+    resource: "@MesdHelpWikiBundle/Resources/config/routing/permission.yml"
     prefix:   /permission
-MESDHelpWikiBundle_permissiontype:
-    resource: "@MESDHelpWikiBundle/Resources/config/routing/permissiontype.yml"
+
+MesdHelpWikiBundle_permissiontype:
+    resource: "@MesdHelpWikiBundle/Resources/config/routing/permissiontype.yml"
     prefix:   /permissiontype

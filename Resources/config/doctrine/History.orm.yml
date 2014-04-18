@@ -1,7 +1,7 @@
-MESD\HelpWikiBundle\Entity\History:
+Mesd\HelpWikiBundle\Entity\History:
     type: entity
     table: helpwiki_history
-    repositoryClass: MESD\HelpWikiBundle\Entity\HistoryRepository
+    repositoryClass: Mesd\HelpWikiBundle\Entity\HistoryRepository
     fields:
         id:
             type: integer
@@ -47,7 +47,7 @@ MESD\HelpWikiBundle\Entity\History:
                 referencedColumnName: id
                 nullable:             false
         user:
-            targetEntity: MESD\HelpWikiBundle\Model\UserSubjectInterface
+            targetEntity: Mesd\HelpWikiBundle\Model\UserSubjectInterface
             joinColumn:
                 name:                 user_id
                 referencedColumnName: id

@@ -1,7 +1,7 @@
-MESD\HelpWikiBundle\Entity\Link:
+Mesd\HelpWikiBundle\Entity\Link:
     type:            entity
     table:           helpwiki_link
-    repositoryClass: MESD\HelpWikiBundle\Entity\LinkRepository
+    repositoryClass: Mesd\HelpWikiBundle\Entity\LinkRepository
     fields:
         id:
             type: integer

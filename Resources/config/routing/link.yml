@@ -1,38 +1,38 @@
 link:
     pattern:  /
-    defaults: { _controller: "MESDHelpWikiBundle:Link:index" }
+    defaults: { _controller: "MesdHelpWikiBundle:Link:index" }
 
 link_show:
     pattern:  /{id}/show
-    defaults: { _controller: "MESDHelpWikiBundle:Link:show" }
+    defaults: { _controller: "MesdHelpWikiBundle:Link:show" }
 
 link_new_by_route:
     pattern:  /new/{route}/new
-    defaults: { _controller: "MESDHelpWikiBundle:Link:newByRoute" }
+    defaults: { _controller: "MesdHelpWikiBundle:Link:newByRoute" }
 
 link_new_by_page:
     pattern:  /page/new
-    defaults: { _controller: "MESDHelpWikiBundle:Link:createNewLinkPage" }
+    defaults: { _controller: "MesdHelpWikiBundle:Link:createNewLinkPage" }
 
 link_new:
     pattern:  /new
-    defaults: { _controller: "MESDHelpWikiBundle:Link:new" }
+    defaults: { _controller: "MesdHelpWikiBundle:Link:new" }
 
 link_create:
     pattern:  /create
-    defaults: { _controller: "MESDHelpWikiBundle:Link:create" }
+    defaults: { _controller: "MesdHelpWikiBundle:Link:create" }
     requirements: { _method: post }
 
 link_edit:
     pattern:  /{id}/edit
-    defaults: { _controller: "MESDHelpWikiBundle:Link:edit" }
+    defaults: { _controller: "MesdHelpWikiBundle:Link:edit" }
 
 link_update:
     pattern:  /{id}/update
-    defaults: { _controller: "MESDHelpWikiBundle:Link:update" }
+    defaults: { _controller: "MesdHelpWikiBundle:Link:update" }
     requirements: { _method: post|put }
 
 link_delete:
     pattern:  /{id}/delete
-    defaults: { _controller: "MESDHelpWikiBundle:Link:delete" }
+    defaults: { _controller: "MesdHelpWikiBundle:Link:delete" }
     requirements: { _method: post|delete }

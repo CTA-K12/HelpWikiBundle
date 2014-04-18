@@ -1,6 +1,6 @@
 <?php
 
-namespace MESD\HelpWikiBundle\Entity;
+namespace Mesd\HelpWikiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 

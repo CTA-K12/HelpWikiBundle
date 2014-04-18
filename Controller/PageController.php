@@ -1,15 +1,15 @@
 <?php
 
-namespace MESD\HelpWikiBundle\Controller;
+namespace Mesd\HelpWikiBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-use MESD\HelpWikiBundle\Entity\Page;
-use MESD\HelpWikiBundle\Form\PageType;
+use Mesd\HelpWikiBundle\Entity\Page;
+use Mesd\HelpWikiBundle\Form\PageType;
 
-use MESD\HelpWikiBundle\Entity\Comment;
-use MESD\HelpWikiBundle\Form\CommentType;
+use Mesd\HelpWikiBundle\Entity\Comment;
+use Mesd\HelpWikiBundle\Form\CommentType;
 
 /**
  * Page controller.
@@ -26,12 +26,12 @@ class PageController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('MESDHelpWikiBundle:Page')->findByParent(null);
+        $entities = $em->getRepository('MesdHelpWikiBundle:Page')->findByParent(null);
 
         usort($entities, array($this, 'cmp_obj'));
         //$child = $entities[1]->getChildren()->toArray();
         //var_dump($child);die;
-        return $this->render('MESDHelpWikiBundle:Page:index.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Page:index.html.twig', array(
             'entities' => $entities,
         ));
     }
@@ -63,7 +63,7 @@ class PageController extends Controller
             return $this->redirect($this->generateUrl('page_show', array('slug' => $entity->getSlug())));
         }
 
-        return $this->render('MESDHelpWikiBundle:Page:new.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Page:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
@@ -106,7 +106,7 @@ class PageController extends Controller
             ));
         }
 
-        return $this->render('MESDHelpWikiBundle:Page:new.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Page:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
@@ -120,9 +120,9 @@ class PageController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity   = $em->getRepository('MESDHelpWikiBundle:Page')->findOneBySlug($slug);
-        $comments = $em->getRepository('MESDHelpWikiBundle:Comment')->findByPage($entity->getId());
-        $next   = $em->getRepository('MESDHelpWikiBundle:Page')->getNextPage($entity);
+        $entity   = $em->getRepository('MesdHelpWikiBundle:Page')->findOneBySlug($slug);
+        $comments = $em->getRepository('MesdHelpWikiBundle:Comment')->findByPage($entity->getId());
+        $next   = $em->getRepository('MesdHelpWikiBundle:Page')->getNextPage($entity);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Page entity.');
@@ -133,7 +133,7 @@ class PageController extends Controller
         $title = preg_replace('/\s*?\bpages?\b\s*?$/i', '', $entity->getTitle());
 
 
-        return $this->render('MESDHelpWikiBundle:Page:show.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Page:show.html.twig', array(
             'subtitle'    => $title,
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
@@ -150,7 +150,7 @@ class PageController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('MESDHelpWikiBundle:Page')->find($id);
+        $entity = $em->getRepository('MesdHelpWikiBundle:Page')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Page entity.');
@@ -161,7 +161,7 @@ class PageController extends Controller
 
         $title = 'Edit ' . preg_replace('/\s*?\bpages?\b\s*?$/i', '', $entity->getTitle()) . ' Page';
 
-        return $this->render('MESDHelpWikiBundle:Page:edit.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Page:edit.html.twig', array(
             'subtitle'    => $title,
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
@@ -196,7 +196,7 @@ class PageController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('MESDHelpWikiBundle:Page')->find($id);
+        $entity = $em->getRepository('MesdHelpWikiBundle:Page')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Page entity.');
@@ -212,7 +212,7 @@ class PageController extends Controller
             return $this->redirect($this->generateUrl('page_show', array('slug' => $entity->getSlug())));
         }
 
-        return $this->render('MESDHelpWikiBundle:Page:edit.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Page:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -229,7 +229,7 @@ class PageController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('MESDHelpWikiBundle:Page')->find($id);
+            $entity = $em->getRepository('MesdHelpWikiBundle:Page')->find($id);
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Page entity.');
@@ -267,11 +267,11 @@ class PageController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('MESDHelpWikiBundle:Page')->findByParent(null);
+        $entities = $em->getRepository('MesdHelpWikiBundle:Page')->findByParent(null);
 
         usort($entities, array($this, 'cmp_obj'));
 
-        return $this->render('MESDHelpWikiBundle:Page:editOrder.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Page:editOrder.html.twig', array(
             'entities' => $entities,
         ));
     }

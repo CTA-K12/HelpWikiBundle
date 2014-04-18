@@ -1,12 +1,12 @@
 <?php
 
-namespace MESD\HelpWikiBundle\Controller;
+namespace Mesd\HelpWikiBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-use MESD\HelpWikiBundle\Entity\Comment;
-use MESD\HelpWikiBundle\Form\CommentType;
+use Mesd\HelpWikiBundle\Entity\Comment;
+use Mesd\HelpWikiBundle\Form\CommentType;
 
 /**
  * Comment controller.
@@ -23,9 +23,9 @@ class CommentController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('MESDHelpWikiBundle:Comment')->findAll();
+        $entities = $em->getRepository('MesdHelpWikiBundle:Comment')->findAll();
 
-        return $this->render('MESDHelpWikiBundle:Comment:index.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Comment:index.html.twig', array(
             'entities' => $entities,
         ));
     }
@@ -52,7 +52,7 @@ class CommentController extends Controller
             return $this->redirect($this->generateUrl('page_show', array('slug' => $page->getSlug())));
         }
 
-        return $this->render('MESDHelpWikiBundle:Comment:new.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Comment:new.html.twig', array(
             'comment' => $comment,
             'form'    => $form->createView(),
         ));
@@ -95,7 +95,7 @@ class CommentController extends Controller
 
         $form   = $this->createCreateForm($comment, $pageId);
 
-        return $this->render('MESDHelpWikiBundle:Comment:new.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Comment:new.html.twig', array(
             'comment' => $comment,
             'form'    => $form->createView(),
         ));
@@ -109,7 +109,7 @@ class CommentController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('MESDHelpWikiBundle:Comment')->find($id);
+        $entity = $em->getRepository('MesdHelpWikiBundle:Comment')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Comment entity.');
@@ -117,7 +117,7 @@ class CommentController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('MESDHelpWikiBundle:Comment:show.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Comment:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
         ));
@@ -131,7 +131,7 @@ class CommentController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('MESDHelpWikiBundle:Comment')->find($id);
+        $entity = $em->getRepository('MesdHelpWikiBundle:Comment')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Comment entity.');
@@ -140,7 +140,7 @@ class CommentController extends Controller
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('MESDHelpWikiBundle:Comment:edit.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Comment:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -173,7 +173,7 @@ class CommentController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('MESDHelpWikiBundle:Comment')->find($id);
+        $entity = $em->getRepository('MesdHelpWikiBundle:Comment')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Comment entity.');
@@ -189,7 +189,7 @@ class CommentController extends Controller
             return $this->redirect($this->generateUrl('comment_edit', array('id' => $id)));
         }
 
-        return $this->render('MESDHelpWikiBundle:Comment:edit.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Comment:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -206,7 +206,7 @@ class CommentController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('MESDHelpWikiBundle:Comment')->find($id);
+            $entity = $em->getRepository('MesdHelpWikiBundle:Comment')->find($id);
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Comment entity.');
@@ -240,7 +240,7 @@ class CommentController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $page = $em->getRepository('MESDHelpWikiBundle:Page')->find($pageId);
+        $page = $em->getRepository('MesdHelpWikiBundle:Page')->find($pageId);
 
         if (!$page) {
             throw $this->createNotFoundException('Unable to find Page.');
@@ -257,9 +257,9 @@ class CommentController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $page = $em->getRepository('MESDHelpWikiBundle:Page')->find($pageId);
+        $page = $em->getRepository('MesdHelpWikiBundle:Page')->find($pageId);
 
-        $comments = $em->getRepository('MESDHelpWikiBundle:Comment')->findByPage($page);
+        $comments = $em->getRepository('MesdHelpWikiBundle:Comment')->findByPage($page);
 
         $deleteForms = array();
 
@@ -267,7 +267,7 @@ class CommentController extends Controller
             $deleteForms[$comment->getId()] = $this->createDeleteForm($comment->getId())->createView();
         }
 
-        return $this->render('MESDHelpWikiBundle:Comment:indexByPage.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Comment:indexByPage.html.twig', array(
             'comments'    => $comments,
             'deleteForms' => $deleteForms,
         ));

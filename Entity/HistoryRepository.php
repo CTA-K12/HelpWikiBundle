@@ -1,7 +1,7 @@
 <?php
-// src/MESD/HelpWikiBundle/Entity/HistoryRepository
+// src/Mesd/HelpWikiBundle/Entity/HistoryRepository
 
-namespace MESD\HelpWikiBundle\Entity;
+namespace Mesd\HelpWikiBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 

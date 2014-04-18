@@ -9,7 +9,7 @@
                     <span class="text-muted">{{ comment.dateTime|date('Y-m-d \\a\\t H:i') }}</span>
                     <div class="pull-right text-muted show-on-hover">
                         <span class="fa fa-pencil"></span>
-                        {% form_theme deleteForms[comment.id] 'MESDHelpWikiBundle:Form:fields.html.twig' %}
+                        {% form_theme deleteForms[comment.id] 'MesdHelpWikiBundle:Form:fields.html.twig' %}
                         {{ form_start(deleteForms[comment.id]) }}
                             {{ form_widget(deleteForms[comment.id].submit, {
                                 'icon':  'fa fa-times',

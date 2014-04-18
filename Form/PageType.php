@@ -1,6 +1,6 @@
 <?php
 
-namespace MESD\HelpWikiBundle\Form;
+namespace Mesd\HelpWikiBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -10,8 +10,8 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Doctrine\ORM\EntityRepository;
 
-use MESD\HelpWikiBundle\Entity\Page;
-use MESD\HelpWikiBundle\Form\DataTransformer\HeadingToPermalinkTransformer;
+use Mesd\HelpWikiBundle\Entity\Page;
+use Mesd\HelpWikiBundle\Form\DataTransformer\HeadingToPermalinkTransformer;
 
 class PageType extends AbstractType
 {
@@ -58,7 +58,7 @@ class PageType extends AbstractType
                     $form = $event->getForm();
 
                     $formOptions = array(
-                        'class'         => 'MESD\HelpWikiBundle\Entity\Page',
+                        'class'         => 'Mesd\HelpWikiBundle\Entity\Page',
                         'property'      => 'title',
                         'required'      => false,
                         'query_builder' => function(EntityRepository $er) use ($pageId) {
@@ -86,7 +86,7 @@ class PageType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'MESD\HelpWikiBundle\Entity\Page'
+            'data_class' => 'Mesd\HelpWikiBundle\Entity\Page'
         ));
     }
 

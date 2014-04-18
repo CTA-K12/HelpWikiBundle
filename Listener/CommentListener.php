@@ -1,9 +1,9 @@
 <?php
 
-namespace MESD\HelpWikiBundle\Listener;
+namespace Mesd\HelpWikiBundle\Listener;
 
-use MESD\HelpWikiBundle\Entity\Page;
-use MESD\HelpWikiBundle\Entity\Comment;
+use Mesd\HelpWikiBundle\Entity\Page;
+use Mesd\HelpWikiBundle\Entity\Comment;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -62,7 +62,7 @@ class CommentListener
             $en->setDateTime(new \DateTime());
 
             // recompute the entity changes
-            //$md = $em->getClassMetadata('MESD\HelpWikiBundle\Entity\Page');
+            //$md = $em->getClassMetadata('Mesd\HelpWikiBundle\Entity\Page');
             //$uow->recomputeSingleEntityChangeSet($md, $en);
         }
     }

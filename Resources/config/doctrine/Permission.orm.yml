@@ -1,7 +1,7 @@
-MESD\HelpWikiBundle\Entity\Permission:
+Mesd\HelpWikiBundle\Entity\Permission:
     type: entity
     table: helpwiki_permission
-    repositoryClass: MESD\HelpWikiBundle\Entity\PermissionRepository
+    repositoryClass: Mesd\HelpWikiBundle\Entity\PermissionRepository
     fields:
         id:
             type: integer
@@ -19,7 +19,7 @@ MESD\HelpWikiBundle\Entity\Permission:
                 name: page_id
                 referencedColumnName: id
         role:
-            targetEntity: MESD\AuthenticationBundle\Entity\AuthRole
+            targetEntity: Mesd\AuthenticationBundle\Entity\AuthRole
             joinColumn:
                 name: role_id
                 referencedColumnName: id

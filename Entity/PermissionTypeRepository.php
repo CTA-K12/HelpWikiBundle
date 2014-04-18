@@ -1,7 +1,7 @@
 <?php
-// src/MESD/HelpWikiBundle/Entity/PermissionTypeRepository
+// src/Mesd/HelpWikiBundle/Entity/PermissionTypeRepository
 
-namespace MESD\HelpWikiBundle\Entity;
+namespace Mesd\HelpWikiBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 

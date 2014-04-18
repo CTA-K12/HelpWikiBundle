@@ -1,57 +1,57 @@
 permission:
     pattern:  /
-    defaults: { _controller: "MESDHelpWikiBundle:Permission:index" }
+    defaults: { _controller: "MesdHelpWikiBundle:Permission:index" }
 
 permission_show:
     pattern:  /{id}/show
-    defaults: { _controller: "MESDHelpWikiBundle:Permission:show" }
+    defaults: { _controller: "MesdHelpWikiBundle:Permission:show" }
 
 permission_new:
     pattern:  /new
-    defaults: { _controller: "MESDHelpWikiBundle:Permission:new" }
+    defaults: { _controller: "MesdHelpWikiBundle:Permission:new" }
 
 permission_create:
     pattern:  /create
-    defaults: { _controller: "MESDHelpWikiBundle:Permission:create" }
+    defaults: { _controller: "MesdHelpWikiBundle:Permission:create" }
     requirements: { _method: post }
 
 permission_edit:
     pattern:  /{id}/edit
-    defaults: { _controller: "MESDHelpWikiBundle:Permission:edit" }
+    defaults: { _controller: "MesdHelpWikiBundle:Permission:edit" }
 
 permission_update:
     pattern:  /{id}/update
-    defaults: { _controller: "MESDHelpWikiBundle:Permission:update" }
+    defaults: { _controller: "MesdHelpWikiBundle:Permission:update" }
     requirements: { _method: post|put }
 
 permission_delete:
     pattern:  /{id}/delete
-    defaults: { _controller: "MESDHelpWikiBundle:Permission:delete" }
+    defaults: { _controller: "MesdHelpWikiBundle:Permission:delete" }
     requirements: { _method: post|delete }
 
 permission_page_show:
     pattern:  /page/{id}/show
-    defaults: { _controller: "MESDHelpWikiBundle:Permission:pageShow" }
+    defaults: { _controller: "MesdHelpWikiBundle:Permission:pageShow" }
 
 permission_page_new:
     pattern:  /page/{id}/new
-    defaults: { _controller: "MESDHelpWikiBundle:Permission:pageNew" }
+    defaults: { _controller: "MesdHelpWikiBundle:Permission:pageNew" }
 
 permission_page_create:
     pattern:  /page/{id}/create
-    defaults: { _controller: "MESDHelpWikiBundle:Permission:pageCreate" }
+    defaults: { _controller: "MesdHelpWikiBundle:Permission:pageCreate" }
     requirements: { _method: post }
 
 permission_page_edit:
     pattern:  /page/{id}/edit
-    defaults: { _controller: "MESDHelpWikiBundle:Permission:pageEdit" }
+    defaults: { _controller: "MesdHelpWikiBundle:Permission:pageEdit" }
 
 permission_page_update:
     pattern:  /page/{id}/update
-    defaults: { _controller: "MESDHelpWikiBundle:Permission:pageUpdate" }
+    defaults: { _controller: "MesdHelpWikiBundle:Permission:pageUpdate" }
     requirements: { _method: post|put }
 
 permission_page_delete:
     pattern:  /page/{id}/delete
-    defaults: { _controller: "MESDHelpWikiBundle:Permission:pageDelete" }
+    defaults: { _controller: "MesdHelpWikiBundle:Permission:pageDelete" }
     requirements: { _method: post|delete }

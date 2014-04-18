@@ -1,6 +1,6 @@
 <?php
 
-namespace MESD\HelpWikiBundle\Entity;
+namespace Mesd\HelpWikiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -20,7 +20,7 @@ class Link
     private $routeAlias;
 
     /**
-     * @var \MESD\HelpWikiBundle\Entity\Page
+     * @var \Mesd\HelpWikiBundle\Entity\Page
      */
     private $page;
 
@@ -61,10 +61,10 @@ class Link
     /**
      * Set page
      *
-     * @param \MESD\HelpWikiBundle\Entity\Page $page
+     * @param \Mesd\HelpWikiBundle\Entity\Page $page
      * @return Link
      */
-    public function setPage(\MESD\HelpWikiBundle\Entity\Page $page = null)
+    public function setPage(\Mesd\HelpWikiBundle\Entity\Page $page = null)
     {
         $this->page = $page;
     
@@ -74,7 +74,7 @@ class Link
     /**
      * Get page
      *
-     * @return \MESD\HelpWikiBundle\Entity\Page 
+     * @return \Mesd\HelpWikiBundle\Entity\Page 
      */
     public function getPage()
     {

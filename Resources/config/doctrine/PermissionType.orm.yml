@@ -1,7 +1,7 @@
-MESD\HelpWikiBundle\Entity\PermissionType:
+Mesd\HelpWikiBundle\Entity\PermissionType:
     type: entity
     table: helpwiki_permission_type
-    repositoryClass: MESD\HelpWikiBundle\Entity\PermissionTypeRepository
+    repositoryClass: Mesd\HelpWikiBundle\Entity\PermissionTypeRepository
     fields:
         id:
             type: integer

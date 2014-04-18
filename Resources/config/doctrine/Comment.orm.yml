@@ -1,7 +1,7 @@
-MESD\HelpWikiBundle\Entity\Comment:
+Mesd\HelpWikiBundle\Entity\Comment:
     type: entity
     table: helpwiki_comment
-    repositoryClass: MESD\HelpWikiBundle\Entity\CommentRepository
+    repositoryClass: Mesd\HelpWikiBundle\Entity\CommentRepository
     fields:
         id:
             type: integer
@@ -23,7 +23,7 @@ MESD\HelpWikiBundle\Entity\Comment:
             unique: false
     manyToOne:
         user:
-            targetEntity: MESD\HelpWikiBundle\Model\UserSubjectInterface
+            targetEntity: Mesd\HelpWikiBundle\Model\UserSubjectInterface
             joinColumn:
                 name: user_id
                 referencedColumnName: id

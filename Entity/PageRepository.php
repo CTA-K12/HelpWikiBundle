@@ -1,7 +1,7 @@
 <?php
-// src/MESD/HelpWikiBundle/Entity/PageRepository
+// src/Mesd/HelpWikiBundle/Entity/PageRepository
 
-namespace MESD\HelpWikiBundle\Entity;
+namespace Mesd\HelpWikiBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 
@@ -36,7 +36,7 @@ class PageRepository extends EntityRepository
         //     where q.id = 4
         $qb = $this->createQueryBuilder('p');
         $qb
-            ->innerJoin('\MESD\HelpWikiBundle\Entity\Page', 'q', 'WITH', 'q.parent = p.id')
+            ->innerJoin('\Mesd\HelpWikiBundle\Entity\Page', 'q', 'WITH', 'q.parent = p.id')
             ->where($qb->expr()->eq('q.id', ':childId'))
             ->setParameter('childId', $pageId)
         ;
@@ -54,7 +54,7 @@ class PageRepository extends EntityRepository
         // get the last page of the previous chapter
         $qb = $this->createQueryBuilder('p');
         $qb
-            ->innerJoin('\MESD\HelpWikiBundle\Entity\Page', 'q', 'WITH', 'q.parent = p.id')
+            ->innerJoin('\Mesd\HelpWikiBundle\Entity\Page', 'q', 'WITH', 'q.parent = p.id')
             ->where(
                 $qb->expr()->eq('q.id', ':childId'))
             ->setParameter('childId', $pageId)

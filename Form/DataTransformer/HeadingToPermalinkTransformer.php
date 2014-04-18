@@ -1,13 +1,13 @@
 <?php
-// src/MESD/HelpWikiBundle/Form/DataTransformer/HeadingToPermalinkTransformer.php
-namespace MESD\HelpWikiBundle\Form\DataTransformer;
+// src/Mesd/HelpWikiBundle/Form/DataTransformer/HeadingToPermalinkTransformer.php
+namespace Mesd\HelpWikiBundle\Form\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DomCrawler\Crawler;
 
-use MESD\HelpWikiBundle\Entity\Page;
+use Mesd\HelpWikiBundle\Entity\Page;
 
 class HeadingToPermalinkTransformer implements DataTransformerInterface
 {

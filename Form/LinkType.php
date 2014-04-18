@@ -1,6 +1,6 @@
 <?php
 
-namespace MESD\HelpWikiBundle\Form;
+namespace Mesd\HelpWikiBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -26,7 +26,7 @@ class LinkType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'MESD\HelpWikiBundle\Entity\Link'
+            'data_class' => 'Mesd\HelpWikiBundle\Entity\Link'
         ));
     }
 

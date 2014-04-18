@@ -1,8 +1,9 @@
 <?php
 
-namespace MESD\HelpWikiBundle\Entity;
+namespace Mesd\HelpWikiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Mesd\HelpWikiBundle\Model\UserSubjectInterface;
 
 /**
  * History
@@ -40,12 +41,12 @@ class History
     private $dateTime;
 
     /**
-     * @var \MESD\HelpWikiBundle\Entity\Page
+     * @var \Mesd\HelpWikiBundle\Entity\Page
      */
     private $page;
 
     /**
-     * @var \MESD\ORCase\CoreBundle\Entity\ORCaseUser
+     * @var \Mesd\HelpWikiBundle\Model\UserSubjectInterface
      */
     private $user;
 
@@ -178,10 +179,10 @@ class History
     /**
      * Set page
      *
-     * @param \MESD\HelpWikiBundle\Entity\Page $page
+     * @param \Mesd\HelpWikiBundle\Entity\Page $page
      * @return History
      */
-    public function setPage(\MESD\HelpWikiBundle\Entity\Page $page = null)
+    public function setPage(\Mesd\HelpWikiBundle\Entity\Page $page = null)
     {
         $this->page = $page;
     
@@ -191,7 +192,7 @@ class History
     /**
      * Get page
      *
-     * @return \MESD\HelpWikiBundle\Entity\Page 
+     * @return \Mesd\HelpWikiBundle\Entity\Page 
      */
     public function getPage()
     {
@@ -201,10 +202,10 @@ class History
     /**
      * Set user
      *
-     * @param \MESD\ORCase\CoreBundle\Entity\ORCaseUser $user
+     * @param \Mesd\HelpWikiBundle\Model\UserSubjectInterface $user
      * @return History
      */
-    public function setUser(\MESD\ORCase\CoreBundle\Entity\ORCaseUser $user = null)
+    public function setUser(\Mesd\HelpWikiBundle\Model\UserSubjectInterface $user = null)
     {
         $this->user = $user;
     
@@ -214,7 +215,7 @@ class History
     /**
      * Get user
      *
-     * @return \MESD\ORCase\CoreBundle\Entity\ORCaseUser 
+     * @return \Mesd\HelpWikiBundle\Model\UserSubjectInterface 
      */
     public function getUser()
     {
@@ -224,7 +225,7 @@ class History
     /**
      * @ORM\PreUpdate
      */
-    public function historyCreateAction(\MESD\HelpWikiBundle\Entity\Page $page)
+    public function historyCreateAction(\Mesd\HelpWikiBundle\Entity\Page $page)
     {
         $this->title    = $page->getTitle();
         $this->body     = $page->getBody();

@@ -1,12 +1,12 @@
 <?php
 
-namespace MESD\HelpWikiBundle\Controller;
+namespace Mesd\HelpWikiBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-use MESD\HelpWikiBundle\Entity\PermissionType;
-use MESD\HelpWikiBundle\Form\PermissionTypeType;
+use Mesd\HelpWikiBundle\Entity\PermissionType;
+use Mesd\HelpWikiBundle\Form\PermissionTypeType;
 
 /**
  * PermissionType controller.
@@ -23,9 +23,9 @@ class PermissionTypeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('MESDHelpWikiBundle:PermissionType')->findAll();
+        $entities = $em->getRepository('MesdHelpWikiBundle:PermissionType')->findAll();
 
-        return $this->render('MESDHelpWikiBundle:PermissionType:index.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:PermissionType:index.html.twig', array(
             'entities' => $entities,
         ));
     }
@@ -47,7 +47,7 @@ class PermissionTypeController extends Controller
             return $this->redirect($this->generateUrl('permissiontype_show', array('id' => $entity->getId())));
         }
 
-        return $this->render('MESDHelpWikiBundle:PermissionType:new.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:PermissionType:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
@@ -81,7 +81,7 @@ class PermissionTypeController extends Controller
         $entity = new PermissionType();
         $form   = $this->createCreateForm($entity);
 
-        return $this->render('MESDHelpWikiBundle:PermissionType:new.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:PermissionType:new.html.twig', array(
             'entity'   => $entity,
             'form'     => $form->createView(),
         )); 
@@ -95,7 +95,7 @@ class PermissionTypeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('MESDHelpWikiBundle:PermissionType')->find($id);
+        $entity = $em->getRepository('MesdHelpWikiBundle:PermissionType')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find PermissionType entity.');
@@ -103,7 +103,7 @@ class PermissionTypeController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('MESDHelpWikiBundle:PermissionType:show.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:PermissionType:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
         ));
@@ -117,7 +117,7 @@ class PermissionTypeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('MESDHelpWikiBundle:PermissionType')->find($id);
+        $entity = $em->getRepository('MesdHelpWikiBundle:PermissionType')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find PermissionType entity.');
@@ -126,7 +126,7 @@ class PermissionTypeController extends Controller
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('MESDHelpWikiBundle:PermissionType:edit.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:PermissionType:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -159,7 +159,7 @@ class PermissionTypeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('MESDHelpWikiBundle:PermissionType')->find($id);
+        $entity = $em->getRepository('MesdHelpWikiBundle:PermissionType')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find PermissionType entity.');
@@ -175,7 +175,7 @@ class PermissionTypeController extends Controller
             return $this->redirect($this->generateUrl('permissiontype_edit', array('id' => $id)));
         }
 
-        return $this->render('MESDHelpWikiBundle:PermissionType:edit.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:PermissionType:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -192,7 +192,7 @@ class PermissionTypeController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('MESDHelpWikiBundle:PermissionType')->find($id);
+            $entity = $em->getRepository('MesdHelpWikiBundle:PermissionType')->find($id);
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find PermissionType entity.');

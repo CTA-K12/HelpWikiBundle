@@ -1,6 +1,6 @@
 <?php
 
-namespace MESD\HelpWikiBundle\Entity;
+namespace Mesd\HelpWikiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -15,17 +15,17 @@ class Permission
     private $id;
 
     /**
-     * @var \MESD\HelpWikiBundle\Entity\page
+     * @var \Mesd\HelpWikiBundle\Entity\page
      */
     private $page;
 
     /**
-     * @var \MESD\AuthenticationBundle\Entity\AuthRole
+     * @var \Mesd\AuthenticationBundle\Entity\AuthRole
      */
     private $role;
 
     /**
-     * @var \MESD\HelpWikiBundle\Entity\PermissionType
+     * @var \Mesd\HelpWikiBundle\Entity\PermissionType
      */
     private $permissionType;
 
@@ -43,10 +43,10 @@ class Permission
     /**
      * Set page
      *
-     * @param \MESD\HelpWikiBundle\Entity\page $page
+     * @param \Mesd\HelpWikiBundle\Entity\page $page
      * @return Permission
      */
-    public function setPage(\MESD\HelpWikiBundle\Entity\page $page = null)
+    public function setPage(\Mesd\HelpWikiBundle\Entity\page $page = null)
     {
         $this->page = $page;
     
@@ -56,7 +56,7 @@ class Permission
     /**
      * Get page
      *
-     * @return \MESD\HelpWikiBundle\Entity\page 
+     * @return \Mesd\HelpWikiBundle\Entity\page 
      */
     public function getPage()
     {
@@ -66,10 +66,10 @@ class Permission
     /**
      * Set role
      *
-     * @param \MESD\AuthenticationBundle\Entity\AuthRole $role
+     * @param \Mesd\AuthenticationBundle\Entity\AuthRole $role
      * @return Permission
      */
-    public function setRole(\MESD\AuthenticationBundle\Entity\AuthRole $role = null)
+    public function setRole(\Mesd\AuthenticationBundle\Entity\AuthRole $role = null)
     {
         $this->role = $role;
     
@@ -79,7 +79,7 @@ class Permission
     /**
      * Get role
      *
-     * @return \MESD\AuthenticationBundle\Entity\AuthRole 
+     * @return \Mesd\AuthenticationBundle\Entity\AuthRole 
      */
     public function getRole()
     {
@@ -89,10 +89,10 @@ class Permission
     /**
      * Set permissionType
      *
-     * @param \MESD\HelpWikiBundle\Entity\PermissionType $permissionType
+     * @param \Mesd\HelpWikiBundle\Entity\PermissionType $permissionType
      * @return Permission
      */
-    public function setPermissionType(\MESD\HelpWikiBundle\Entity\PermissionType $permissionType = null)
+    public function setPermissionType(\Mesd\HelpWikiBundle\Entity\PermissionType $permissionType = null)
     {
         $this->permissionType = $permissionType;
     
@@ -102,7 +102,7 @@ class Permission
     /**
      * Get permissionType
      *
-     * @return \MESD\HelpWikiBundle\Entity\PermissionType 
+     * @return \Mesd\HelpWikiBundle\Entity\PermissionType 
      */
     public function getPermissionType()
     {

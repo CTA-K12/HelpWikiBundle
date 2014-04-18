@@ -1,7 +1,7 @@
-MESD\HelpWikiBundle\Entity\Page:
+Mesd\HelpWikiBundle\Entity\Page:
     type:            entity
     table:           helpwiki_page
-    repositoryClass: MESD\HelpWikiBundle\Entity\PageRepository
+    repositoryClass: Mesd\HelpWikiBundle\Entity\PageRepository
     fields:
         id:
             type: integer
@@ -76,7 +76,7 @@ MESD\HelpWikiBundle\Entity\Page:
             mappedBy:     page
     manyToOne:
         user:
-            targetEntity: MESD\HelpWikiBundle\Model\UserSubjectInterface
+            targetEntity: Mesd\HelpWikiBundle\Model\UserSubjectInterface
             joinColumn:
                 name:                 user_id
                 referencedColumnName: id

@@ -1,38 +1,38 @@
 history:
     pattern:  /
-    defaults: { _controller: "MESDHelpWikiBundle:History:index" }
+    defaults: { _controller: "MesdHelpWikiBundle:History:index" }
 
 history_show:
     pattern:  /{id}/show
-    defaults: { _controller: "MESDHelpWikiBundle:History:show" }
+    defaults: { _controller: "MesdHelpWikiBundle:History:show" }
 
 history_page:
     pattern:  /{id}/page
-    defaults: { _controller: "MESDHelpWikiBundle:History:page" }
+    defaults: { _controller: "MesdHelpWikiBundle:History:page" }
 
 history_user:
     pattern:  /{id}/user
-    defaults: { _controller: "MESDHelpWikiBundle:History:user" }
+    defaults: { _controller: "MesdHelpWikiBundle:History:user" }
 
 history_new:
     pattern:  /new
-    defaults: { _controller: "MESDHelpWikiBundle:History:new" }
+    defaults: { _controller: "MesdHelpWikiBundle:History:new" }
 
 history_create:
     pattern:  /create
-    defaults: { _controller: "MESDHelpWikiBundle:History:create" }
+    defaults: { _controller: "MesdHelpWikiBundle:History:create" }
     requirements: { _method: post }
 
 history_edit:
     pattern:  /{id}/edit
-    defaults: { _controller: "MESDHelpWikiBundle:History:edit" }
+    defaults: { _controller: "MesdHelpWikiBundle:History:edit" }
 
 history_update:
     pattern:  /{id}/update
-    defaults: { _controller: "MESDHelpWikiBundle:History:update" }
+    defaults: { _controller: "MesdHelpWikiBundle:History:update" }
     requirements: { _method: post|put }
 
 history_delete:
     pattern:  /{id}/delete
-    defaults: { _controller: "MESDHelpWikiBundle:History:delete" }
+    defaults: { _controller: "MesdHelpWikiBundle:History:delete" }
     requirements: { _method: post|delete }

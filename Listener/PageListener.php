@@ -1,15 +1,15 @@
 <?php
 
-namespace MESD\HelpWikiBundle\Listener;
+namespace Mesd\HelpWikiBundle\Listener;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 
-use MESD\HelpWikiBundle\Entity\Page;
-use MESD\HelpWikiBundle\Entity\History;
-use MESD\HelpWikiBundle\Entity\Link;
+use Mesd\HelpWikiBundle\Entity\Page;
+use Mesd\HelpWikiBundle\Entity\History;
+use Mesd\HelpWikiBundle\Entity\Link;
 
 /**
  * Page
@@ -55,7 +55,7 @@ class PageListener
             $en->setIsEditInProgress(false);
 
             // look for a last page, if there is one
-            $lastPage = $em->getRepository('MESDHelpWikiBundle:Page')->findBy(
+            $lastPage = $em->getRepository('MesdHelpWikiBundle:Page')->findBy(
                 array('parent' => $parent),
                 array('printOrder' => 'DESC')
             );
@@ -127,7 +127,7 @@ class PageListener
             $en->setUser($sc->getToken()->getUser());
 
             // recompute the entity changes
-            $md = $em->getClassMetadata('MESD\HelpWikiBundle\Entity\Page');
+            $md = $em->getClassMetadata('Mesd\HelpWikiBundle\Entity\Page');
             $uow->recomputeSingleEntityChangeSet($md, $en);
         }
     }
@@ -155,31 +155,31 @@ class PageListener
 
         if ($en instanceof Page) {
             // be sure to delete all the links associated with the page
-            $links = $em->getRepository('MESDHelpWikiBundle:Link')->findByPage($en);
+            $links = $em->getRepository('MesdHelpWikiBundle:Link')->findByPage($en);
             foreach ($links as $link) {
                 $em->remove($link);
             }
 
             // delete all the histories associated with the page
-            $histories = $em->getRepository('MESDHelpWikiBundle:History')->findByPage($en);
+            $histories = $em->getRepository('MesdHelpWikiBundle:History')->findByPage($en);
             foreach ($histories as $history) {
                 $em->remove($history);
             }
 
             // delete all the comments associated with the page
-            $comments = $em->getRepository('MESDHelpWikiBundle:Comment')->findByPage($en);
+            $comments = $em->getRepository('MesdHelpWikiBundle:Comment')->findByPage($en);
             foreach ($comments as $comment) {
                 $em->remove($comment);
             }
 
             // delete all the permissions associated with the page
-            $permissions = $em->getRepository('MESDHelpWikiBundle:Permissions')->findByPage($en);
+            $permissions = $em->getRepository('MesdHelpWikiBundle:Permissions')->findByPage($en);
             foreach ($permissions as $permission) {
                 $em->remove($permission);
             }
 
             // delete only the parent association of all child pages
-            $pages = $em->getRepository('MESDHelpWikiBundle:Page')->findByParent($en);
+            $pages = $em->getRepository('MesdHelpWikiBundle:Page')->findByParent($en);
             foreach ($pages as $page) {
                 $page->setParent(null);
                 $em->persist($page);
@@ -197,10 +197,10 @@ class PageListener
         // Matched controller
         $_controller = $request->attributes->get('_controller');
 
-        if ('MESD\HelpWikiBundle\Controller\PageController::editAction' === $_controller) {
+        if ('Mesd\HelpWikiBundle\Controller\PageController::editAction' === $_controller) {
 
             $em = $this->container->get('doctrine')->getManager();
-            $en = $em->getRepository('MESDHelpWikiBundle:Page')->find(1);
+            $en = $em->getRepository('MesdHelpWikiBundle:Page')->find(1);
 
             //var_dump($request);exit;
         }

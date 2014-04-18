@@ -51,15 +51,69 @@ This bundle has been developed and tested to work on the following broswers:
   + Blackberry
   + and sadly some Internet Explorer
 
-.. code-block:: bash
-
+```bash
     $ cd /var/www/html/project
     $ composer install
 
 Configuring
 -----------
 
-No configuration instructions yet.
+# Configure UserInterface and RoleInterface
+
+Before using this bundle, you will need to set up your users and roles.
+This is done by configuring your `app/config/config.ext` to link the
+HelpWikiBundle abstract user and role classes to your application's
+user and role entities:
+
+```yaml
+# Doctrine Configuration
+doctrine:
+    # ...
+    orm:
+        # ...
+        resolve_target_entities:
+            Mesd\HelpWikiBundle\Model\UserSubjectInterface: Mesd\Acme\DemoBundle\Entity\AppUser
+            Mesd\HelpWikiBundle\Model\RoleSubjectInterface: Mesd\AuthenticationBundle\Entity\AuthRole
+
+```xml
+<!-- app/config/config.xml -->
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                        http://symfony.com/schema/dic/doctrine http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
+    <doctrine:config>
+        <doctrine:orm>
+            <!-- ... -->
+            <doctrine:resolve-target-entity interface="Mesd\HelpWikiBundle\Model\UserSubjectInterface">Mesd\Acme\DemoBundle\Entity\AppUser</resolve-target-entity>
+            <doctrine:resolve-target-entity interface="Mesd\HelpWikiBundle\Model\RoleSubjectInterface">Mesd\AuthenticationBundle\Entity\AuthRole</resolve-target-entity>
+        </doctrine:orm>
+    </doctrine:config>
+</container>
+
+```php
+// app/config/config.php
+$container->loadFromExtension('doctrine', array(
+    'orm' => array(
+        // ...
+        'resolve_target_entities' => array(
+            'Mesd\HelpWikiBundle\Model\UserSubjectInterface' => 'Mesd\Acme\DemoBundle\Entity\AppUser',
+            'Mesd\HelpWikiBundle\Model\RoleSubjectInterface' => 'Mesd\AuthenticationBundle\Entity\AuthRole',
+        ),
+    ),
+));
+
+# Configure Form Types
+
+## Configure Select 2 Form Type
+
+## Configure Sortable-Nestable List Form Type
+
+## Configure WYSIWYG Text Editor
+
+# Integrating Wiki Pages Into Your Application
+
+The HelpWikiBundle associates 
 
 Updating
 --------
@@ -75,8 +129,7 @@ How to use.
 Code Snippet
 ------------
 
-.. code-block:: html
-
+```html
     <body>
         <h1 class="your-class">code</h1>
         <p>some code here</p>
@@ -89,7 +142,15 @@ Troubleshooting
 This bundle is likely to fail if you attempt to install it.
 I must work on this more.
 
-History
--------
 
-2014/04/09 - initial commit, probably several problems
+## Contributing
+
+See the [CONTRIBUTING.md](CONTRIBUTING.md) file for more information.
+
+## Changelog
+
+See the [CHANGELOG.md](CHANGELOG.md) file for more information.
+
+## License
+
+See the [LICENSE.md](LICENSE.md) file for more information.

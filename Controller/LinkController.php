@@ -1,13 +1,13 @@
 <?php
 
-namespace MESD\HelpWikiBundle\Controller;
+namespace Mesd\HelpWikiBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-use MESD\HelpWikiBundle\Entity\Link;
-use MESD\HelpWikiBundle\Form\LinkType;
+use Mesd\HelpWikiBundle\Entity\Link;
+use Mesd\HelpWikiBundle\Form\LinkType;
 
 /**
  * Link controller.
@@ -24,9 +24,9 @@ class LinkController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('MESDHelpWikiBundle:Link')->findAll();
+        $entities = $em->getRepository('MesdHelpWikiBundle:Link')->findAll();
 
-        return $this->render('MESDHelpWikiBundle:Link:index.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Link:index.html.twig', array(
             'entities' => $entities,
         ));
     }
@@ -48,7 +48,7 @@ class LinkController extends Controller
             return $this->redirect($this->generateUrl('link_show', array('id' => $entity->getId())));
         }
 
-        return $this->render('MESDHelpWikiBundle:Link:new.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Link:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
@@ -106,7 +106,7 @@ class LinkController extends Controller
 
         //var_dump($newLinkForm);exit;
 
-        return $this->render('MESDHelpWikiBundle:Link:new.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Link:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
@@ -120,7 +120,7 @@ class LinkController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('MESDHelpWikiBundle:Link')->find($id);
+        $entity = $em->getRepository('MesdHelpWikiBundle:Link')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Link entity.');
@@ -128,7 +128,7 @@ class LinkController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('MESDHelpWikiBundle:Link:show.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Link:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
         ));
@@ -142,7 +142,7 @@ class LinkController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('MESDHelpWikiBundle:Link')->find($id);
+        $entity = $em->getRepository('MesdHelpWikiBundle:Link')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Link entity.');
@@ -151,7 +151,7 @@ class LinkController extends Controller
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('MESDHelpWikiBundle:Link:edit.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Link:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -184,7 +184,7 @@ class LinkController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('MESDHelpWikiBundle:Link')->find($id);
+        $entity = $em->getRepository('MesdHelpWikiBundle:Link')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Link entity.');
@@ -200,7 +200,7 @@ class LinkController extends Controller
             return $this->redirect($this->generateUrl('link_edit', array('id' => $id)));
         }
 
-        return $this->render('MESDHelpWikiBundle:Link:edit.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Link:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -217,7 +217,7 @@ class LinkController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('MESDHelpWikiBundle:Link')->find($id);
+            $entity = $em->getRepository('MesdHelpWikiBundle:Link')->find($id);
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Link entity.');
@@ -251,14 +251,14 @@ class LinkController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $link = $em->getRepository('MESDHelpWikiBundle:Link')->findOneByRouteAlias($route);
+        $link = $em->getRepository('MesdHelpWikiBundle:Link')->findOneByRouteAlias($route);
 
         if (!$link) {
-            return $this->render('MESDHelpWikiBundle:Link:linker.html.twig', array(
+            return $this->render('MesdHelpWikiBundle:Link:linker.html.twig', array(
                 'route' => $route,
             ));
         }
-        return $this->render('MESDHelpWikiBundle:Link:linker.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Link:linker.html.twig', array(
             'route' => $route,
             'link' => $link,
         ));
@@ -273,7 +273,7 @@ class LinkController extends Controller
         $newLinkForm->get('routeAlias')->setData($route);
         $newPageForm->get('routeAlias')->setData($route);
 
-        return $this->render('MESDHelpWikiBundle:Link:newWithPage.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Link:newWithPage.html.twig', array(
             'entity'        => $entity,
             'new_link_form' => $newLinkForm->createView(),
             'new_page_form' => $newPageForm->createView(),

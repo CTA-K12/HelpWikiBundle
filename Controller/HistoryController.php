@@ -1,12 +1,12 @@
 <?php
 
-namespace MESD\HelpWikiBundle\Controller;
+namespace Mesd\HelpWikiBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-use MESD\HelpWikiBundle\Entity\History;
-use MESD\HelpWikiBundle\Form\HistoryType;
+use Mesd\HelpWikiBundle\Entity\History;
+use Mesd\HelpWikiBundle\Form\HistoryType;
 
 /**
  * History controller.
@@ -23,9 +23,9 @@ class HistoryController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('MESDHelpWikiBundle:History')->findAll();
+        $entities = $em->getRepository('MesdHelpWikiBundle:History')->findAll();
 
-        return $this->render('MESDHelpWikiBundle:History:index.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:History:index.html.twig', array(
             'entities' => $entities,
         ));
     }
@@ -39,9 +39,9 @@ class HistoryController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('MESDHelpWikiBundle:History')->findByPage($id);
+        $entities = $em->getRepository('MesdHelpWikiBundle:History')->findByPage($id);
 
-        return $this->render('MESDHelpWikiBundle:History:index.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:History:index.html.twig', array(
             'entities' => $entities,
         ));
     }
@@ -55,9 +55,9 @@ class HistoryController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('MESDHelpWikiBundle:History')->findByUser($id);
+        $entities = $em->getRepository('MesdHelpWikiBundle:History')->findByUser($id);
 
-        return $this->render('MESDHelpWikiBundle:History:index.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:History:index.html.twig', array(
             'entities' => $entities,
         ));
     }
@@ -81,7 +81,7 @@ class HistoryController extends Controller
             return $this->redirect($this->generateUrl('history_show', array('id' => $entity->getId())));
         }
 
-        return $this->render('MESDHelpWikiBundle:History:new.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:History:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
@@ -115,7 +115,7 @@ class HistoryController extends Controller
         $entity = new History();
         $form   = $this->createCreateForm($entity);
 
-        return $this->render('MESDHelpWikiBundle:History:new.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:History:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
@@ -129,7 +129,7 @@ class HistoryController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('MESDHelpWikiBundle:History')->find($id);
+        $entity = $em->getRepository('MesdHelpWikiBundle:History')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find History entity.');
@@ -137,7 +137,7 @@ class HistoryController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('MESDHelpWikiBundle:History:show.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:History:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
         ));
@@ -151,7 +151,7 @@ class HistoryController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('MESDHelpWikiBundle:History')->find($id);
+        $entity = $em->getRepository('MesdHelpWikiBundle:History')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find History entity.');
@@ -160,7 +160,7 @@ class HistoryController extends Controller
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('MESDHelpWikiBundle:History:edit.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:History:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -193,7 +193,7 @@ class HistoryController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('MESDHelpWikiBundle:History')->find($id);
+        $entity = $em->getRepository('MesdHelpWikiBundle:History')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find History entity.');
@@ -209,7 +209,7 @@ class HistoryController extends Controller
             return $this->redirect($this->generateUrl('history_edit', array('id' => $id)));
         }
 
-        return $this->render('MESDHelpWikiBundle:History:edit.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:History:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -226,7 +226,7 @@ class HistoryController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('MESDHelpWikiBundle:History')->find($id);
+            $entity = $em->getRepository('MesdHelpWikiBundle:History')->find($id);
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find History entity.');

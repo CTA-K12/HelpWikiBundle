@@ -1,7 +1,7 @@
 <?php
-// src/MESD/HelpWikiBundle/Entity/CommentRepository
+// src/Mesd/HelpWikiBundle/Entity/CommentRepository
 
-namespace MESD\HelpWikiBundle\Entity;
+namespace Mesd\HelpWikiBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 
