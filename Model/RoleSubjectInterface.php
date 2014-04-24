@@ -1,5 +1,5 @@
 <?php
-// src/Mesd/HelpWikiBundle/Model/UserSubjectInterface.php
+// src/Mesd/HelpWikiBundle/Model/RoleSubjectInterface.php
 
 namespace Mesd\HelpWikiBundle\Model;
 
@@ -9,7 +9,7 @@ namespace Mesd\HelpWikiBundle\Model;
  * this interface as the ResolveTargetEntityListener can only
  * change the target to a single object.
  */
-interface UserSubjectInterface
+interface RoleSubjectInterface
 {
     // List any additional methods that your InvoiceBundle
     // will need to access on the subject so that you can
@@ -18,5 +18,5 @@ interface UserSubjectInterface
     /**
      * @return string
      */
-    public function getUsername();
+    public function getRole();
 }

@@ -1,30 +1,30 @@
 Mesd\HelpWikiBundle\Entity\PermissionType:
-    type: entity
-    table: helpwiki_permission_type
+    type:            entity
+    table:           helpwiki_permission_type
     repositoryClass: Mesd\HelpWikiBundle\Entity\PermissionTypeRepository
     fields:
         id:
             type: integer
-            id: true
+            id:   true
             generator:
                 strategy: AUTO
             sequenceGenerator:
                 sequenceName: helpwiki_permission_type_id_seq
                 initialValue: 1
         shortName:
-            column: short_name
-            type: string
-            length: 32
+            column:   short_name
+            type:     string
+            length:   32
             nullable: false
-            unique: true
+            unique:   true
         longName:
-            column: long_name
-            type: string
-            length: 64
+            column:   long_name
+            type:     string
+            length:   64
             nullable: false
-            unique: true
+            unique:   true
         description:
-            column: description
-            type: text
+            column:   description
+            type:     text
             nullable: false
-            unique: true
+            unique:   true

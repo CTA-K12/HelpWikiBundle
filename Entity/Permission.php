@@ -20,7 +20,7 @@ class Permission
     private $page;
 
     /**
-     * @var \Mesd\AuthenticationBundle\Entity\AuthRole
+     * @var \Mesd\HelpWikiBundle\Model\RoleSubjectInterface
      */
     private $role;
 
@@ -66,10 +66,10 @@ class Permission
     /**
      * Set role
      *
-     * @param \Mesd\AuthenticationBundle\Entity\AuthRole $role
+     * @param \Mesd\HelpWikiBundle\Model\RoleSubjectInterface $role
      * @return Permission
      */
-    public function setRole(\Mesd\AuthenticationBundle\Entity\AuthRole $role = null)
+    public function setRole(\Mesd\HelpWikiBundle\Model\RoleSubjectInterface $role = null)
     {
         $this->role = $role;
     
@@ -79,7 +79,7 @@ class Permission
     /**
      * Get role
      *
-     * @return \Mesd\AuthenticationBundle\Entity\AuthRole 
+     * @return \Mesd\HelpWikiBundle\Model\RoleSubjectInterface
      */
     public function getRole()
     {
@@ -116,6 +116,6 @@ class Permission
      */
     public function __toString()
     {
-        return $this->permissionType();
+        return $this->getId();
     }
 }

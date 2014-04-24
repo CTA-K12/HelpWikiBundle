@@ -506,7 +506,7 @@ class Page
     /**
      * Get parent
      *
-     * @return \Mesd\HelpWikiBundle\Entity\Page 
+     * @return \Mesd\HelpWikiBundle\Entity\Page  
      */
     public function getParent()
     {

@@ -1,11 +1,11 @@
 Mesd\HelpWikiBundle\Entity\Permission:
-    type: entity
-    table: helpwiki_permission
+    type:            entity
+    table:           helpwiki_permission
     repositoryClass: Mesd\HelpWikiBundle\Entity\PermissionRepository
     fields:
         id:
             type: integer
-            id: true
+            id:   true
             generator:
                 strategy: AUTO
             sequenceGenerator:
@@ -14,17 +14,17 @@ Mesd\HelpWikiBundle\Entity\Permission:
     manyToOne:
         page:
             targetEntity: Page
-            inversedBy: permissions
+            inversedBy:   permissions
             joinColumn:
-                name: page_id
+                name:                 page_id
                 referencedColumnName: id
         role:
-            targetEntity: Mesd\AuthenticationBundle\Entity\AuthRole
+            targetEntity: Mesd\HelpWikiBundle\Model\RoleSubjectInterface
             joinColumn:
-                name: role_id
+                name:                 role_id
                 referencedColumnName: id
         permissionType:
             targetEntity: PermissionType
             joinColumn:
-                name: permission_type_id
+                name:                 permission_type_id
                 referencedColumnName: id
