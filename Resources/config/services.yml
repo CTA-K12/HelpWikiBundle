@@ -1,6 +1,7 @@
 parameters:
-    MesdHelpWikiBundle.pagelistener.class: Mesd\HelpWikiBundle\Listener\PageListener
-    MesdHelpWikiBundle.commentlistener.class: Mesd\HelpWikiBundle\Listener\CommentListener
+    MesdHelpWikiBundle.pagelistener.class:       Mesd\HelpWikiBundle\Listener\PageListener
+    MesdHelpWikiBundle.commentlistener.class:    Mesd\HelpWikiBundle\Listener\CommentListener
+    MesdHelpWikiBundle.form.type.ckeditor.class: Mesd\HelpWikiBundle\Form\Type\CKEditorType
 
 services:
     help_wiki.page_listener:
@@ -21,3 +22,7 @@ services:
         tags:
             - { name: doctrine.event_listener, event: prePersist  }
             - { name: doctrine.event_listener, event: preUpdate   }
+    help_wiki.form.type.ckeditor:
+        class: %MesdHelpWikiBundle.form.type.ckeditor.class%
+        tags:
+            - { name: form.type, alias: ckeditor }

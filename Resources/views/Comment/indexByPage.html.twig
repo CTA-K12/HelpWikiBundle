@@ -2,7 +2,6 @@
 <ul class="media-list">
     {% for comment in comments %}
         <li class="media comment">
-            <img src="{{ comment.user.email|gravatar }}" alt="comment.user.email" class="pull-left" />
             <div class="media-body">
                 <div class="media-heading">
                     <strong>{{ comment.user }}</strong>

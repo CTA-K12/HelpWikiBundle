@@ -5,7 +5,7 @@
 
     {{ form_start(form) }}
         {{ form_errors(form) }}
-            <div class="row">
+            <div class="row-fluid">
                 <div class="form-group col-md-12">
                     {{ form_label(form.routeAlias, 'Route') }}
                     {{ form_errors(form.routeAlias) }}
@@ -16,7 +16,7 @@
                     } }) }}
                 </div>
             </div>
-            <div class="row">
+            <div class="row-fluid">
                 <div class="form-group col-md-12">
                     {{ form_label(form.page, 'Page') }}
                     {{ form_errors(form.page) }}
@@ -30,7 +30,7 @@
                     }) }}
                 </div>
             </div>
-            <div class="row">
+            <div class="row-fluid">
                 <div class="form-group col-md-2 col-md-offset-10">
                     {{ form_widget(form.submit, { 'attr': {
                         'class': 'form-control btn btn-default',

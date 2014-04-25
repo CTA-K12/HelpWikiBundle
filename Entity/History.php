@@ -234,7 +234,6 @@ class History
         $this->dateTime = $page->getDateTime();
         $this->page     = $page->getId();
         $this->user     = $page->getUser();
-        var_dump($this);exit;
     }
 
     /**

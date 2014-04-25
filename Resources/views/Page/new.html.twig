@@ -6,7 +6,7 @@
     {{ form_start(form) }}
         {{ form_errors(form) }}
 
-        <div class="row">
+        <div class="row-fluid">
             <div class="form-group col-md-1-1">
                 {{ form_label(form.title, 'Title') }}
                 {{ form_errors(form.title) }}
@@ -18,7 +18,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row-fluid">
             <div class="form-group col-md-1-1">
                 {{ form_label(form.slug, 'Slug') }}
                 {{ form_errors(form.slug) }}
@@ -30,7 +30,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row-fluid">
             <div class="form-group col-md-1-1">
                 {{ form_label(form.body, 'Body') }}
                 {{ form_errors(form.body) }}
@@ -38,7 +38,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row-fluid">
             <div class="form-group col-md-1-1">
                 {{ form_label(form.parent, 'Parent Page') }}
                 {{ form_errors(form.parent) }}
@@ -53,7 +53,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row-fluid">
             <div class="form-group col-md-1-6 col-md-offset-5-6">
                 {{ form_widget(form.save, { 'attr': {
                     'class': 'form-control btn btn-default',

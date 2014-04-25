@@ -1,52 +1,53 @@
-{% extends 'MesdOrcaseAppBundle:Index:index.html.twig' %}
+{#}{% extends 'MESDPresentationPresentationBundle::index.html.twig' %}{#}
+{% extends '::base.html.twig' %}
 
 {% block sidebar %}
     {% if is_granted('ROLE_ADMIN') %}
-        {{ render(controller('MesdPresentationBundle:Default:sidebar',
+        {{ render(controller('MESDPresentationPresentationBundle:Default:sidebar',
             { 'route': app.request.get('_route'),
               'options': { 'type': '' },
               'menu': {
                 'Table of Contents': {
                     'path': path('page'),
                     'title': 'Help Wiki Table of Contents',
-                    'icon': 'fa-files-o'
+                    'icon': 'icon-copy'
                 },
                 'Comments': {
                     'path': path('comment'),
                     'title': 'Help Wiki Comments',
-                    'icon': 'fa-comments-o'
+                    'icon': 'icon-comments-alt'
                 },
                 'Links': {
                     'path': path('link'),
                     'title': 'Help Wiki Links',
-                    'icon': 'fa-link'
+                    'icon': 'icon-link'
                 },
                 'History': {
                     'path': path('history'),
                     'title': 'Help Wiki History',
-                    'icon': 'fa-clock-o'
+                    'icon': 'icon-time'
                 },
                 'Permissions': {
                     'path': path('permission'),
                     'title': 'Help Wiki Permissions',
-                    'icon': 'fa-ban'
+                    'icon': 'icon-ban-circle'
                 },
                 'Permission Types': {
                     'path': path('permissiontype'),
                     'title': 'Help Wiki Permission Types',
-                    'icon': 'fa-tags'
+                    'icon': 'icon-tags'
                 },
             }
         })) }}
     {% else %}
-        {{ render(controller('MesdPresentationBundle:Default:sidebar',
+        {{ render(controller('MESDPresentationPresentationBundle:Default:sidebar',
             { 'route': app.request.get('_route'),
               'options': { 'type': '' },
               'menu': {
                 'Table of Contents': {
                     'path': path('page'),
                     'title': 'Help Wiki Table of Contents',
-                    'icon': 'fa-files-o'
+                    'icon': 'icon-copy'
                 },
             }
         })) }}

@@ -6,7 +6,7 @@
     <h2>Table of Contents</h2>
     {{ _self.tree(entities) }}
 
-    <div class="row">
+    <div class="row-fluid">
         <div class="col-md-2 col-md-offset-10">
             <a href="{{ path('page_new') }}" class="btn btn-default form-control">
                 <span class="fa fa-plus"></span>
@@ -26,7 +26,7 @@
 {% endblock toolbarTopRightContent %}
 
 {% block toolbarBottomContent %}
-    <div class="row hidden-xs">
+    <div class="row-fluid hidden-xs">
         <div class="col-sm-1-3 text-left">
             <a href="#" class="btn btn-default btn-xs disabled"><span class="fa fa-arrow-circle-left"></span> Prev</a>
         </div>

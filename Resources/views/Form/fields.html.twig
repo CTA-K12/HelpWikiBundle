@@ -45,9 +45,9 @@
 {% endblock submit_widget %}
 
 {% block ckeditor_widget %}
-        <script type="text/javascript" src="{{ asset('ckeditor/ckeditor.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('ckeditor/config.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('ckeditor/styles.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/mesdhelpwiki/js/ckeditor/ckeditor.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/mesdhelpwiki/js/ckeditor/config.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/mesdhelpwiki/js/ckeditor/styles.js') }}"></script>
 {% spaceless %}
     {% set attr = attr|merge({'class': 'ckeditor'}) %}
     <textarea {{ block('widget_attributes') }}>{{ value }}</textarea>

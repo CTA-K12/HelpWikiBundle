@@ -149,17 +149,17 @@ class PageController extends Controller
      */
     public function editAction($id)
     {
+        // secure the route 
+        //if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+        //    throw new AccessDeniedException();
+        //}
         $em = $this->getDoctrine()->getManager();
 
-        $entity      = $em->getRepository('MesdHelpWikiBundle:Page')->find($id);
+        $entity = $em->getRepository('MesdHelpWikiBundle:Page')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Page entity.');
         }
-        else if ( false === $this->isGrantedAction($entity, 'VIEW_ONLY')) {
-            throw new AccessDeniedException();
-        }
-
 
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
@@ -205,9 +205,6 @@ class PageController extends Controller
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Page entity.');
-        }
-        else if ( false === $this->isGrantedAction($entity, 'VIEW_ONLY')) {
-            throw new AccessDeniedException();
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -282,24 +279,6 @@ class PageController extends Controller
         return $this->render('MesdHelpWikiBundle:Page:editOrder.html.twig', array(
             'entities' => $entities,
         ));
-    }
-
-    private function isGrantedAction($entity, $permissionType)
-    {
-        // get all permissions for page
-        // for each one, make sure no one's attempting to
-        // access the edit screen who doesn't have permission
-        $em = $this->getDoctrine()->getManager();
-
-        $permissions = $em->getRepository('MesdHelpWikiBundle:Permission')->findByPage($entity->getId());
-        
-        foreach ($permissions as $permission) {
-            if( true === $this->get('security.context')->isGranted($permission->getRole()->getRole())) {
-                if ( $permissionType == $permission->getPermissionType()) {
-                    return false;
-                }
-            }
-        }
     }
 
     /* This is the static comparing function: */

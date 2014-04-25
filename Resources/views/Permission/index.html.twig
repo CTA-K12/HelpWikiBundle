@@ -6,35 +6,33 @@
         <thead>
             <tr>
                 <th>Actions</th>
-                <th>Permission</th>
-                <th>Page</th>
-                <th>Role</th>
+                <th>Id</th>
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td data-role-th="Actions">
-                    <div class="btn-group">
-                        <a class="btn btn-default btn-xs" href="{{ path('permission_show', { 'id': entity.id }) }}" title="view"><span class="fa fa-search"></span></a>
-                        <a class="btn btn-default btn-xs" href="{{ path('permission_edit', { 'id': entity.id }) }}" title="edit"><span class="fa fa-pencil"></span></a>
-                    </div>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('permission_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('permission_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
                 </td>
-                <td data-role-th="Permission">{{ entity.permissionType }}</td>
-                <td data-role-th="Page">{{ entity.page }}</td>
-                <td data-role-th="Role">{{ entity.role }}</td>
+                <td><a href="{{ path('permission_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <div class="row">
-        <div class="col-md-1-6 col-md-offset-5-6">
-            <a href="{{ path('permission_new') }}" class="btn btn-default form-control">
-                <span class="fa fa-plus"></span>
-                New
+        <ul>
+        <li>
+            <a href="{{ path('permission_new') }}">
+                Create a new entry
             </a>
-        </div>
-    </div>
-
-{% endblock main %}
+        </li>
+    </ul>
+    {% endblock main %}
