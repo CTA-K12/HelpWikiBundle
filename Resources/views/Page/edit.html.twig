@@ -6,7 +6,7 @@
         {{ form_errors(edit_form) }}
 
         <div class="row">
-            <div class="form-group col-md-12">
+            <div class="form-group col-sm-12-12">
                 {{ form_label(edit_form.title, 'Title') }}
                 {{ form_errors(edit_form.title) }}
                 {{ form_widget(edit_form.title, { 'attr': {
@@ -36,7 +36,7 @@
         </div>
 
         <div class="row">
-            <div class="form-group col-md-12">
+            <div class="form-group col-sm-12-12">
                 {{ form_label(edit_form.body, 'Body') }}
                 {{ form_errors(edit_form.body) }}
                 {{ form_widget(edit_form.body, { 'attr': {
@@ -46,7 +46,7 @@
         </div>
 
         <div class="row">
-            <div class="form-group col-md-12">
+            <div class="form-group col-sm-12-12">
                 {{ form_label(edit_form.parent, 'Parent Page') }}
                 {{ form_errors(edit_form.parent) }}
                 {{ form_widget(edit_form.parent, {
@@ -61,7 +61,7 @@
         </div>
 
         <div class="row">
-            <div class="form-group col-md-2 col-md-offset-10">
+            <div class="form-group col-sm-2-12 col-sm-offset-10">
                 {{ form_widget(edit_form.save, { 'attr': {
                     'class': 'form-control btn btn-default',
                     'tabindex': 4,
