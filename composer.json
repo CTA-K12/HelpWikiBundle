@@ -8,6 +8,6 @@
     },
     "target-dir": "Mesd/HelpWikiBundle",
     "require": {
-        "egeloen/ckeditor-bundle": "~2.0",
+        "egeloen/ckeditor-bundle": "~2.0"
     }
 }
