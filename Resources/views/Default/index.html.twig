@@ -1,5 +1,5 @@
-{% extends 'MesdOrcaseAppBundle:Index:index.html.twig' %}
-
+{% extends 'YourBundle:Index:index.html.twig' %}
+{# Overwrite this in app/Resources #}
 {% block sidebar %}
     {% if is_granted('ROLE_ADMIN') %}
         {{ render(controller('MesdPresentationBundle:Default:sidebar',
