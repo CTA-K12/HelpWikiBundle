@@ -1,7 +1,7 @@
 {% extends 'MesdHelpWikiBundle:Default:index.html.twig' %}
 {% set subtitle = 'New Permission Type' %}
 
-{% block main %}
+{% block contentBody %}
 
     {{ form_start(form) }}
     {{ form_errors(form) }}
@@ -55,4 +55,4 @@
     </div>
     {{ form_end(form) }}
 
-{% endblock main %}
+{% endblock contentBody %}

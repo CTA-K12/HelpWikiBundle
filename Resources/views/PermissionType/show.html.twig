@@ -1,14 +1,14 @@
 {% extends 'MesdHelpWikiBundle:Default:index.html.twig' %}
 {% set subtitle = entity.shortName ~ ' Permission Type' %}
 
-{% block main %}
+{% block contentBody %}
     <p class="lead">
         <span class="label label-default">{{ entity.id }}</span>
         {{ entity.longName }}
     </p>
 
     <p>{{ entity.description|nl2br }}</p>
-{% endblock main %}
+{% endblock contentBody %}
 
 {% block toolbarBottomContent %}
     {{ form_start(delete_form) }}

@@ -1,7 +1,7 @@
 {% extends 'MesdHelpWikiBundle:Default:index.html.twig' %}
 {% set subtitle = 'New Link' %}
 
-{% block main %}
+{% block contentBody %}
 
     {{ form_start(form) }}
         {{ form_errors(form) }}
@@ -44,4 +44,4 @@
         <a href="{{ path('link') }}">
             Back to the list
         </a>
-{% endblock main %}
+{% endblock contentBody %}

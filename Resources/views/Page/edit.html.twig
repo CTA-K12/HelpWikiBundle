@@ -1,6 +1,6 @@
 {% extends 'MesdHelpWikiBundle:Default:index.html.twig' %}
 
-{% block main %}
+{% block contentBody %}
 
     {{ form_start(edit_form) }}
         {{ form_errors(edit_form) }}
@@ -71,7 +71,7 @@
 
     {{ form_end(edit_form) }}
 
-{% endblock main %}
+{% endblock contentBody %}
 
 {% block toolbarBottomContent %}
     {{ form_start(delete_form) }}

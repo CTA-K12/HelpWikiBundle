@@ -1,7 +1,7 @@
 {% extends 'MesdHelpWikiBundle:Default:index.html.twig' %}
 {% set subtitle = 'List Pages' %}
 
-{% block main %}
+{% block contentBody %}
 
     <h2>Table of Contents</h2>
     {{ _self.tree(entities) }}
@@ -14,7 +14,7 @@
             </a>
         </div>
     </div>
-{% endblock main %}
+{% endblock contentBody %}
 
 {% block toolbarTopRightContent %}
     <div class="btn-group pull-right">

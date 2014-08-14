@@ -1,7 +1,7 @@
 {% extends 'MesdHelpWikiBundle:Default:index.html.twig' %}
 {% set subtitle = 'New Page' %}
 
-{% block main %}
+{% block contentBody %}
 
     {{ form_start(form) }}
         {{ form_errors(form) }}
@@ -65,4 +65,4 @@
         {{ form_rest(form) }}
     {{ form_end(form) }}
 
-{% endblock main %}
+{% endblock contentBody %}

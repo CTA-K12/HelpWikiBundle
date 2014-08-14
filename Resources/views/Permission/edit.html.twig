@@ -2,7 +2,7 @@
 
 {% set subtitle = 'Edit Permission' %}
 
-{% block main %}
+{% block contentBody %}
 
     {{ form_start(edit_form) }}
     {{ form_errors(edit_form) }}
@@ -73,4 +73,4 @@
         <li>{{ form(delete_form) }}</li>
     </ul>
 
-{% endblock main %}
+{% endblock contentBody %}
