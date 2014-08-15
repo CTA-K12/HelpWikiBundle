@@ -54,7 +54,7 @@ class History
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -70,14 +70,14 @@ class History
     public function setTitle($title)
     {
         $this->title = $title;
-    
+
         return $this;
     }
 
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -93,14 +93,14 @@ class History
     public function setBody($body)
     {
         $this->body = $body;
-    
+
         return $this;
     }
 
     /**
      * Get body
      *
-     * @return string 
+     * @return string
      */
     public function getBody()
     {
@@ -116,14 +116,14 @@ class History
     public function setSlug($slug)
     {
         $this->slug = $slug;
-    
+
         return $this;
     }
 
     /**
      * Get slug
      *
-     * @return string 
+     * @return string
      */
     public function getSlug()
     {
@@ -139,14 +139,14 @@ class History
     public function setRevision($revision)
     {
         $this->revision = $revision;
-    
+
         return $this;
     }
 
     /**
      * Get revision
      *
-     * @return integer 
+     * @return integer
      */
     public function getRevision()
     {
@@ -162,14 +162,14 @@ class History
     public function setDateTime($dateTime)
     {
         $this->dateTime = $dateTime;
-    
+
         return $this;
     }
 
     /**
      * Get dateTime
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDateTime()
     {
@@ -185,14 +185,14 @@ class History
     public function setPage(\Mesd\HelpWikiBundle\Entity\Page $page = null)
     {
         $this->page = $page;
-    
+
         return $this;
     }
 
     /**
      * Get page
      *
-     * @return \Mesd\HelpWikiBundle\Entity\Page 
+     * @return \Mesd\HelpWikiBundle\Entity\Page
      */
     public function getPage()
     {
@@ -208,14 +208,14 @@ class History
     public function setUser(\Mesd\HelpWikiBundle\Model\UserSubjectInterface $user = null)
     {
         $this->user = $user;
-    
+
         return $this;
     }
 
     /**
      * Get user
      *
-     * @return \Mesd\HelpWikiBundle\Model\UserSubjectInterface 
+     * @return \Mesd\HelpWikiBundle\Model\UserSubjectInterface
      */
     public function getUser()
     {
@@ -234,7 +234,6 @@ class History
         $this->dateTime = $page->getDateTime();
         $this->page     = $page->getId();
         $this->user     = $page->getUser();
-        var_dump($this);exit;
     }
 
     /**

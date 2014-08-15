@@ -27,7 +27,8 @@ class CommentController extends Controller
 
         return $this->render('MesdHelpWikiBundle:Comment:index.html.twig', array(
             'entities' => $entities,
-        ));
+                )
+        );
     }
 
     /**
@@ -49,13 +50,15 @@ class CommentController extends Controller
             $em->persist($comment);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('page_show', array('slug' => $page->getSlug())));
+            return $this->redirect($this->generateUrl('page_show', array('slug' => $page->getSlug())        )
+        );
         }
 
         return $this->render('MesdHelpWikiBundle:Comment:new.html.twig', array(
             'comment' => $comment,
             'form'    => $form->createView(),
-        ));
+        )
+        );
     }
 
     /**
@@ -74,10 +77,11 @@ class CommentController extends Controller
         $form = $this->createForm(new CommentType(), $comment, array(
             'action' => $this->generateUrl('comment_create', array('pageId' => $pageId)),
             'method' => 'POST',
-        ));
-        //echo 'foobar';exit;
+        )
+        );
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', 'submit', array('label' => 'Create'        )
+        );
 
         return $form;
     }
@@ -98,7 +102,8 @@ class CommentController extends Controller
         return $this->render('MesdHelpWikiBundle:Comment:new.html.twig', array(
             'comment' => $comment,
             'form'    => $form->createView(),
-        ));
+        )
+        );
     }
 
     /**
@@ -120,7 +125,8 @@ class CommentController extends Controller
         return $this->render('MesdHelpWikiBundle:Comment:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
-        ));
+        )
+        );
     }
 
     /**
@@ -144,7 +150,8 @@ class CommentController extends Controller
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        ));
+                )
+        );
     }
 
     /**
@@ -159,9 +166,11 @@ class CommentController extends Controller
         $form = $this->createForm(new CommentType(), $entity, array(
             'action' => $this->generateUrl('comment_update', array('id' => $entity->getId())),
             'method' => 'PUT',
-        ));
+                )
+        );
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('submit', 'submit', array('label' => 'Update'        )
+        );
 
         return $form;
     }
@@ -186,14 +195,16 @@ class CommentController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('comment_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('comment_edit', array('id' => $id)        )
+        );
         }
 
         return $this->render('MesdHelpWikiBundle:Comment:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        ));
+                )
+        );
     }
     /**
      * Deletes a Comment entity.
@@ -216,7 +227,8 @@ class CommentController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('comment'));
+        return $this->redirect($this->generateUrl('comment'        )
+        );
     }
 
     /**
@@ -270,6 +282,7 @@ class CommentController extends Controller
         return $this->render('MesdHelpWikiBundle:Comment:indexByPage.html.twig', array(
             'comments'    => $comments,
             'deleteForms' => $deleteForms,
-        ));
+                )
+        );
     }
 }

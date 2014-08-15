@@ -28,7 +28,6 @@ class PageListener
     public function __construct(ContainerInterface $container)
     {
         $this->container  = $container;
-        //var_dump($this->container);exit;
         //$this->routeAlias = $routeAlias;
     }
 
@@ -73,7 +72,7 @@ class PageListener
         if ($en instanceof Page) {
 
             $this->routeAlias = $this->container->get('routealias');
-            
+
             if ($this->routeAlias) {
                 // create a new link based on page data
                 $this->link = new Link();
@@ -81,7 +80,7 @@ class PageListener
                 $this->link->setPage($en);
 
                 $em->persist($this->link);
-            
+
                 $em->flush();
             }
         }
@@ -101,7 +100,7 @@ class PageListener
         $sc = $this->container->get('security.context');
 
         if ($en instanceof Page) {
-        
+
             // create new history based on old data
             $this->history = new History();
 
@@ -138,7 +137,7 @@ class PageListener
 
         if ($this->history instanceof History) {
             $em->persist($this->history);
-            
+
             $em->flush();
         }
     }
@@ -201,8 +200,6 @@ class PageListener
 
             $em = $this->container->get('doctrine')->getManager();
             $en = $em->getRepository('MesdHelpWikiBundle:Page')->find(1);
-
-            //var_dump($request);exit;
         }
         // All route parameters including the `_controller`
         $params      = $request->attributes->get('_route_params');

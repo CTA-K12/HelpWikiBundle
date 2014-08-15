@@ -19,15 +19,15 @@ class HistoryController extends Controller
      * Lists all History entities.
      *
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('MesdHelpWikiBundle:History')->findAll();
+        $entities = $em->getRepository( 'MesdHelpWikiBundle:History' )->findAll();
 
-        return $this->render('MesdHelpWikiBundle:History:index.html.twig', array(
-            'entities' => $entities,
-        ));
+        return $this->render( 'MesdHelpWikiBundle:History:index.html.twig', array(
+                'entities' => $entities,
+            )
+        );
     }
 
 
@@ -35,15 +35,15 @@ class HistoryController extends Controller
      * Lists all History entities for a page.
      *
      */
-    public function pageAction($id)
-    {
+    public function pageAction( $id ) {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('MesdHelpWikiBundle:History')->findByPage($id);
+        $entities = $em->getRepository( 'MesdHelpWikiBundle:History' )->findByPage( $id );
 
-        return $this->render('MesdHelpWikiBundle:History:index.html.twig', array(
-            'entities' => $entities,
-        ));
+        return $this->render( 'MesdHelpWikiBundle:History:index.html.twig', array(
+                'entities' => $entities,
+            )
+        );
     }
 
 
@@ -51,15 +51,15 @@ class HistoryController extends Controller
      * Lists all History entities for a user.
      *
      */
-    public function userAction($id)
-    {
+    public function userAction( $id ) {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('MesdHelpWikiBundle:History')->findByUser($id);
+        $entities = $em->getRepository( 'MesdHelpWikiBundle:History' )->findByUser( $id );
 
-        return $this->render('MesdHelpWikiBundle:History:index.html.twig', array(
-            'entities' => $entities,
-        ));
+        return $this->render( 'MesdHelpWikiBundle:History:index.html.twig', array(
+                'entities' => $entities,
+            )
+        );
     }
 
 
@@ -67,41 +67,43 @@ class HistoryController extends Controller
      * Creates a new History entity.
      *
      */
-    public function createAction(Request $request)
-    {
+    public function createAction( Request $request ) {
         $entity = new History();
-        $form = $this->createCreateForm($entity);
-        $form->handleRequest($request);
+        $form = $this->createCreateForm( $entity );
+        $form->handleRequest( $request );
 
-        if ($form->isValid()) {
+        if ( $form->isValid() ) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
+            $em->persist( $entity );
             $em->flush();
 
-            return $this->redirect($this->generateUrl('history_show', array('id' => $entity->getId())));
+            return $this->redirect( $this->generateUrl( 'history_show', array( 'id' => $entity->getId() )        )
+            );
         }
 
-        return $this->render('MesdHelpWikiBundle:History:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
+        return $this->render( 'MesdHelpWikiBundle:History:new.html.twig', array(
+                'entity' => $entity,
+                'form'   => $form->createView(),
+            )
+        );
     }
 
     /**
-    * Creates a form to create a History entity.
-    *
-    * @param History $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createCreateForm(History $entity)
-    {
-        $form = $this->createForm(new HistoryType(), $entity, array(
-            'action' => $this->generateUrl('history_create'),
-            'method' => 'POST',
-        ));
+     * Creates a form to create a History entity.
+     *
+     * @param History $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createCreateForm( History $entity ) {
+        $form = $this->createForm( new HistoryType(), $entity, array(
+                'action' => $this->generateUrl( 'history_create' ),
+                'method' => 'POST',
+            )
+        );
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add( 'submit', 'submit', array( 'label' => 'Create'        )
+        );
 
         return $form;
     }
@@ -110,78 +112,79 @@ class HistoryController extends Controller
      * Displays a form to create a new History entity.
      *
      */
-    public function newAction()
-    {
+    public function newAction() {
         $entity = new History();
-        $form   = $this->createCreateForm($entity);
+        $form   = $this->createCreateForm( $entity );
 
-        return $this->render('MesdHelpWikiBundle:History:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
+        return $this->render( 'MesdHelpWikiBundle:History:new.html.twig', array(
+                'entity' => $entity,
+                'form'   => $form->createView(),
+            )
+        );
     }
 
     /**
      * Finds and displays a History entity.
      *
      */
-    public function showAction($id)
-    {
+    public function showAction( $id ) {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('MesdHelpWikiBundle:History')->find($id);
+        $entity = $em->getRepository( 'MesdHelpWikiBundle:History' )->find( $id );
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find History entity.');
+        if ( !$entity ) {
+            throw $this->createNotFoundException( 'Unable to find History entity.' );
         }
 
-        $deleteForm = $this->createDeleteForm($id);
+        $deleteForm = $this->createDeleteForm( $id );
 
-        return $this->render('MesdHelpWikiBundle:History:show.html.twig', array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
-        ));
+        return $this->render( 'MesdHelpWikiBundle:History:show.html.twig', array(
+                'entity'      => $entity,
+                'delete_form' => $deleteForm->createView(),
+            )
+        );
     }
 
     /**
      * Displays a form to edit an existing History entity.
      *
      */
-    public function editAction($id)
-    {
+    public function editAction( $id ) {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('MesdHelpWikiBundle:History')->find($id);
+        $entity = $em->getRepository( 'MesdHelpWikiBundle:History' )->find( $id );
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find History entity.');
+        if ( !$entity ) {
+            throw $this->createNotFoundException( 'Unable to find History entity.' );
         }
 
-        $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
+        $editForm = $this->createEditForm( $entity );
+        $deleteForm = $this->createDeleteForm( $id );
 
-        return $this->render('MesdHelpWikiBundle:History:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
+        return $this->render( 'MesdHelpWikiBundle:History:edit.html.twig', array(
+                'entity'      => $entity,
+                'edit_form'   => $editForm->createView(),
+                'delete_form' => $deleteForm->createView(),
+            )
+        );
     }
 
     /**
-    * Creates a form to edit a History entity.
-    *
-    * @param History $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(History $entity)
-    {
-        $form = $this->createForm(new HistoryType(), $entity, array(
-            'action' => $this->generateUrl('history_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
-        ));
+     * Creates a form to edit a History entity.
+     *
+     * @param History $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createEditForm( History $entity ) {
+        $form = $this->createForm( new HistoryType(), $entity, array(
+                'action' => $this->generateUrl( 'history_update', array( 'id' => $entity->getId() ) ),
+                'method' => 'PUT',
+            )
+        );
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add( 'submit', 'submit', array( 'label' => 'Update'        )
+        );
 
         return $form;
     }
@@ -189,70 +192,70 @@ class HistoryController extends Controller
      * Edits an existing History entity.
      *
      */
-    public function updateAction(Request $request, $id)
-    {
+    public function updateAction( Request $request, $id ) {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('MesdHelpWikiBundle:History')->find($id);
+        $entity = $em->getRepository( 'MesdHelpWikiBundle:History' )->find( $id );
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find History entity.');
+        if ( !$entity ) {
+            throw $this->createNotFoundException( 'Unable to find History entity.' );
         }
 
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
-        $editForm->handleRequest($request);
+        $deleteForm = $this->createDeleteForm( $id );
+        $editForm = $this->createEditForm( $entity );
+        $editForm->handleRequest( $request );
 
-        if ($editForm->isValid()) {
+        if ( $editForm->isValid() ) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('history_edit', array('id' => $id)));
+            return $this->redirect( $this->generateUrl( 'history_edit', array( 'id' => $id )        )
+            );
         }
 
-        return $this->render('MesdHelpWikiBundle:History:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
+        return $this->render( 'MesdHelpWikiBundle:History:edit.html.twig', array(
+                'entity'      => $entity,
+                'edit_form'   => $editForm->createView(),
+                'delete_form' => $deleteForm->createView(),
+            )
+        );
     }
     /**
      * Deletes a History entity.
      *
      */
-    public function deleteAction(Request $request, $id)
-    {
-        $form = $this->createDeleteForm($id);
-        $form->handleRequest($request);
+    public function deleteAction( Request $request, $id ) {
+        $form = $this->createDeleteForm( $id );
+        $form->handleRequest( $request );
 
-        if ($form->isValid()) {
+        if ( $form->isValid() ) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('MesdHelpWikiBundle:History')->find($id);
+            $entity = $em->getRepository( 'MesdHelpWikiBundle:History' )->find( $id );
 
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find History entity.');
+            if ( !$entity ) {
+                throw $this->createNotFoundException( 'Unable to find History entity.' );
             }
 
-            $em->remove($entity);
+            $em->remove( $entity );
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('history'));
+        return $this->redirect( $this->generateUrl( 'history'        )
+        );
     }
 
     /**
      * Creates a form to delete a History entity by id.
      *
-     * @param mixed $id The entity id
+     * @param mixed   $id The entity id
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm($id)
-    {
+    private function createDeleteForm( $id ) {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('history_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
+        ->setAction( $this->generateUrl( 'history_delete', array( 'id' => $id ) ) )
+        ->setMethod( 'DELETE' )
+        ->add( 'submit', 'submit', array( 'label' => 'Delete' ) )
+        ->getForm()
         ;
     }
 }
