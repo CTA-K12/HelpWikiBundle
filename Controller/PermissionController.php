@@ -1,4 +1,11 @@
 <?php
+/**
+ * /tmp/phptidy-sublime-buffer.php
+ *
+ * @author Morgan Estes <morgan.estes@gmail.com>
+ * @package default
+ */
+
 
 namespace Mesd\HelpWikiBundle\Controller;
 
@@ -18,8 +25,10 @@ class PermissionController extends Controller
     /**
      * Lists all Permission entities.
      *
+     * @return unknown
      */
-    public function indexAction() {
+    public function indexAction()
+    {
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository( 'MesdHelpWikiBundle:Permission' )->findAll();
@@ -29,11 +38,15 @@ class PermissionController extends Controller
             )
         );
     }
+
     /**
      * Creates a new Permission entity.
      *
+     * @param object  $request
+     * @return unknown
      */
-    public function createAction( Request $request ) {
+    public function createAction( Request $request )
+    {
         $entity = new Permission();
         $form = $this->createCreateForm( $entity );
         $form->handleRequest( $request );
@@ -43,8 +56,7 @@ class PermissionController extends Controller
             $em->persist( $entity );
             $em->flush();
 
-            return $this->redirect( $this->generateUrl( 'permission_show', array( 'id' => $entity->getId() )        )
-            );
+            return $this->redirect( $this->generateUrl( 'permission_show', array('id' => $entity->getId())));
         }
 
         return $this->render( 'MesdHelpWikiBundle:Permission:new.html.twig', array(
@@ -57,18 +69,19 @@ class PermissionController extends Controller
     /**
      * Creates a form to create a Permission entity.
      *
-     * @param Permission $entity The entity
      *
+     * @param object  $entity The entity
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm( Permission $entity ) {
+    private function createCreateForm( Permission $entity )
+    {
         $form = $this->createForm( new PermissionType(), $entity, array(
                 'action' => $this->generateUrl( 'permission_create' ),
                 'method' => 'POST',
             )
         );
 
-        $form->add( 'submit', 'submit', array( 'label' => 'Create'        )
+        $form->add( 'submit', 'submit', array( 'label' => 'Create')
         );
 
         return $form;
@@ -77,8 +90,10 @@ class PermissionController extends Controller
     /**
      * Displays a form to create a new Permission entity.
      *
+     * @return unknown
      */
-    public function newAction() {
+    public function newAction()
+    {
         $entity = new Permission();
         $form   = $this->createCreateForm( $entity );
 
@@ -92,8 +107,11 @@ class PermissionController extends Controller
     /**
      * Finds and displays a Permission entity.
      *
+     * @param unknown $id
+     * @return unknown
      */
-    public function showAction( $id ) {
+    public function showAction( $id )
+    {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository( 'MesdHelpWikiBundle:Permission' )->find( $id );
@@ -114,8 +132,11 @@ class PermissionController extends Controller
     /**
      * Displays a form to edit an existing Permission entity.
      *
+     * @param unknown $id
+     * @return unknown
      */
-    public function editAction( $id ) {
+    public function editAction( $id )
+    {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository( 'MesdHelpWikiBundle:Permission' )->find( $id );
@@ -138,27 +159,33 @@ class PermissionController extends Controller
     /**
      * Creates a form to edit a Permission entity.
      *
-     * @param Permission $entity The entity
      *
+     * @param object  $entity The entity
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createEditForm( Permission $entity ) {
+    private function createEditForm( Permission $entity )
+    {
         $form = $this->createForm( new PermissionType(), $entity, array(
                 'action' => $this->generateUrl( 'permission_update', array( 'id' => $entity->getId() ) ),
                 'method' => 'PUT',
             )
         );
 
-        $form->add( 'submit', 'submit', array( 'label' => 'Update'        )
+        $form->add( 'submit', 'submit', array( 'label' => 'Update')
         );
 
         return $form;
     }
+
     /**
      * Edits an existing Permission entity.
      *
+     * @param object  $request
+     * @param unknown $id
+     * @return unknown
      */
-    public function updateAction( Request $request, $id ) {
+    public function updateAction( Request $request, $id )
+    {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository( 'MesdHelpWikiBundle:Permission' )->find( $id );
@@ -174,7 +201,7 @@ class PermissionController extends Controller
         if ( $editForm->isValid() ) {
             $em->flush();
 
-            return $this->redirect( $this->generateUrl( 'permission_edit', array( 'id' => $id )        )
+            return $this->redirect( $this->generateUrl( 'permission_edit', array( 'id' => $id ))
             );
         }
 
@@ -185,11 +212,16 @@ class PermissionController extends Controller
             )
         );
     }
+
     /**
      * Deletes a Permission entity.
      *
+     * @param object  $request
+     * @param unknown $id
+     * @return unknown
      */
-    public function deleteAction( Request $request, $id ) {
+    public function deleteAction( Request $request, $id )
+    {
         $form = $this->createDeleteForm( $id );
         $form->handleRequest( $request );
 
@@ -205,18 +237,19 @@ class PermissionController extends Controller
             $em->flush();
         }
 
-        return $this->redirect( $this->generateUrl( 'permission'        )
+        return $this->redirect( $this->generateUrl( 'permission')
         );
     }
 
     /**
      * Creates a form to delete a Permission entity by id.
      *
-     * @param mixed   $id The entity id
      *
+     * @param mixed   $id The entity id
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm( $id ) {
+    private function createDeleteForm( $id )
+    {
         return $this->createFormBuilder()
         ->setAction( $this->generateUrl( 'permission_delete', array( 'id' => $id ) ) )
         ->setMethod( 'DELETE' )

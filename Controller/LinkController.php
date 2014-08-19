@@ -1,4 +1,11 @@
 <?php
+/**
+ * /tmp/phptidy-sublime-buffer.php
+ *
+ * @author Morgan Estes <morgan.estes@gmail.com>
+ * @package default
+ */
+
 
 namespace Mesd\HelpWikiBundle\Controller;
 
@@ -19,8 +26,10 @@ class LinkController extends Controller
     /**
      * Lists all Link entities.
      *
+     * @return unknown
      */
-    public function indexAction() {
+    public function indexAction()
+    {
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository( 'MesdHelpWikiBundle:Link' )->findAll();
@@ -30,11 +39,15 @@ class LinkController extends Controller
             )
         );
     }
+
     /**
      * Creates a new Link entity.
      *
+     * @param object  $request
+     * @return unknown
      */
-    public function createAction( Request $request ) {
+    public function createAction( Request $request )
+    {
         $entity = new link();
         $form = $this->createCreateForm( $entity );
         $form->handleRequest( $request );
@@ -44,8 +57,7 @@ class LinkController extends Controller
             $em->persist( $entity );
             $em->flush();
 
-            return $this->redirect( $this->generateUrl( 'link_show', array( 'id' => $entity->getId() )        )
-            );
+            return $this->redirect( $this->generateUrl( 'link_show', array( 'id' => $entity->getId())));
         }
 
         return $this->render( 'MesdHelpWikiBundle:Link:new.html.twig', array(
@@ -58,11 +70,12 @@ class LinkController extends Controller
     /**
      * Creates a form to create a Link entity.
      *
-     * @param Link    $entity The entity
      *
+     * @param object  $entity The entity
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm( Link $entity ) {
+    private function createCreateForm( Link $entity )
+    {
         $form = $this->createForm( new LinkType(), $entity, array(
                 'action' => $this->generateUrl( 'link_create' ),
                 'method' => 'POST',
@@ -81,7 +94,8 @@ class LinkController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreatePageForm() {
+    private function createCreatePageForm()
+    {
         $form = $this->createFormBuilder()
         ->setAction( $this->generateUrl( 'link_new_by_page' ) )
         ->add( 'routeAlias', 'hidden', array(
@@ -98,8 +112,10 @@ class LinkController extends Controller
     /**
      * Displays a form to create a new Link entity.
      *
+     * @return unknown
      */
-    public function newAction() {
+    public function newAction()
+    {
         $entity = new link();
         $form   = $this->createCreateForm( $entity );
 
@@ -113,8 +129,11 @@ class LinkController extends Controller
     /**
      * Finds and displays a Link entity.
      *
+     * @param unknown $id
+     * @return unknown
      */
-    public function showAction( $id ) {
+    public function showAction( $id )
+    {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository( 'MesdHelpWikiBundle:Link' )->find( $id );
@@ -135,8 +154,11 @@ class LinkController extends Controller
     /**
      * Displays a form to edit an existing Link entity.
      *
+     * @param unknown $id
+     * @return unknown
      */
-    public function editAction( $id ) {
+    public function editAction( $id )
+    {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository( 'MesdHelpWikiBundle:Link' )->find( $id );
@@ -159,11 +181,12 @@ class LinkController extends Controller
     /**
      * Creates a form to edit a Link entity.
      *
-     * @param Link    $entity The entity
      *
+     * @param object  $entity The entity
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createEditForm( Link $entity ) {
+    private function createEditForm( Link $entity )
+    {
         $form = $this->createForm( new LinkType(), $entity, array(
                 'action' => $this->generateUrl( 'link_update', array( 'id' => $entity->getId() ) ),
                 'method' => 'PUT',
@@ -175,11 +198,16 @@ class LinkController extends Controller
 
         return $form;
     }
+
     /**
      * Edits an existing Link entity.
      *
+     * @param object  $request
+     * @param unknown $id
+     * @return unknown
      */
-    public function updateAction( Request $request, $id ) {
+    public function updateAction( Request $request, $id )
+    {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository( 'MesdHelpWikiBundle:Link' )->find( $id );
@@ -195,8 +223,7 @@ class LinkController extends Controller
         if ( $editForm->isValid() ) {
             $em->flush();
 
-            return $this->redirect( $this->generateUrl( 'link_edit', array( 'id' => $id )        )
-            );
+            return $this->redirect( $this->generateUrl( 'link_edit', array( 'id' => $id )));
         }
 
         return $this->render( 'MesdHelpWikiBundle:Link:edit.html.twig', array(
@@ -206,11 +233,16 @@ class LinkController extends Controller
             )
         );
     }
+
     /**
      * Deletes a Link entity.
      *
+     * @param object  $request
+     * @param unknown $id
+     * @return unknown
      */
-    public function deleteAction( Request $request, $id ) {
+    public function deleteAction( Request $request, $id )
+    {
         $form = $this->createDeleteForm( $id );
         $form->handleRequest( $request );
 
@@ -233,11 +265,12 @@ class LinkController extends Controller
     /**
      * Creates a form to delete a Link entity by id.
      *
-     * @param mixed   $id The entity id
      *
+     * @param mixed   $id The entity id
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm( $id ) {
+    private function createDeleteForm( $id )
+    {
         return $this->createFormBuilder()
         ->setAction( $this->generateUrl( 'link_delete', array( 'id' => $id ) ) )
         ->setMethod( 'DELETE' )
@@ -246,7 +279,14 @@ class LinkController extends Controller
         ;
     }
 
-    public function isLinkedAction( $route ) {
+    /**
+     *
+     *
+     * @param unknown $route
+     * @return unknown
+     */
+    public function isLinkedAction( $route )
+    {
         $em = $this->getDoctrine()->getManager();
 
         $link = $em->getRepository( 'MesdHelpWikiBundle:Link' )->findOneByRouteAlias( $route );
@@ -264,7 +304,14 @@ class LinkController extends Controller
         );
     }
 
-    public function newByRouteAction( $route ) {
+    /**
+     *
+     *
+     * @param unknown $route
+     * @return unknown
+     */
+    public function newByRouteAction( $route )
+    {
         $entity = new link();
         $newLinkForm = $this->createCreateForm( $entity );
         $newPageForm = $this->createCreatePageForm();
@@ -280,7 +327,14 @@ class LinkController extends Controller
         );
     }
 
-    public function createNewLinkPageAction( Request $request ) {
+    /**
+     *
+     *
+     * @param object  $request
+     * @return unknown
+     */
+    public function createNewLinkPageAction( Request $request )
+    {
         $form = $this->createCreatePageForm();
         $form->handleRequest( $request );
 
@@ -290,8 +344,7 @@ class LinkController extends Controller
 
             $routeAlias = $data['routeAlias'];
 
-            return $this->redirect( $this->generateUrl( 'page_new', array( 'routeAlias' => $routeAlias )        )
-            );
+            return $this->redirect( $this->generateUrl( 'page_new', array( 'routeAlias' => $routeAlias)));
         }
     }
 }
