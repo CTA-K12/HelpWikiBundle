@@ -1,20 +1,20 @@
 {% extends 'MesdHelpWikiBundle:Default:index.html.twig' %}
 {% set subtitle = 'Edit ' ~ entity.shortName ~ ' Permission Type' %}
 
-{% block main %}
+{% block contentBody %}
 
     {{ form_start(edit_form) }}
     {{ form_errors(edit_form) }}
 
     <div class="row">
-        <div class="form-group col-md-2">
+        <div class="form-group col-sm-2-12">
             <label for="permissionTypeId">ID</label>
             <div class="form-control">
                 <em class="text-muted">{{ entity.id }}</em>
             </div>
         </div>
 
-        <div class="form-group col-md-3">
+        <div class="form-group col-sm-3-12">
             {{ form_label(edit_form.shortName, 'Short Name') }}
             {{ form_errors(edit_form.shortName) }}
             {{ form_widget(edit_form.shortName, { 'attr': {
@@ -24,7 +24,7 @@
             } }) }}
         </div>
 
-        <div class="form-group col-md-7">
+        <div class="form-group col-sm-7-12">
             {{ form_label(edit_form.longName, 'Long Name') }}
             {{ form_errors(edit_form.longName) }}
             {{ form_widget(edit_form.longName, { 'attr': {
@@ -35,7 +35,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="form-group col-md-12">
+        <div class="form-group col-sm-12-12">
             {{ form_label(edit_form.description, 'Description') }}
             {{ form_errors(edit_form.description) }}
             {{ form_widget(edit_form.description, { 'attr': {
@@ -46,7 +46,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="form-group col-md-2 col-md-offset-10">
+        <div class="form-group col-sm-2-12 col-sm-offset-10">
             {{ form_widget(edit_form.submit, { 'attr': {
                 'class': 'form-control btn btn-default',
                 'tabindex': 4,
@@ -54,8 +54,8 @@
         </div>
     </div>
     {{ form_end(edit_form) }}
-    
-{% endblock main %}
+
+{% endblock contentBody %}
 
 {% block toolbarBottomContent %}
     {{ form_start(delete_form) }}

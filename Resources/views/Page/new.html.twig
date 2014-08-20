@@ -1,13 +1,13 @@
 {% extends 'MesdHelpWikiBundle:Default:index.html.twig' %}
 {% set subtitle = 'New Page' %}
 
-{% block main %}
+{% block contentBody %}
 
     {{ form_start(form) }}
         {{ form_errors(form) }}
 
         <div class="row">
-            <div class="form-group col-md-1-1">
+            <div class="form-group col-sm-1-12-1">
                 {{ form_label(form.title, 'Title') }}
                 {{ form_errors(form.title) }}
                 {{ form_widget(form.title, { 'attr': {
@@ -19,7 +19,7 @@
         </div>
 
         <div class="row">
-            <div class="form-group col-md-1-1">
+            <div class="form-group col-sm-1-12-1">
                 {{ form_label(form.slug, 'Slug') }}
                 {{ form_errors(form.slug) }}
                 {{ form_widget(form.slug, { 'attr': {
@@ -31,7 +31,7 @@
         </div>
 
         <div class="row">
-            <div class="form-group col-md-1-1">
+            <div class="form-group col-sm-1-12-1">
                 {{ form_label(form.body, 'Body') }}
                 {{ form_errors(form.body) }}
                 {{ form_widget(form.body) }}
@@ -39,7 +39,7 @@
         </div>
 
         <div class="row">
-            <div class="form-group col-md-1-1">
+            <div class="form-group col-sm-1-12-1">
                 {{ form_label(form.parent, 'Parent Page') }}
                 {{ form_errors(form.parent) }}
                 {{ form_widget(form.parent, {
@@ -54,7 +54,7 @@
         </div>
 
         <div class="row">
-            <div class="form-group col-md-1-6 col-md-offset-5-6">
+            <div class="form-group col-sm-1-12-6 col-sm-offset-5-6">
                 {{ form_widget(form.save, { 'attr': {
                     'class': 'form-control btn btn-default',
                     'tabindex': 4,
@@ -65,4 +65,4 @@
         {{ form_rest(form) }}
     {{ form_end(form) }}
 
-{% endblock main %}
+{% endblock contentBody %}

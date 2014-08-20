@@ -1,11 +1,11 @@
 {% extends 'MesdHelpWikiBundle:Default:index.html.twig' %}
 {% set subtitle = 'New Link' %}
 
-{% block main %}
+{% block contentBody %}
 
 
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-sm-6-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">Link Route with Existing Page</h3>
@@ -14,7 +14,7 @@
                         {{ form_start(new_link_form) }}
                             {{ form_errors(new_link_form) }}
                                 <div class="row">
-                                    <div class="form-group col-md-12">
+                                    <div class="form-group col-sm-12-12">
                                         {{ form_label(new_link_form.routeAlias, 'Route') }}
                                         {{ form_errors(new_link_form.routeAlias) }}
                                         {{ form_widget(new_link_form.routeAlias, { 'attr': {
@@ -25,7 +25,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="form-group col-md-12">
+                                    <div class="form-group col-sm-12-12">
                                         {{ form_label(new_link_form.page, 'Page') }}
                                         {{ form_errors(new_link_form.page) }}
                                         {{ form_widget(new_link_form.page, {
@@ -39,7 +39,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="form-group col-md-12">
+                                    <div class="form-group col-sm-12-12">
                                         {{ form_widget(new_link_form.submit, { 'attr': {
                                             'class': 'form-control btn btn-default',
                                             'tabindex': 3,
@@ -51,14 +51,14 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-sm-6-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">Link Route with New Page</h3>
                     </div>
                     <div class="panel-body">
                         <div class="row">
-                            <div class="form-group col-md-12">
+                            <div class="form-group col-sm-12-12">
                                 {{ form(new_page_form) }}
                             </div>
                         </div>
@@ -71,4 +71,4 @@
         <a href="{{ path('link') }}">
             Back to the list
         </a>
-{% endblock main %}
+{% endblock contentBody %}

@@ -1,19 +1,19 @@
 {% extends 'MesdHelpWikiBundle:Default:index.html.twig' %}
 {% set subtitle = 'New Permission' %}
 
-{% block main %}
+{% block contentBody %}
 
     {{ form_start(form) }}
     {{ form_errors(form) }}
 
     <div class="row">
-        <div class="form-group col-md-2-12">
+        <div class="form-group col-sm-2-12-12">
             <label for="permissionId">ID</label>
             <div class="form-control">
                 <em class="text-muted">New</em>
             </div>
         </div>
-        <div class="form-group col-md-10-12">
+        <div class="form-group col-sm-10-12-12">
             {{ form_label(form.page, 'Page Title') }}
             {{ form_errors(form.page) }}
             {{ form_widget(form.page, {
@@ -28,7 +28,7 @@
     </div>
 
     <div class="row">
-        <div class="form-group col-md-6-12">
+        <div class="form-group col-sm-6-12-12">
             {{ form_label(form.role, 'Role') }}
             {{ form_errors(form.role) }}
             {{ form_widget(form.role, {
@@ -40,7 +40,7 @@
                 }
             }) }}
         </div>
-        <div class="form-group col-md-6-12">
+        <div class="form-group col-sm-6-12-12">
             {{ form_label(form.permissionType, 'Permission Type') }}
             {{ form_errors(form.permissionType) }}
             {{ form_widget(form.permissionType, {
@@ -54,7 +54,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="form-group col-md-2-12 col-md-offset-10-12">
+        <div class="form-group col-sm-2-12-12 col-sm-offset-10-12">
             {{ form_widget(form.submit, { 'attr': {
                 'class': 'form-control btn btn-default',
                 'tabindex': 4,
@@ -63,4 +63,4 @@
     </div>
     {{ form_end(form) }}
 
-{% endblock main %}
+{% endblock contentBody %}

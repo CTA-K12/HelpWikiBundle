@@ -1,4 +1,11 @@
 <?php
+/**
+ * /tmp/phptidy-sublime-buffer.php
+ *
+ * @author Morgan Estes <morgan.estes@gmail.com>
+ * @package default
+ */
+
 
 namespace Mesd\HelpWikiBundle\Controller;
 
@@ -18,6 +25,7 @@ class CommentController extends Controller
     /**
      * Lists all Comment entities.
      *
+     * @return unknown
      */
     public function indexAction()
     {
@@ -26,13 +34,17 @@ class CommentController extends Controller
         $entities = $em->getRepository('MesdHelpWikiBundle:Comment')->findAll();
 
         return $this->render('MesdHelpWikiBundle:Comment:index.html.twig', array(
-            'entities' => $entities,
-        ));
+                'entities' => $entities,
+            )
+        );
     }
 
     /**
      * Creates a new Comment entity.
      *
+     * @param object  $request
+     * @param unknown $pageId
+     * @return unknown
      */
     public function createAction(Request $request, $pageId)
     {
@@ -53,18 +65,20 @@ class CommentController extends Controller
         }
 
         return $this->render('MesdHelpWikiBundle:Comment:new.html.twig', array(
-            'comment' => $comment,
-            'form'    => $form->createView(),
-        ));
+                'comment' => $comment,
+                'form'    => $form->createView(),
+            )
+        );
     }
 
     /**
-    * Creates a form to create a Comment entity.
-    *
-    * @param Comment $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
+     * Creates a form to create a Comment entity.
+     *
+     *
+     * @param object  $comment
+     * @param unknown $pageId
+     * @return \Symfony\Component\Form\Form The form
+     */
     private function createCreateForm(Comment $comment, $pageId)
     {
         $page = $this->getPage($pageId);
@@ -72,10 +86,10 @@ class CommentController extends Controller
         $comment->setPage($page);
 
         $form = $this->createForm(new CommentType(), $comment, array(
-            'action' => $this->generateUrl('comment_create', array('pageId' => $pageId)),
-            'method' => 'POST',
-        ));
-        //echo 'foobar';exit;
+                'action' => $this->generateUrl('comment_create', array('pageId' => $pageId)),
+                'method' => 'POST',
+            )
+        );
 
         $form->add('submit', 'submit', array('label' => 'Create'));
 
@@ -85,6 +99,9 @@ class CommentController extends Controller
     /**
      * Displays a form to create a new Comment entity.
      *
+     * @param object  $request
+     * @param unknown $pageId
+     * @return unknown
      */
     public function newAction(Request $request, $pageId)
     {
@@ -96,14 +113,17 @@ class CommentController extends Controller
         $form   = $this->createCreateForm($comment, $pageId);
 
         return $this->render('MesdHelpWikiBundle:Comment:new.html.twig', array(
-            'comment' => $comment,
-            'form'    => $form->createView(),
-        ));
+                'comment' => $comment,
+                'form'    => $form->createView(),
+            )
+        );
     }
 
     /**
      * Finds and displays a Comment entity.
      *
+     * @param unknown $id
+     * @return unknown
      */
     public function showAction($id)
     {
@@ -118,14 +138,17 @@ class CommentController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('MesdHelpWikiBundle:Comment:show.html.twig', array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
-        ));
+                'entity'      => $entity,
+                'delete_form' => $deleteForm->createView(),
+            )
+        );
     }
 
     /**
      * Displays a form to edit an existing Comment entity.
      *
+     * @param unknown $id
+     * @return unknown
      */
     public function editAction($id)
     {
@@ -141,33 +164,40 @@ class CommentController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('MesdHelpWikiBundle:Comment:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
+                'entity'      => $entity,
+                'edit_form'   => $editForm->createView(),
+                'delete_form' => $deleteForm->createView(),
+            )
+        );
     }
 
     /**
-    * Creates a form to edit a Comment entity.
-    *
-    * @param Comment $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
+     * Creates a form to edit a Comment entity.
+     *
+     *
+     * @param object  $entity The entity
+     * @return \Symfony\Component\Form\Form The form
+     */
     private function createEditForm(Comment $entity)
     {
         $form = $this->createForm(new CommentType(), $entity, array(
-            'action' => $this->generateUrl('comment_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
-        ));
+                'action' => $this->generateUrl('comment_update', array('id' => $entity->getId())),
+                'method' => 'PUT',
+            )
+        );
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('submit', 'submit', array('label' => 'Update'        )
+        );
 
         return $form;
     }
+
     /**
      * Edits an existing Comment entity.
      *
+     * @param object  $request
+     * @param unknown $id
+     * @return unknown
      */
     public function updateAction(Request $request, $id)
     {
@@ -190,14 +220,19 @@ class CommentController extends Controller
         }
 
         return $this->render('MesdHelpWikiBundle:Comment:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
+                'entity'      => $entity,
+                'edit_form'   => $editForm->createView(),
+                'delete_form' => $deleteForm->createView(),
+            )
+        );
     }
+
     /**
      * Deletes a Comment entity.
      *
+     * @param object  $request
+     * @param unknown $id
+     * @return unknown
      */
     public function deleteAction(Request $request, $id)
     {
@@ -216,26 +251,33 @@ class CommentController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('comment'));
+        return $this->redirect($this->generateUrl('comment'        )
+        );
     }
 
     /**
      * Creates a form to delete a Comment entity by id.
      *
-     * @param mixed $id The entity id
      *
+     * @param mixed   $id The entity id
      * @return \Symfony\Component\Form\Form The form
      */
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('comment_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
+        ->setAction($this->generateUrl('comment_delete', array('id' => $id)))
+        ->setMethod('DELETE')
+        ->add('submit', 'submit', array('label' => 'Delete'))
+        ->getForm()
         ;
     }
 
+    /**
+     *
+     *
+     * @param unknown $pageId
+     * @return unknown
+     */
     protected function getPage($pageId)
     {
         $em = $this->getDoctrine()->getManager();
@@ -252,6 +294,8 @@ class CommentController extends Controller
     /**
      * Lists all Comment entities.
      *
+     * @param unknown $pageId
+     * @return unknown
      */
     public function indexByPageAction($pageId)
     {
@@ -268,8 +312,9 @@ class CommentController extends Controller
         }
 
         return $this->render('MesdHelpWikiBundle:Comment:indexByPage.html.twig', array(
-            'comments'    => $comments,
-            'deleteForms' => $deleteForms,
-        ));
+                'comments'    => $comments,
+                'deleteForms' => $deleteForms,
+            )
+        );
     }
 }

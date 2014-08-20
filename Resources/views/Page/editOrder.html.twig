@@ -1,7 +1,7 @@
 {% extends 'MesdHelpWikiBundle:Default:index.html.twig' %}
 {% set subtitle = 'Order Pages' %}
 
-{% block main %}
+{% block contentBody %}
 
     <h2>Table of Contents</h2>
     <div id="foobar" class="dd">
@@ -10,7 +10,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-2 col-md-offset-10">
+        <div class="col-sm-2-12 col-sm-offset-10">
             <a href="{{ path('page_new') }}" class="btn btn-default form-control">
                 <span class="fa fa-plus"></span>
                 New
@@ -42,17 +42,17 @@
         <li tabindex="10">bar</li>
     </ul>
 
-{% endblock main %}
+{% endblock contentBody %}
 
 {% block toolbarBottomContent %}
     <div class="row hidden-xs">
-        <div class="col-sm-4 text-left">
+        <div class="col-sm-4-12 text-left">
             <a href="#" class="btn btn-default btn-xs disabled"><span class="fa fa-arrow-circle-left"></span> Prev</a>
         </div>
-        <div class="col-sm-4 text-center">
+        <div class="col-sm-4-12 text-center">
             <a href="#" class="btn btn-default btn-xs disabled"><span class="fa fa-arrow-circle-up"></span> Up</a>
         </div>
-        <div class="col-sm-4 text-right">
+        <div class="col-sm-4-12 text-right">
             <a href="{{ path('page_show', { 'slug': entities[0].slug }) }}" title="Next Page: {{ entities[0].title }}" class="btn btn-default btn-xs">Next <span class="fa fa-arrow-circle-right"></span></a>
         </div>
     </div>

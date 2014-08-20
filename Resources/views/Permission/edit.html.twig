@@ -2,19 +2,19 @@
 
 {% set subtitle = 'Edit Permission' %}
 
-{% block main %}
+{% block contentBody %}
 
     {{ form_start(edit_form) }}
     {{ form_errors(edit_form) }}
 
     <div class="row">
-        <div class="form-group col-md-2-12">
+        <div class="form-group col-sm-2-12-12">
             <label for="permissionId">ID</label>
             <div class="form-control">
                 <em class="text-muted">{{ entity.id }}</em>
             </div>
         </div>
-        <div class="form-group col-md-10-12">
+        <div class="form-group col-sm-10-12-12">
             {{ form_label(edit_form.page, 'Page Title') }}
             {{ form_errors(edit_form.page) }}
             {{ form_widget(edit_form.page, {
@@ -29,7 +29,7 @@
     </div>
 
     <div class="row">
-        <div class="form-group col-md-6-12">
+        <div class="form-group col-sm-6-12-12">
             {{ form_label(edit_form.role, 'Role') }}
             {{ form_errors(edit_form.role) }}
             {{ form_widget(edit_form.role, {
@@ -41,7 +41,7 @@
                 }
             }) }}
         </div>
-        <div class="form-group col-md-6-12">
+        <div class="form-group col-sm-6-12-12">
             {{ form_label(edit_form.permissionType, 'Permission Type') }}
             {{ form_errors(edit_form.permissionType) }}
             {{ form_widget(edit_form.permissionType, {
@@ -55,7 +55,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="form-group col-md-2-12 col-md-offset-10-12">
+        <div class="form-group col-sm-2-12-12 col-sm-offset-10-12">
             {{ form_widget(edit_form.submit, { 'attr': {
                 'class': 'form-control btn btn-default',
                 'tabindex': 4,
@@ -73,4 +73,4 @@
         <li>{{ form(delete_form) }}</li>
     </ul>
 
-{% endblock main %}
+{% endblock contentBody %}

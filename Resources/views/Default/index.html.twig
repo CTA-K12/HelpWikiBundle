@@ -1,3 +1,7 @@
+{#}
+TODO: make this view not dependent on index.html.twig
+{#}
+
 {% extends '::index.html.twig' %}
 {% set pageTitle = 'Help <b>Wiki</b> Home' %}
 
@@ -54,6 +58,6 @@
     {% endif %}
 {% endblock sidebar %}
 
-{% block main %}
+{% block contentBody %}
 This is the help wiki main page
-{% endblock main %}
+{% endblock contentBody %}
