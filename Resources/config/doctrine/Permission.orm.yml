@@ -2,15 +2,17 @@ Mesd\HelpWikiBundle\Entity\Permission:
     type:            entity
     table:           helpwiki_permission
     repositoryClass: Mesd\HelpWikiBundle\Entity\PermissionRepository
-    fields:
+    id:
         id:
             type: integer
             id:   true
             generator:
                 strategy: AUTO
             sequenceGenerator:
-                sequenceName: helpwiki_permission_id_seq
-                initialValue: 1
+                sequenceName:   helpwiki_permission_id_seq
+                initialValue:   1
+                allocationSize: 10
+    fields:
     manyToOne:
         page:
             targetEntity: Page

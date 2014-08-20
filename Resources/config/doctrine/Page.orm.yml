@@ -2,15 +2,17 @@ Mesd\HelpWikiBundle\Entity\Page:
     type:            entity
     table:           helpwiki_page
     repositoryClass: Mesd\HelpWikiBundle\Entity\PageRepository
-    fields:
+    id:
         id:
             type: integer
             id:   true
             generator:
                 strategy: AUTO
             sequenceGenerator:
-                sequenceName: helpwiki_page_id_seq
-                initialValue: 1
+                sequenceName:   helpwiki_page_id_seq
+                initialValue:   1
+                allocationSize: 10
+    fields:
         title:
             column:   title
             type:     string
@@ -56,7 +58,7 @@ Mesd\HelpWikiBundle\Entity\Page:
         isEditInProgress:
             column:   is_edit_in_progress
             type:     boolean
-            nullable: false
+            nullable: true  
             unique:   false
     oneToMany:
         children:

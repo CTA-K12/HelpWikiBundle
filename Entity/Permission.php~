@@ -20,7 +20,7 @@ class Permission
     private $page;
 
     /**
-     * @var \Mesd\AuthenticationBundle\Entity\AuthRole
+     * @var \Mesd\UserBundle\Entity\AuthRole
      */
     private $role;
 
@@ -66,10 +66,10 @@ class Permission
     /**
      * Set role
      *
-     * @param \Mesd\AuthenticationBundle\Entity\AuthRole $role
+     * @param \Mesd\UserBundle\Entity\AuthRole $role
      * @return Permission
      */
-    public function setRole(\Mesd\AuthenticationBundle\Entity\AuthRole $role = null)
+    public function setRole(\Mesd\UserBundle\Entity\AuthRole $role = null)
     {
         $this->role = $role;
     
@@ -79,7 +79,7 @@ class Permission
     /**
      * Get role
      *
-     * @return \Mesd\AuthenticationBundle\Entity\AuthRole 
+     * @return \Mesd\UserBundle\Entity\AuthRole 
      */
     public function getRole()
     {

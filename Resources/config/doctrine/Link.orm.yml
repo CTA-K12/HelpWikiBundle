@@ -2,15 +2,17 @@ Mesd\HelpWikiBundle\Entity\Link:
     type:            entity
     table:           helpwiki_link
     repositoryClass: Mesd\HelpWikiBundle\Entity\LinkRepository
-    fields:
+    id:
         id:
             type: integer
             id:   true
             generator:
                 strategy: AUTO
             sequenceGenerator:
-                sequenceName: helpwiki_link_id_seq
-                initialValue: 1
+                sequenceName:   helpwiki_link_id_seq
+                initialValue:   1
+                allocationSize: 10
+    fields:
         routeAlias:
             column:   route_alias
             type:     string

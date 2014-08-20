@@ -73,7 +73,7 @@ doctrine:
         # ...
         resolve_target_entities:
             Mesd\HelpWikiBundle\Model\UserSubjectInterface: Mesd\Acme\DemoBundle\Entity\AppUser
-            Mesd\HelpWikiBundle\Model\RoleSubjectInterface: Mesd\AuthenticationBundle\Entity\AuthRole
+            Mesd\HelpWikiBundle\Model\RoleSubjectInterface: Mesd\UserBundle\Entity\AuthRole
 
 ```xml
 <!-- app/config/config.xml -->
@@ -86,7 +86,7 @@ doctrine:
         <doctrine:orm>
             <!-- ... -->
             <doctrine:resolve-target-entity interface="Mesd\HelpWikiBundle\Model\UserSubjectInterface">Mesd\Acme\DemoBundle\Entity\AppUser</resolve-target-entity>
-            <doctrine:resolve-target-entity interface="Mesd\HelpWikiBundle\Model\RoleSubjectInterface">Mesd\AuthenticationBundle\Entity\AuthRole</resolve-target-entity>
+            <doctrine:resolve-target-entity interface="Mesd\HelpWikiBundle\Model\RoleSubjectInterface">Mesd\UserBundle\Entity\AuthRole</resolve-target-entity>
         </doctrine:orm>
     </doctrine:config>
 </container>
@@ -98,7 +98,7 @@ $container->loadFromExtension('doctrine', array(
         // ...
         'resolve_target_entities' => array(
             'Mesd\HelpWikiBundle\Model\UserSubjectInterface' => 'Mesd\Acme\DemoBundle\Entity\AppUser',
-            'Mesd\HelpWikiBundle\Model\RoleSubjectInterface' => 'Mesd\AuthenticationBundle\Entity\AuthRole',
+            'Mesd\HelpWikiBundle\Model\RoleSubjectInterface' => 'Mesd\UserBundle\Entity\AuthRole',
         ),
     ),
 ));

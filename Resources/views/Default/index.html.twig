@@ -1,4 +1,5 @@
-{% extends 'MesdOrcaseAppBundle:Index:index.html.twig' %}
+{% extends '::index.html.twig' %}
+{% set pageTitle = 'Help <b>Wiki</b> Home' %}
 
 {% block sidebar %}
     {% if is_granted('ROLE_ADMIN') %}
