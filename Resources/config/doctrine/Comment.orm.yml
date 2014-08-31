@@ -1,11 +1,11 @@
 Mesd\HelpWikiBundle\Entity\Comment:
-    type: entity
-    table: helpwiki_comment
+    type:            entity
+    table:           helpwiki_comment
     repositoryClass: Mesd\HelpWikiBundle\Entity\CommentRepository
     id:
         id:
             type: integer
-            id: true
+            id:   true
             generator:
                 strategy: AUTO
             sequenceGenerator:
@@ -14,24 +14,24 @@ Mesd\HelpWikiBundle\Entity\Comment:
                 allocationSize: 10
     fields:
         body:
-            column: body
-            type: text
+            column:   body
+            type:     text
             nullable: false
-            unique: false
+            unique:   false
         dateTime:
-            column: date_time
-            type: datetime
+            column:   date_time
+            type:     datetime
             nullable: false
-            unique: false
+            unique:   false
     manyToOne:
         user:
             targetEntity: Mesd\HelpWikiBundle\Model\UserSubjectInterface
             joinColumn:
-                name: user_id
+                name:                 user_id
                 referencedColumnName: id
         page:
             targetEntity: Page
-            inversedBy: comments
+            inversedBy:   comments
             joinColumn:
-                name: page_id
+                name:                 page_id
                 referencedColumnName: id

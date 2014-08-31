@@ -3,7 +3,7 @@ HelpWikiBundle
 
 Wiki bundle for adding documentation to pages in an application.
 
-version: 0.0.1
+version: `0.0.1`
 
 Description
 -----------
@@ -54,6 +54,7 @@ This bundle has been developed and tested to work on the following broswers:
 ```bash
     $ cd /var/www/html/project
     $ composer install
+```
 
 Configuring
 -----------
@@ -74,6 +75,7 @@ doctrine:
         resolve_target_entities:
             Mesd\HelpWikiBundle\Model\UserSubjectInterface: Mesd\Acme\DemoBundle\Entity\AppUser
             Mesd\HelpWikiBundle\Model\RoleSubjectInterface: Mesd\UserBundle\Entity\AuthRole
+```
 
 ```xml
 <!-- app/config/config.xml -->
@@ -90,6 +92,7 @@ doctrine:
         </doctrine:orm>
     </doctrine:config>
 </container>
+```
 
 ```php
 // app/config/config.php
@@ -102,6 +105,7 @@ $container->loadFromExtension('doctrine', array(
         ),
     ),
 ));
+```
 
 # Configure Form Types
 
@@ -134,7 +138,7 @@ Code Snippet
         <h1 class="your-class">code</h1>
         <p>some code here</p>
     </body>
-
+```
 
 Troubleshooting
 ---------------
@@ -143,14 +147,17 @@ This bundle is likely to fail if you attempt to install it.
 I must work on this more.
 
 
-## Contributing
+Contributing
+------------
 
 See the [CONTRIBUTING.md](CONTRIBUTING.md) file for more information.
 
-## Changelog
+Changelog
+---------
 
 See the [CHANGELOG.md](CHANGELOG.md) file for more information.
 
-## License
+License
+-------
 
 See the [LICENSE.md](LICENSE.md) file for more information.

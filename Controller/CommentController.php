@@ -1,12 +1,21 @@
 <?php
 /**
- * /tmp/phptidy-sublime-buffer.php
+ * CommentController.php file
  *
- * @author Morgan Estes <morgan.estes@gmail.com>
- * @package default
+ * File that contains the form type comment controller class
+ *
+ * Licence MIT
+ * Copyright (c) 2014 Multnomah Education Service District <http://www.mesd.k12.or.us>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ * 
+ * @filesource /src/Mesd/HelpWikiBundle/Controller/CommentController.php
+ * @package    Mesd\HelpWikiBundle\Controller
+ * @copyright  2014 (c) Multnomah Education Service District <http://www.mesd.k12.or.us>
+ * @license    <http://opensource.org/licenses/MIT> MIT
+ * @author     Curtis G Hanson <chanson@mesd.k12.or.us>
+ * @version    0.1.0
  */
-
-
 namespace Mesd\HelpWikiBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -16,8 +25,15 @@ use Mesd\HelpWikiBundle\Entity\Comment;
 use Mesd\HelpWikiBundle\Form\CommentType;
 
 /**
- * Comment controller.
+ * Comment Controller
  *
+ * This controller links all actions to the comment model
+ *
+ * @package    Mesd\HelpWikiBundle\Controller
+ * @copyright  2014 (c) Multnomah Education Service District <http://www.mesd.k12.or.us>
+ * @license    <http://opensource.org/licenses/MIT> MIT
+ * @author     Curtis G Hanson <chanson@mesd.k12.or.us>
+ * @since      0.1.0
  */
 class CommentController extends Controller
 {
@@ -42,8 +58,8 @@ class CommentController extends Controller
     /**
      * Creates a new Comment entity.
      *
-     * @param object  $request
-     * @param unknown $pageId
+     * @param  object  $request
+     * @param  unknown $pageId
      * @return unknown
      */
     public function createAction(Request $request, $pageId)
@@ -75,8 +91,8 @@ class CommentController extends Controller
      * Creates a form to create a Comment entity.
      *
      *
-     * @param object  $comment
-     * @param unknown $pageId
+     * @param  object  $comment
+     * @param  unknown $pageId
      * @return \Symfony\Component\Form\Form The form
      */
     private function createCreateForm(Comment $comment, $pageId)

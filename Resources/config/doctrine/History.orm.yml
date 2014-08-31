@@ -1,11 +1,11 @@
 Mesd\HelpWikiBundle\Entity\History:
-    type: entity
-    table: helpwiki_history
+    type:            entity
+    table:           helpwiki_history
     repositoryClass: Mesd\HelpWikiBundle\Entity\HistoryRepository
     id:
         id:
             type: integer
-            id: true
+            id:   true
             generator:
                 strategy: AUTO
             sequenceGenerator:
