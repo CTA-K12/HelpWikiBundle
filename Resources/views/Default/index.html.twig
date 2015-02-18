@@ -1,9 +1,7 @@
-{#}
-TODO: make this view not dependent on index.html.twig
-{#}
-
-{% extends '::index.html.twig' %}
+{#}TODO: make this view not dependent on index.html.twig{#}
+{% extends '::base.html.twig' %}
 {% set pageTitle = 'Help <b>Wiki</b> Home' %}
+{% set pageSubtitle = 'home' %}
 
 {% block sidebarInner %}
     {% if is_granted('ROLE_ADMIN') %}

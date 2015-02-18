@@ -1,17 +1,22 @@
 Mesd\HelpWikiBundle\Entity\Comment:
     type:            entity
-    table:           helpwiki_comment
+    table:           mesd_helpwiki_comment
     repositoryClass: Mesd\HelpWikiBundle\Entity\CommentRepository
+    indexes:
+        mesd_helpwiki_comment_page_id_idx:
+            columns: [page_id]
+        mesd_helpwiki_comment_user_id_idx:
+            columns: [user_id]
     id:
         id:
-            type: integer
             id:   true
+            type: integer
             generator:
                 strategy: AUTO
             sequenceGenerator:
-                sequenceName:   helpwiki_comment_id_seq
+                sequenceName:   mesd_helpwiki_comment_id_seq
                 initialValue:   1
-                allocationSize: 10
+                allocationSize: 1
     fields:
         body:
             column:   body

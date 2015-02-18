@@ -1,28 +1,29 @@
 {% extends 'MesdHelpWikiBundle:Default:index.html.twig' %}
 
 {% block contentBody %}
+{{ entity.body|raw }}
+{% endblock contentBody %}
 
-    <hr />
-    {{ entity.body|raw }}
-
-    <hr />
-    <section class="page-detail" id ="page-detail">
-        <h2>Page Details</h2>
+{% block contentFooter %}
+    <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#comments" aria-expanded="false" aria-controls="collapseExample">{{ 'comments'|trans }}</button>
+    <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#page-detail" aria-expanded="false" aria-controls="collapseExample">{{ 'page.details'|trans }}</button>
+    
+    <section id ="page-detail" class="page-detail collapse alert alert-info text-align-left">
+        <strong>{{ 'page.details'|trans }}</strong>
         <dl class="dl-horizontal">
-            <dt>Last Updated</dt>
+            <dt>{{ 'last.updated'|trans }}</dt>
             <dd>{{ entity.dateTime|date('m/d/Y') ~ ' at ' ~ entity.dateTime|date('h:i a') }}</dd>
-            <dt>Updated By</dt>
+            <dt>{{ 'updated.by'|trans }}</dt>
             <dd>{{ entity.user }}</dd>
-            <dt>Revision</dt>
+            <dt>{{ 'revision'|trans }}</dt>
             <dd>{{ entity.revision }}</dd>
-            <dt>Chapter Page</dt>
+            <dt>{{ 'chapter.page'|trans }}</dt>
             <dd>{{ entity.parent }}</dd>
-            <dt>Page Number</dt>
+            <dt>{{ 'page.number'|trans }}</dt>
             <dd>{{ entity.printOrder }}</dd>
         </dl>
     </section>
-    <hr />
-    <section class="comments" id="comments">
+    <section id="comments" class="comments collapse text-align-left">
         <div class="comments-list" id="comments-list">
             {{ render(controller('MesdHelpWikiBundle:Comment:indexByPage', {
                 'pageId': entity.id
@@ -36,21 +37,18 @@
         </div>
     </section>
 
-{% endblock contentBody %}
+{% endblock contentFooter %}
 
 {% block toolbarTopRightContent %}
     <div class="btn-group pull-right">
         <a href="#" class="btn btn-xs btn-default">
-            <span class="fa fa-search"></span>
-            Detail
+            <span class="fa fa-search"></span>&nbsp; {{ 'detail'|trans }}
         </a>
         <a href="{{ path('history_page', { 'id': entity.id }) }}" class="btn btn-xs btn-default">
-            <span class="fa fa-clock-o"></span>
-            History
+            <span class="fa fa-clock-o"></span>&nbsp; {{ 'history'|trans }}
         </a>
         <a href="{{ path('page_edit', { 'id': entity.id }) }}" class="btn btn-xs btn-default">
-            <span class="fa fa-pencil"></span>
-            Edit
+            <span class="fa fa-pencil"></span>&nbsp; {{ 'edit'|trans }}
         </a>
     </div>
 {% endblock toolbarTopRightContent %}
@@ -58,18 +56,18 @@
 {% block toolbarBottomContent %}
     <div class="row hidden-xs">
         <div class="col-sm-1-12-3 text-left">
-            <a href="#" class="btn btn-default btn-xs"><span class="fa fa-arrow-circle-left"></span> Prev</a>
+            <a href="#" class="btn btn-default btn-xs"><span class="fa fa-arrow-circle-left"></span>&nbsp; {{ 'previous'|trans }}</a>
         </div>
         <div class="col-sm-1-12-3 text-center">
-            <a href="#" class="btn btn-default btn-xs"><span class="fa fa-arrow-circle-up"></span> Up</a>
+            <a href="#" class="btn btn-default btn-xs"><span class="fa fa-arrow-circle-up"></span>&nbsp; {{ 'up'|trans }}</a>
         </div>
         <div class="col-sm-1-12-3 text-right">
-            <a href="#" title="" class="btn btn-default btn-xs">Next <span class="fa fa-arrow-circle-right"></span></a>
+            <a href="#" title="" class="btn btn-default btn-xs">{{ 'next'|trans }} &nbsp;<span class="fa fa-arrow-circle-right"></span></a>
         </div>
     </div>
     <div class="btn-group btn-group-justified visible-xs">
-        <a href="#" class="btn btn-default btn-xs" title="Previous"><span class="fa fa-arrow-circle-left"></span></a>
-        <a href="#" class="btn btn-default btn-xs" title="Up"><span class="fa fa-arrow-circle-up"></span></a>
-        <a href="" title="" class="btn btn-default btn-xs" title="Next"><span class="fa fa-arrow-circle-right"></span></a>
+        <a href="#" class="btn btn-default btn-xs" title="{{ 'previous'|trans }}"><span class="fa fa-arrow-circle-left"></span></a>
+        <a href="#" class="btn btn-default btn-xs" title="{{ 'up'|trans }}"><span class="fa fa-arrow-circle-up"></span></a>
+        <a href="" title="" class="btn btn-default btn-xs" title="{{ 'next'|trans }}"><span class="fa fa-arrow-circle-right"></span></a>
     </div>
 {% endblock toolbarBottomContent %}

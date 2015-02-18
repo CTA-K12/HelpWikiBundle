@@ -20,9 +20,20 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('mesd_help_wiki');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode
+            ->children()
+                ->arrayNode('form_types')
+                    ->children()
+                        ->scalarNode('wysiwyg_editor')
+                            ->defaultValue('mesd_help_wiki_ckeditor')
+                        ->end()
+                        ->scalarNode('selectbox_editor')
+                            ->defaultValue('mesd_help_wiki_select2')
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
 
         return $treeBuilder;
     }

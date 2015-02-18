@@ -1,12 +1,15 @@
 parameters:
-    MesdHelpWikiBundle.pagelistener.class: Mesd\HelpWikiBundle\Listener\PageListener
-    MesdHelpWikiBundle.commentlistener.class: Mesd\HelpWikiBundle\Listener\CommentListener
+    mesd_help_wiki.page_listener.class:        Mesd\HelpWikiBundle\Listener\PageListener
+    mesd_help_wiki.comment_listener.class:     Mesd\HelpWikiBundle\Listener\CommentListener
+    mesd_help_wiki.form.type.page.class:       Mesd\HelpWikiBundle\Form\PageType
+    #mesd_help_wiki.form.type.pageselect.class: Mesd\HelpWikiBundle\Form\Type\CKEditorType
+    mesd_help_wiki.form.type.ckeditor.class:   Mesd\HelpWikiBundle\Form\Type\CKEditorType
+    #mesd_help_wiki.form.type.select2.class:  Mesd\HelpWikiBundle\Form\Type\Select2Type
 
 services:
-    help_wiki.page_listener:
-        class: %MesdHelpWikiBundle.pagelistener.class%
-        arguments:
-            - @service_container
+    mesd_help_wiki.page_listener:
+        class:     %mesd_help_wiki.page_listener.class%
+        arguments: ['@service_container']
         tags:
             - { name: kernel.event_listener,   event: kernel.controller, method: onKernelController, priority: 64 }
             - { name: doctrine.event_listener, event: prePersist  }
@@ -14,10 +17,22 @@ services:
             - { name: doctrine.event_listener, event: postUpdate  }
             - { name: doctrine.event_listener, event: postPersist }
             - { name: doctrine.event_listener, event: preRemove   }
-    help_wiki.comment_listener:
-        class: %MesdHelpWikiBundle.commentlistener.class%
-        arguments:
-            - @service_container
+    mesd_help_wiki.comment_listener:
+        class:     %mesd_help_wiki.comment_listener.class%
+        arguments: ['@service_container']
         tags:
             - { name: doctrine.event_listener, event: prePersist  }
             - { name: doctrine.event_listener, event: preUpdate   }
+    mesd_help_wiki.form.type.page:
+        class:     %mesd_help_wiki.form.type.page.class%
+        arguments: ['%mesd_help_wiki.wysiwyg_editor%']
+        tags:
+            - { name: form.type, alias: mesd_help_wiki_page }
+    mesd_help_wiki.form.type.ckeditor:
+        class:     %mesd_help_wiki.form.type.ckeditor.class%
+        tags:
+            - { name: form.type, alias: mesd_help_wiki_ckeditor }
+    #mesd_help_wiki.form.type.select2:
+    #    class: %mesd_help_wiki.form.type.select2.class%
+    #    tags:
+    #        - { name: form.type, alias: mesd_help_wiki_select2 }

@@ -35,15 +35,13 @@ class PageController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository( 'MesdHelpWikiBundle:Page' )->findByParent( null );
+        $entities = $em->getRepository('MesdHelpWikiBundle:Page')->findByParent(null);
 
-        usort( $entities, array( $this, 'cmp_obj')
-            );
+        usort($entities, array($this, 'cmp_obj'));
         //$child = $entities[1]->getChildren()->toArray();
-        return $this->render( 'MesdHelpWikiBundle:Page:index.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Page:index.html.twig', array(
             'entities' => $entities,
-            )
-        );
+        ));
     }
 
     /**
@@ -52,35 +50,33 @@ class PageController extends Controller
     * @param object  $request
     * @return unknown
     */
-    public function createAction( Request $request )
+    public function createAction(Request $request)
     {
         $entity = new Page();
 
-        $form = $this->createCreateForm( $entity );
+        $form = $this->createCreateForm($entity);
 
-        $form->add( 'routeAlias', 'hidden', array(
+        $form->add('routeAlias', 'hidden', array(
             'mapped' => false,
-            )
-        );
+        ));
 
-        $form->handleRequest( $request );
+        $form->handleRequest($request );
 
-        if ( $form->isValid() ) {
-            $routeAlias = $form->get( 'routeAlias' )->getViewData();
-            $this->container->set( 'routeAlias', $routeAlias );
+        if ($form->isValid()) {
+            $routeAlias = $form->get('routeAlias')->getViewData();
+            $this->container->set('routeAlias', $routeAlias);
 
             $em = $this->getDoctrine()->getManager();
-            $em->persist( $entity );
+            $em->persist($entity);
             $em->flush();
 
-            return $this->redirect( $this->generateUrl( 'page_show', array( 'slug' => $entity->getSlug())));
+            return $this->redirect($this->generateUrl('page_show', array('slug' => $entity->getSlug())));
         }
 
-        return $this->render( 'MesdHelpWikiBundle:Page:new.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Page:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
-            )
-        );
+        ));
     }
 
     /**
@@ -90,16 +86,14 @@ class PageController extends Controller
     * @param object  $entity The entity
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createCreateForm( Page $entity )
+    private function createCreateForm(Page $entity)
     {
-        $form = $this->createForm( new PageType( $entity ), $entity, array(
-            'action' => $this->generateUrl( 'page_create' ),
+        $form = $this->createForm('mesd_help_wiki_page', $entity, array(
+            'action' => $this->generateUrl('page_create'),
             'method' => 'POST',
-            )
-        );
+        ));
 
-        $form->add( 'save', 'submit', array( 'label' => 'Create')
-            );
+        $form->add('save', 'submit', array('label' => 'Create'));
 
         return $form;
     }
@@ -112,23 +106,21 @@ class PageController extends Controller
     public function newAction()
     {
         $entity = new Page();
-        $form   = $this->createCreateForm( $entity );
+        $form   = $this->createCreateForm($entity);
 
-        $data = $this->getRequest()->query->get( 'routeAlias' );
+        $data = $this->getRequest()->query->get('routeAlias');
 
-        if ( $data ) {
-            $form->add( 'routeAlias', 'hidden', array(
+        if ($data) {
+            $form->add('routeAlias', 'hidden', array(
                 'mapped' => false,
                 'data' => $data
-                )
-            );
+            ));
         }
 
-        return $this->render( 'MesdHelpWikiBundle:Page:new.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Page:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
-            )
-        );
+        ));
     }
 
     /**
@@ -137,31 +129,30 @@ class PageController extends Controller
     * @param unknown $slug
     * @return unknown
     */
-    public function showAction( $slug )
+    public function showAction($slug)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity   = $em->getRepository( 'MesdHelpWikiBundle:Page' )->findOneBySlug( $slug );
-        $comments = $em->getRepository( 'MesdHelpWikiBundle:Comment' )->findByPage( $entity->getId());
-        $next     = $em->getRepository( 'MesdHelpWikiBundle:Page' )->getNextPage( $entity );
+        $entity   = $em->getRepository('MesdHelpWikiBundle:Page')->findOneBySlug($slug);
+        $comments = $em->getRepository('MesdHelpWikiBundle:Comment')->findByPage($entity->getId());
+        $next     = $em->getRepository('MesdHelpWikiBundle:Page')->getNextPage($entity);
 
-        if ( !$entity ) {
-            throw $this->createNotFoundException( 'Unable to find Page entity.' );
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Page entity.');
         }
 
-        $deleteForm = $this->createDeleteForm( $entity->getId());
+        $deleteForm = $this->createDeleteForm($entity->getId());
 
-        $title = preg_replace( '/\s*?\bpages?\b\s*?$/i', '', $entity->getTitle());
+        $title = preg_replace('/\s*?\bpages?\b\s*?$/i', '', $entity->getTitle());
 
 
-        return $this->render( 'MesdHelpWikiBundle:Page:show.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Page:show.html.twig', array(
             'subtitle'    => $title,
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
             'comments'    => $comments,
             'next'        => $next,
-            )
-        );
+        ));
     }
 
     /**
@@ -170,32 +161,31 @@ class PageController extends Controller
     * @param unknown $id
     * @return unknown
     */
-    public function editAction( $id )
+    public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity      = $em->getRepository( 'MesdHelpWikiBundle:Page' )->find( $id );
+        $entity = $em->getRepository('MesdHelpWikiBundle:Page')->find($id);
 
-        if ( !$entity ) {
-            throw $this->createNotFoundException( 'Unable to find Page entity.' );
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Page entity.');
         }
-        else if ( false === $this->isGrantedAction( $entity, 'VIEW_ONLY' ) ) {
+        else if (false === $this->isGrantedAction($entity, 'VIEW_ONLY')) {
             throw new AccessDeniedException();
         }
 
 
-        $editForm = $this->createEditForm( $entity );
-        $deleteForm = $this->createDeleteForm( $id );
+        $editForm   = $this->createEditForm($entity);
+        $deleteForm = $this->createDeleteForm($id);
 
-        $title = 'Edit ' . preg_replace( '/\s*?\bpages?\b\s*?$/i', '', $entity->getTitle() ) . ' Page';
+        $title = 'Edit ' . preg_replace('/\s*?\bpages?\b\s*?$/i', '', $entity->getTitle()) . ' Page';
 
-        return $this->render( 'MesdHelpWikiBundle:Page:edit.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Page:edit.html.twig', array(
             'subtitle'    => $title,
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-            )
-        );
+        ));
     }
 
     /**
@@ -205,17 +195,15 @@ class PageController extends Controller
     * @param object  $entity The entity
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm( Page $entity )
+    private function createEditForm(Page $entity)
     {
 
-        $form = $this->createForm( new PageType( $entity ), $entity, array(
-            'action' => $this->generateUrl( 'page_update', array( 'id' => $entity->getId() ) ),
+        $form = $this->createForm(new PageType($entity), $entity, array(
+            'action' => $this->generateUrl('page_update', array('id' => $entity->getId())),
             'method' => 'PUT',
-            )
-        );
+        ));
 
-        $form->add( 'save', 'submit', array( 'label' => 'Update')
-            );
+        $form->add('save', 'submit', array('label' => 'Update'));
 
         return $form;
     }
@@ -227,36 +215,34 @@ class PageController extends Controller
     * @param unknown $id
     * @return unknown
     */
-    public function updateAction( Request $request, $id )
+    public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository( 'MesdHelpWikiBundle:Page' )->find( $id );
+        $entity = $em->getRepository('MesdHelpWikiBundle:Page')->find($id);
 
-        if ( !$entity ) {
-            throw $this->createNotFoundException( 'Unable to find Page entity.' );
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Page entity.');
         }
-        else if ( false === $this->isGrantedAction( $entity, 'VIEW_ONLY' ) ) {
+        else if (false === $this->isGrantedAction($entity, 'VIEW_ONLY')) {
             throw new AccessDeniedException();
         }
 
-        $deleteForm = $this->createDeleteForm( $id );
-        $editForm = $this->createEditForm( $entity );
-        $editForm->handleRequest( $request );
+        $deleteForm = $this->createDeleteForm($id);
+        $editForm   = $this->createEditForm($entity);
+        $editForm->handleRequest($request);
 
-        if ( $editForm->isValid() ) {
+        if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect( $this->generateUrl( 'page_show', array( 'slug' => $entity->getSlug() ))
-                );
+            return $this->redirect($this->generateUrl('page_show', array('slug' => $entity->getSlug())));
         }
 
-        return $this->render( 'MesdHelpWikiBundle:Page:edit.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Page:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-            )
-        );
+        ));
     }
 
     /**
@@ -266,25 +252,24 @@ class PageController extends Controller
     * @param unknown $id
     * @return unknown
     */
-    public function deleteAction( Request $request, $id )
+    public function deleteAction(Request $request, $id)
     {
-        $form = $this->createDeleteForm( $id );
-        $form->handleRequest( $request );
+        $form = $this->createDeleteForm($id);
+        $form->handleRequest($request);
 
-        if ( $form->isValid() ) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository( 'MesdHelpWikiBundle:Page' )->find( $id );
+        if ($form->isValid()) {
+            $em     = $this->getDoctrine()->getManager();
+            $entity = $em->getRepository('MesdHelpWikiBundle:Page')->find($id);
 
-            if ( !$entity ) {
-                throw $this->createNotFoundException( 'Unable to find Page entity.' );
+            if (!$entity) {
+                throw $this->createNotFoundException('Unable to find Page entity.');
             }
 
-            $em->remove( $entity );
+            $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect( $this->generateUrl( 'page')
-            );
+        return $this->redirect($this->generateUrl('page'));
     }
 
     /**
@@ -294,12 +279,12 @@ class PageController extends Controller
     * @param mixed   $id The entity id
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createDeleteForm( $id )
+    private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-        ->setAction( $this->generateUrl( 'page_delete', array( 'id' => $id ) ) )
-        ->setMethod( 'DELETE' )
-        ->add( 'submit', 'submit', array( 'label' => 'Delete' ) )
+        ->setAction($this->generateUrl('page_delete', array('id' => $id)))
+        ->setMethod('DELETE')
+        ->add('submit', 'submit', array('label' => 'Delete'))
         ->getForm()
         ;
     }
@@ -311,17 +296,15 @@ class PageController extends Controller
     */
     public function editOrderAction()
     {
-        $em = $this->getDoctrine()->getManager();
+        $em       = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository( 'MesdHelpWikiBundle:Page' )->findByParent( null );
+        $entities = $em->getRepository('MesdHelpWikiBundle:Page')->findByParent(null);
 
-        usort( $entities, array( $this, 'cmp_obj')
-            );
+        usort($entities, array($this, 'cmp_obj'));
 
-        return $this->render( 'MesdHelpWikiBundle:Page:editOrder.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Page:editOrder.html.twig', array(
             'entities' => $entities,
-            )
-        );
+        ));
     }
 
     /**
@@ -331,19 +314,17 @@ class PageController extends Controller
     * @param unknown $permissionType
     * @return unknown
     */
-    private function isGrantedAction( $entity, $permissionType )
+    private function isGrantedAction($entity, $permissionType)
     {
         // get all permissions for page
         // for each one, make sure no one's attempting to
         // access the edit screen who doesn't have permission
-        $em = $this->getDoctrine()->getManager();
+        $em          = $this->getDoctrine()->getManager();
+        $permissions = $em->getRepository('MesdHelpWikiBundle:Permission')->findByPage($entity->getId());
 
-        $permissions = $em->getRepository( 'MesdHelpWikiBundle:Permission' )->findByPage( $entity->getId()
-            );
-
-        foreach ( $permissions as $permission ) {
-            if ( true === $this->get( 'security.context' )->isGranted( $permission->getRole()->getRole() ) ) {
-                if ( $permissionType == $permission->getPermissionType() ) {
+        foreach ($permissions as $permission) {
+            if (true === $this->get('security.context')->isGranted($permission->getRole()->getRole())) {
+                if ($permissionType == $permission->getPermissionType()) {
                     return false;
                 }
             }
@@ -353,29 +334,25 @@ class PageController extends Controller
     /* This is the static comparing function: */
 
     /**
-    *
+    * Compare Objects
     *
     * @param unknown $a
     * @param unknown $b
     * @return unknown
     */
-    static function cmp_obj( $a, $b )
+    static function cmp_obj($a, $b)
     {
-        $al = strtolower( $a->getPrintOrder()
-            );
-        $bl = strtolower( $b->getPrintOrder()
-            );
-        if ( $al == $bl ) {
-            $ax = strtolower( $a->getTitle()
-                );
-            $bx = strtolower( $b->getTitle()
-                );
-            if ( $ax == $bx ) {
+        $al = strtolower($a->getPrintOrder());
+        $bl = strtolower($b->getPrintOrder());
+        if ($al == $bl) {
+            $ax = strtolower($a->getTitle());
+            $bx = strtolower($b->getTitle());
+            if ($ax == $bx) {
                 return 0;
             }
-            return ( $ax > $bx ) ? +1 : -1;
+            return ($ax > $bx) ? +1 : -1;
         }
-        return ( $al > $bl ) ? +1 : -1;
+        return ($al > $bl) ? +1 : -1;
     }
 
 }

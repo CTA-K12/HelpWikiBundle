@@ -24,5 +24,13 @@ class MesdHelpWikiExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+
+        if (isset($config['form_types'])) {
+            $formTypes = $config['form_types'];
+            foreach ($formTypes as $k => $v) {
+                $container->setParameter('mesd_help_wiki.' . $k, $v);
+            }
+        }
     }
+
 }
