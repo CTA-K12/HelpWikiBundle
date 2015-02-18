@@ -15,6 +15,7 @@
  * @license    <http://opensource.org/licenses/MIT> MIT
  * @author     Curtis G Hanson <chanson@mesd.k12.or.us>
  * @version    0.1.0
+ * @deprecated This file is not used and will be removed in future versions
  */
 namespace Mesd\HelpWikiBundle\Controller;
 

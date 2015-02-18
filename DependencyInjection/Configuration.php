@@ -34,10 +34,10 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('mesd_help_wiki')
+        $rootNode = $treeBuilder->root('mesd_help_wiki');
+            /*
             ->addDefaultsIfNotSet()
             ->children()
-            /*
                 permissions:
                     manage_all:
                     manage_permissions:
@@ -98,9 +98,9 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-                */
             ->end()
         ;
+                */
 
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for
@@ -112,6 +112,20 @@ class Configuration implements ConfigurationInterface
         // jquery_ui_lib:
         // select_box_form_type:
         // textarea_form_type:
+        $rootNode
+            ->children()
+                ->arrayNode('form_types')
+                    ->children()
+                        ->scalarNode('wysiwyg_editor')
+                            ->defaultValue('mesd_help_wiki_ckeditor')
+                        ->end()
+                        ->scalarNode('selectbox_editor')
+                            ->defaultValue('mesd_help_wiki_select2')
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
 
         return $treeBuilder;
     }

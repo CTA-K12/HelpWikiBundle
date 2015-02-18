@@ -1,9 +1,9 @@
 {% extends 'MesdHelpWikiBundle:Default:index.html.twig' %}
-{% set subtitle = 'Order Pages' %}
+{% set subtitle = 'order.pages'|trans %}
 
 {% block contentBody %}
 
-    <h2>Table of Contents</h2>
+    <h2>{{ 'table.of.contents'|trans }}</h2>
     <div id="foobar" class="dd">
         {% set i = 0 %}
         {{ _self.tree(entities) }}

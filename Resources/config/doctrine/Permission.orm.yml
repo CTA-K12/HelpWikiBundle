@@ -1,7 +1,14 @@
 Mesd\HelpWikiBundle\Entity\Permission:
     type:            entity
-    table:           helpwiki_permission
+    table:           mesd_helpwiki_permission
     repositoryClass: Mesd\HelpWikiBundle\Entity\PermissionRepository
+    indexes:
+        mesd_helpwiki_permission_page_id_idx:
+            columns: [page_id]
+        mesd_helpwiki_permission_role_id_idx:
+            columns: [role_id]
+        mesd_helpwiki_permission_permission_type_id_idx:
+            columns: [permission_type_id]
     id:
         id:
             id:   true
@@ -9,9 +16,9 @@ Mesd\HelpWikiBundle\Entity\Permission:
             generator:
                 strategy: AUTO
             sequenceGenerator:
-                sequenceName:   helpwiki_permission_id_seq
+                sequenceName:   mesd_helpwiki_permission_id_seq
                 initialValue:   1
-                allocationSize: 10
+                allocationSize: 1
     fields:
     manyToOne:
         page:

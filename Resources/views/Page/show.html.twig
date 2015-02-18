@@ -2,19 +2,41 @@
 {% set pageTitle = entity.title %}
 
 {% block contentBody %}
+{{ entity.body|raw }}
+{% endblock contentBody %}
 
-    {{ entity.body|raw }}
-
-    <section class="page-detail text-right" id ="page-detail">
+{% block contentFooter %}
+    <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#comments" aria-expanded="false" aria-controls="collapseExample">{{ 'comments'|trans }}</button>
+    <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#page-detail" aria-expanded="false" aria-controls="collapseExample">{{ 'page.details'|trans }}</button>
+    
+    <section id ="page-detail" class="page-detail collapse alert alert-info text-align-left">
+        <strong>{{ 'page.details'|trans }}</strong>
         <em>
             <small>
-                Updated by <strong>{{ entity.user }}</strong> on <strong>{{ entity.dateTime|date('Y-m-d h:i a') }}</strong>.
-                Revision <strong>{{ entity.revision }}</strong>; Chapter <strong>{{ entity.parent }}</strong>; Page <strong>{{ entity.printOrder }}</strong>.
+                {{ 'updated.by.user.on.datetime'|trans({'%user%': entity.user, '%datetime%': entity.dateTime|date('Y-m-d h:i a')}) }}
+                {#{{ 'updated.by'|trans }} <strong>{{ entity.user }}</strong> {{ 'on'|trans }} <strong>{{ entity.dateTime|date('Y-m-d h:i a') }}</strong>.#}
+            </small>
+            <small>
+                {{ 'revision.revnum.chapter.chapternum.page.pagenum'|trans({'%revnum%': entity.revision, '%chapternum%': entity.parent, '%pagenum%': entity.printOrder}) }}
+                {#{{ 'revision'|trans }} <strong>{{ entity.revision }}</strong>;
+                {{ 'chapter'|trans }} <strong>{{ entity.parent }}</strong>;
+                {{ 'page'|trans }} <strong>{{ entity.printOrder }}</strong>.#}
             </small>
         </em>
+        <dl class="dl-horizontal">
+            <dt>{{ 'last.updated'|trans }}</dt>
+            <dd>{{ entity.dateTime|date('m/d/Y') ~ ' at ' ~ entity.dateTime|date('h:i a') }}</dd>
+            <dt>{{ 'updated.by'|trans }}</dt>
+            <dd>{{ entity.user }}</dd>
+            <dt>{{ 'revision'|trans }}</dt>
+            <dd>{{ entity.revision }}</dd>
+            <dt>{{ 'chapter.page'|trans }}</dt>
+            <dd>{{ entity.parent }}</dd>
+            <dt>{{ 'page.number'|trans }}</dt>
+            <dd>{{ entity.printOrder }}</dd>
+        </dl>
     </section>
-    <hr />
-    <section class="comments" id="comments">
+    <section id="comments" class="comments collapse text-align-left">
         <div class="comments-list" id="comments-list">
             {{ render(controller('MesdHelpWikiBundle:Comment:indexByPage', {
                 'pageId': entity.id
@@ -28,21 +50,18 @@
         </div>
     </section>
 
-{% endblock contentBody %}
+{% endblock contentFooter %}
 
 {% block toolbarTopRightContent %}
     <div class="btn-group pull-right">
         <a href="#" class="btn btn-xs btn-default">
-            <span class="fa fa-search"></span>
-            Detail
+            <span class="fa fa-search"></span>&nbsp; {{ 'detail'|trans }}
         </a>
         <a href="{{ path('history_page', { 'id': entity.id }) }}" class="btn btn-xs btn-default">
-            <span class="fa fa-clock-o"></span>
-            History
+            <span class="fa fa-clock-o"></span>&nbsp; {{ 'history'|trans }}
         </a>
         <a href="{{ path('page_edit', { 'id': entity.id }) }}" class="btn btn-xs btn-default">
-            <span class="fa fa-pencil"></span>
-            Edit
+            <span class="fa fa-pencil"></span>&nbsp; {{ 'edit'|trans }}
         </a>
     </div>
 {% endblock toolbarTopRightContent %}
@@ -50,19 +69,19 @@
 {% block toolbarBottomContent %}
     <div class="row hidden-xs">
         <div class="col-sm-1-12-3 text-left">
-            <a href="#" class="btn btn-default btn-xs"><span class="fa fa-arrow-circle-left"></span> Prev</a>
+            <a href="#" class="btn btn-default btn-xs"><span class="fa fa-arrow-circle-left"></span>&nbsp; {{ 'previous'|trans }}</a>
         </div>
         <div class="col-sm-1-12-3 text-center">
-            <a href="#" class="btn btn-default btn-xs"><span class="fa fa-arrow-circle-up"></span> Up</a>
+            <a href="#" class="btn btn-default btn-xs"><span class="fa fa-arrow-circle-up"></span>&nbsp; {{ 'up'|trans }}</a>
         </div>
         <div class="col-sm-1-12-3 text-right">
-            <a href="#" title="" class="btn btn-default btn-xs">Next <span class="fa fa-arrow-circle-right"></span></a>
+            <a href="#" title="" class="btn btn-default btn-xs">{{ 'next'|trans }} &nbsp;<span class="fa fa-arrow-circle-right"></span></a>
         </div>
     </div>
     <div class="btn-group btn-group-justified visible-xs">
-        <a href="#" class="btn btn-default btn-xs" title="Previous"><span class="fa fa-arrow-circle-left"></span></a>
-        <a href="#" class="btn btn-default btn-xs" title="Up"><span class="fa fa-arrow-circle-up"></span></a>
-        <a href="" title="" class="btn btn-default btn-xs" title="Next"><span class="fa fa-arrow-circle-right"></span></a>
+        <a href="#" class="btn btn-default btn-xs" title="{{ 'previous'|trans }}"><span class="fa fa-arrow-circle-left"></span></a>
+        <a href="#" class="btn btn-default btn-xs" title="{{ 'up'|trans }}"><span class="fa fa-arrow-circle-up"></span></a>
+        <a href="" title="" class="btn btn-default btn-xs" title="{{ 'next'|trans }}"><span class="fa fa-arrow-circle-right"></span></a>
     </div>
 {% endblock toolbarBottomContent %}
 

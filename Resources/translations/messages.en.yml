@@ -1,0 +1,16 @@
+# messages.en.yml
+# English
+welcome:
+    user:           Welcome %name%
+add.comment:        Add Comment
+body:               Body
+choose.parent.page: Choose Parent Page
+comment:            Comment
+comments:           Comments
+create:             Create
+help.wiki:
+    home:           HelpWiki Home
+home:               Home
+parent.page:        Parent Page
+slug:               Slug
+title:              Title

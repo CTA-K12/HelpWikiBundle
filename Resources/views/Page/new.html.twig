@@ -1,5 +1,5 @@
 {% extends 'MesdHelpWikiBundle:Default:index.html.twig' %}
-{% set subtitle = 'New Page' %}
+{% set subtitle = 'new.page'|trans %}
 
 {% block contentBody %}
 
@@ -8,11 +8,11 @@
 
         <div class="row">
             <div class="form-group col-sm-1-1">
-                {{ form_label(form.title, 'Title') }}
+                {{ form_label(form.title, 'title'|trans) }}
                 {{ form_errors(form.title) }}
                 {{ form_widget(form.title, { 'attr': {
                     'class': 'form-control',
-                    'placeholder': 'Title',
+                    'placeholder': 'title'|trans,
                     'tabindex': 1,
                 } }) }}
             </div>
@@ -20,11 +20,11 @@
 
         <div class="row">
             <div class="form-group col-sm-1-1">
-                {{ form_label(form.slug, 'Slug') }}
+                {{ form_label(form.slug, 'slug'|trans) }}
                 {{ form_errors(form.slug) }}
                 {{ form_widget(form.slug, { 'attr': {
                     'class': 'form-control',
-                    'placeholder': 'Slug',
+                    'placeholder': 'slug'|trans,
                     'tabindex': 1,
                 } }) }}
             </div>
@@ -32,7 +32,7 @@
 
         <div class="row">
             <div class="form-group col-sm-1-1">
-                {{ form_label(form.body, 'Body') }}
+                {{ form_label(form.body, 'body'|trans) }}
                 {{ form_errors(form.body) }}
                 {{ form_widget(form.body) }}
             </div>
@@ -40,13 +40,12 @@
 
         <div class="row">
             <div class="form-group col-sm-1-1">
-                {{ form_label(form.parent, 'Parent Page') }}
+                {{ form_label(form.parent, 'parent.page'|trans) }}
                 {{ form_errors(form.parent) }}
                 {{ form_widget(form.parent, {
-                    'empty_value' : 'Choose a parent page',
+                    'empty_value' : 'choose.parent.page'|trans,
                     'attr': {
                         'class': 'form-control',
-                        'placeholder': 'Page Title',
                         'tabindex': 1,
                     }
                 }) }}
@@ -57,6 +56,7 @@
             <div class="form-group col-sm-1-6 col-sm-offset-5-6">
                 {{ form_widget(form.save, { 'attr': {
                     'class': 'form-control btn btn-default',
+                    'label': 'create'|trans,
                     'tabindex': 4,
                 } }) }}
             </div>

@@ -41,7 +41,7 @@ class CommentController extends Controller
     /**
      * Lists all Comment entities.
      *
-     * @return unknown
+     * @return $this
      */
     public function indexAction()
     {

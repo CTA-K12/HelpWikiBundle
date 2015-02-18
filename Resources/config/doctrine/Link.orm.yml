@@ -1,7 +1,10 @@
 Mesd\HelpWikiBundle\Entity\Link:
     type:            entity
-    table:           helpwiki_link
+    table:           mesd_helpwiki_link
     repositoryClass: Mesd\HelpWikiBundle\Entity\LinkRepository
+    indexes:
+        mesd_helpwiki_link_page_id_idx:
+            columns: [page_id]
     id:
         id:
             id:   true
@@ -9,16 +12,18 @@ Mesd\HelpWikiBundle\Entity\Link:
             generator:
                 strategy: AUTO
             sequenceGenerator:
-                sequenceName:   helpwiki_link_id_seq
+                sequenceName:   mesd_helpwiki_link_id_seq
                 initialValue:   1
-                allocationSize: 10
+                allocationSize: 1
     fields:
         routeAlias:
             column:   route_alias
             type:     string
             length:   255
             nullable: false
-            unique:   true
+    uniqueConstraints:
+        mesd_helpwiki_link_route_alias_unique_idx:
+            columns: [route_alias]
     manyToOne:
         page:
             targetEntity: Page

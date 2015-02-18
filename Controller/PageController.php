@@ -54,9 +54,8 @@ class PageController extends Controller
         $entities = $em->getRepository('MesdHelpWikiBundle:Page')->findByParent(null);
 
         usort($entities, array($this, 'cmp_obj'));
-
         //$child = $entities[1]->getChildren()->toArray();
-        
+
         return $this->render('MesdHelpWikiBundle:Page:index.html.twig', array(
             'entities' => $entities,
         ));
@@ -111,7 +110,7 @@ class PageController extends Controller
      */
     private function createCreateForm(Page $entity)
     {
-        $form = $this->createForm(new PageType($entity), $entity, array(
+        $form = $this->createForm('mesd_help_wiki_page', $entity, array(
             'action' => $this->generateUrl('page_create'),
             'method' => 'POST',
         ));
@@ -186,18 +185,17 @@ class PageController extends Controller
     */
     public function editAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity      = $em->getRepository('MesdHelpWikiBundle:Page')->find($id);
+        $em     = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('MesdHelpWikiBundle:Page')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Page entity.');
-        } else if (false === $this->isGrantedAction($entity, 'VIEW_ONLY')) {
+        }
+        else if (false === $this->isGrantedAction($entity, 'VIEW_ONLY')) {
             throw new AccessDeniedException();
         }
 
-
-        $editForm = $this->createEditForm($entity);
+        $editForm   = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
         $title = 'Edit ' . preg_replace('/\s*?\bpages?\b\s*?$/i', '', $entity->getTitle()) . ' Page';
@@ -251,7 +249,7 @@ class PageController extends Controller
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
+        $editForm   = $this->createEditForm($entity);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
@@ -280,7 +278,7 @@ class PageController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $em     = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('MesdHelpWikiBundle:Page')->find($id);
 
             if (!$entity) {
@@ -303,7 +301,8 @@ class PageController extends Controller
     */
     private function createDeleteForm($id)
     {
-        return $this->createFormBuilder()
+        return $this
+            ->createFormBuilder()
             ->setAction($this->generateUrl('page_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
@@ -318,7 +317,7 @@ class PageController extends Controller
     */
     public function editOrderAction()
     {
-        $em = $this->getDoctrine()->getManager();
+        $em       = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('MesdHelpWikiBundle:Page')->findByParent(null);
 
@@ -341,8 +340,7 @@ class PageController extends Controller
         // get all permissions for page
         // for each one, make sure no one's attempting to
         // access the edit screen who doesn't have permission
-        $em = $this->getDoctrine()->getManager();
-
+        $em          = $this->getDoctrine()->getManager();
         $permissions = $em->getRepository('MesdHelpWikiBundle:Permission')->findByPage($entity->getId());
 
         foreach ($permissions as $permission) {
@@ -364,7 +362,7 @@ class PageController extends Controller
     * @return integer
     * @todo   There has to be a better way to handle this
     */
-    static function cmp_obj($a, $b)
+    static function cmp_obj(Page $a, Page $b)
     {
         $al = strtolower($a->getPrintOrder());
         $bl = strtolower($b->getPrintOrder());
@@ -372,14 +370,11 @@ class PageController extends Controller
         if ($al == $bl) {
             $ax = strtolower($a->getTitle());
             $bx = strtolower($b->getTitle());
-
             if ($ax == $bx) {
                 return 0;
             }
-
             return ($ax > $bx) ? +1 : -1;
         }
-
         return ($al > $bl) ? +1 : -1;
     }
 
