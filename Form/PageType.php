@@ -18,51 +18,60 @@ class PageType extends AbstractType
 
     private $page;
 
-    public function __construct( Page $page ) {
+    public function __construct(Page $page) {
         $this->page = $page;
     }
 
     /**
+     * Build Form
      *
+     * Build a page form type form.
      *
      * @param FormBuilderInterface $builder
      * @param array   $options
      */
-    public function buildForm( FormBuilderInterface $builder, array $options ) {
+    public function buildForm(FormBuilderInterface $builder, array $options) {
         $transformer = new HeadingToPermalinkTransformer();
 
         $builder
-        ->add( 'title' )
-        ->add( 'slug' )
-        ->add(
-            $builder->create( 'body', 'ckeditor', array() )
-            ->addModelTransformer( $transformer )
-        );
+            ->add('title')
+            ->add('slug')
+            ->add(
+                $builder
+                    ->create('body', 'mesd_form_type_ckeditor', array())
+                    ->addModelTransformer($transformer)
+                )
+        ;
 
         $pageId = $this->page->getId();
 
-        if ( !$pageId ) {
-            $builder->add( 'parent' )
-            ->add(
-                $builder->create( 'body', 'ckeditor', array() )
-                ->addModelTransformer( $transformer )
-            );
+        if (!$pageId) {
+            $builder
+                ->add('parent')
+                ->add(
+                    $builder
+                        ->create('body', 'mesd_form_type_ckeditor', array())
+                        ->addModelTransformer($transformer)
+                )
+            ;
         } else {
             $builder->add(
-                $builder->create( 'body', 'ckeditor', array() )
-                ->addModelTransformer( $transformer, $this->page->getSlug() )
+                $builder
+                    ->create('body', 'mesd_form_type_ckeditor', array())
+                    ->addModelTransformer($transformer, $this->page->getSlug())
             );
+
             $builder->addEventListener(
                 FormEvents::PRE_SET_DATA,
-                function( FormEvent $event ) use ( $pageId ) {
+                function(FormEvent $event) use ($pageId) {
                     $form = $event->getForm();
 
                     $formOptions = array(
                         'class'         => 'Mesd\HelpWikiBundle\Entity\Page',
                         'property'      => 'title',
                         'required'      => false,
-                        'query_builder' => function( EntityRepository $er ) use ( $pageId ) {
-                            return $er->getPagesNotEqualToPage( $pageId );
+                        'query_builder' => function(EntityRepository $er) use ($pageId) {
+                            return $er->getPagesNotEqualToPage($pageId);
                             // build a custom query
                             // return $er->createQueryBuilder('u')->addOrderBy('fullName', 'DESC');
 
@@ -70,30 +79,33 @@ class PageType extends AbstractType
                             // the $er is an instance of your UserRepository
                             // return $er->createOrderByFullNameQueryBuilder();
                         },
-                    );
+                   );
 
                     // create the field, this is similar the $builder->add()
                     // field name, field type, data, options
-                    $form->add( 'parent', 'entity', $formOptions );
+                    $form->add('parent', 'entity', $formOptions);
                 }
-            );
+           );
         }
     }
 
     /**
+     * Set Default Options
      *
+     * Set the entity linked to the data class
      *
      * @param OptionsResolverInterface $resolver
      */
-    public function setDefaultOptions( OptionsResolverInterface $resolver ) {
-        $resolver->setDefaults( array(
-                'data_class' => 'Mesd\HelpWikiBundle\Entity\Page'
-            )
-        );
+    public function setDefaultOptions(OptionsResolverInterface $resolver) {
+        $resolver->setDefaults(array(
+            'data_class' => 'Mesd\HelpWikiBundle\Entity\Page'
+        ));
     }
 
     /**
+     * Get Name
      *
+     * Get the name of the page form type service
      *
      * @return string
      */

@@ -202,7 +202,7 @@ class PageListener
             $en = $em->getRepository('MesdHelpWikiBundle:Page')->find(1);
         }
         // All route parameters including the `_controller`
-        $params      = $request->attributes->get('_route_params');
+        $params = $request->attributes->get('_route_params');
 
     }
 }

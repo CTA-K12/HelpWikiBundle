@@ -4,8 +4,8 @@ Mesd\HelpWikiBundle\Entity\History:
     repositoryClass: Mesd\HelpWikiBundle\Entity\HistoryRepository
     id:
         id:
-            type: integer
             id:   true
+            type: integer
             generator:
                 strategy: AUTO
             sequenceGenerator:

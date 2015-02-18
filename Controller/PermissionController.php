@@ -1,12 +1,21 @@
 <?php
 /**
- * /tmp/phptidy-sublime-buffer.php
+ * PermissionController.php file
  *
- * @author Morgan Estes <morgan.estes@gmail.com>
- * @package default
+ * File that contains the permissions controller class
+ *
+ * Licence MIT
+ * Copyright (c) 2014 Multnomah Education Service District <http://www.mesd.k12.or.us>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ * 
+ * @filesource /src/Mesd/HelpWikiBundle/Controller/PermissionController.php
+ * @package    Mesd\HelpWikiBundle\Controller
+ * @copyright  2014 (c) Multnomah Education Service District <http://www.mesd.k12.or.us>
+ * @license    <http://opensource.org/licenses/MIT> MIT
+ * @author     Curtis G Hanson <chanson@mesd.k12.or.us>
+ * @version    0.1.0
  */
-
-
 namespace Mesd\HelpWikiBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -31,12 +40,12 @@ class PermissionController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository( 'MesdHelpWikiBundle:Permission' )->findAll();
+        $entities = $em->getRepository('MesdHelpWikiBundle:Permission')->findAll();
 
-        return $this->render( 'MesdHelpWikiBundle:Permission:index.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Permission:index.html.twig', array(
                 'entities' => $entities,
-            )
-        );
+           )
+       );
     }
 
     /**
@@ -45,25 +54,25 @@ class PermissionController extends Controller
      * @param object  $request
      * @return unknown
      */
-    public function createAction( Request $request )
+    public function createAction(Request $request)
     {
         $entity = new Permission();
-        $form = $this->createCreateForm( $entity );
-        $form->handleRequest( $request );
+        $form = $this->createCreateForm($entity);
+        $form->handleRequest($request);
 
-        if ( $form->isValid() ) {
+        if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist( $entity );
+            $em->persist($entity);
             $em->flush();
 
-            return $this->redirect( $this->generateUrl( 'permission_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('permission_show', array('id' => $entity->getId())));
         }
 
-        return $this->render( 'MesdHelpWikiBundle:Permission:new.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Permission:new.html.twig', array(
                 'entity' => $entity,
                 'form'   => $form->createView(),
-            )
-        );
+           )
+       );
     }
 
     /**
@@ -73,16 +82,16 @@ class PermissionController extends Controller
      * @param object  $entity The entity
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm( Permission $entity )
+    private function createCreateForm(Permission $entity)
     {
-        $form = $this->createForm( new PermissionType(), $entity, array(
-                'action' => $this->generateUrl( 'permission_create' ),
+        $form = $this->createForm(new PermissionType(), $entity, array(
+                'action' => $this->generateUrl('permission_create'),
                 'method' => 'POST',
-            )
-        );
+           )
+       );
 
-        $form->add( 'submit', 'submit', array( 'label' => 'Create')
-        );
+        $form->add('submit', 'submit', array('label' => 'Create')
+       );
 
         return $form;
     }
@@ -95,13 +104,13 @@ class PermissionController extends Controller
     public function newAction()
     {
         $entity = new Permission();
-        $form   = $this->createCreateForm( $entity );
+        $form   = $this->createCreateForm($entity);
 
-        return $this->render( 'MesdHelpWikiBundle:Permission:new.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Permission:new.html.twig', array(
                 'entity' => $entity,
                 'form'   => $form->createView(),
-            )
-        );
+           )
+       );
     }
 
     /**
@@ -110,23 +119,23 @@ class PermissionController extends Controller
      * @param unknown $id
      * @return unknown
      */
-    public function showAction( $id )
+    public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository( 'MesdHelpWikiBundle:Permission' )->find( $id );
+        $entity = $em->getRepository('MesdHelpWikiBundle:Permission')->find($id);
 
-        if ( !$entity ) {
-            throw $this->createNotFoundException( 'Unable to find Permission entity.' );
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Permission entity.');
         }
 
-        $deleteForm = $this->createDeleteForm( $id );
+        $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render( 'MesdHelpWikiBundle:Permission:show.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Permission:show.html.twig', array(
                 'entity'      => $entity,
                 'delete_form' => $deleteForm->createView(),
-            )
-        );
+           )
+       );
     }
 
     /**
@@ -135,25 +144,25 @@ class PermissionController extends Controller
      * @param unknown $id
      * @return unknown
      */
-    public function editAction( $id )
+    public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository( 'MesdHelpWikiBundle:Permission' )->find( $id );
+        $entity = $em->getRepository('MesdHelpWikiBundle:Permission')->find($id);
 
-        if ( !$entity ) {
-            throw $this->createNotFoundException( 'Unable to find Permission entity.' );
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Permission entity.');
         }
 
-        $editForm = $this->createEditForm( $entity );
-        $deleteForm = $this->createDeleteForm( $id );
+        $editForm = $this->createEditForm($entity);
+        $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render( 'MesdHelpWikiBundle:Permission:edit.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Permission:edit.html.twig', array(
                 'entity'      => $entity,
                 'edit_form'   => $editForm->createView(),
                 'delete_form' => $deleteForm->createView(),
-            )
-        );
+           )
+       );
     }
 
     /**
@@ -163,16 +172,16 @@ class PermissionController extends Controller
      * @param object  $entity The entity
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createEditForm( Permission $entity )
+    private function createEditForm(Permission $entity)
     {
-        $form = $this->createForm( new PermissionType(), $entity, array(
-                'action' => $this->generateUrl( 'permission_update', array( 'id' => $entity->getId() ) ),
+        $form = $this->createForm(new PermissionType(), $entity, array(
+                'action' => $this->generateUrl('permission_update', array('id' => $entity->getId())),
                 'method' => 'PUT',
-            )
-        );
+           )
+       );
 
-        $form->add( 'submit', 'submit', array( 'label' => 'Update')
-        );
+        $form->add('submit', 'submit', array('label' => 'Update')
+       );
 
         return $form;
     }
@@ -184,33 +193,33 @@ class PermissionController extends Controller
      * @param unknown $id
      * @return unknown
      */
-    public function updateAction( Request $request, $id )
+    public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository( 'MesdHelpWikiBundle:Permission' )->find( $id );
+        $entity = $em->getRepository('MesdHelpWikiBundle:Permission')->find($id);
 
-        if ( !$entity ) {
-            throw $this->createNotFoundException( 'Unable to find Permission entity.' );
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Permission entity.');
         }
 
-        $deleteForm = $this->createDeleteForm( $id );
-        $editForm = $this->createEditForm( $entity );
-        $editForm->handleRequest( $request );
+        $deleteForm = $this->createDeleteForm($id);
+        $editForm = $this->createEditForm($entity);
+        $editForm->handleRequest($request);
 
-        if ( $editForm->isValid() ) {
+        if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect( $this->generateUrl( 'permission_edit', array( 'id' => $id ))
-            );
+            return $this->redirect($this->generateUrl('permission_edit', array('id' => $id))
+           );
         }
 
-        return $this->render( 'MesdHelpWikiBundle:Permission:edit.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Permission:edit.html.twig', array(
                 'entity'      => $entity,
                 'edit_form'   => $editForm->createView(),
                 'delete_form' => $deleteForm->createView(),
-            )
-        );
+           )
+       );
     }
 
     /**
@@ -220,25 +229,25 @@ class PermissionController extends Controller
      * @param unknown $id
      * @return unknown
      */
-    public function deleteAction( Request $request, $id )
+    public function deleteAction(Request $request, $id)
     {
-        $form = $this->createDeleteForm( $id );
-        $form->handleRequest( $request );
+        $form = $this->createDeleteForm($id);
+        $form->handleRequest($request);
 
-        if ( $form->isValid() ) {
+        if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository( 'MesdHelpWikiBundle:Permission' )->find( $id );
+            $entity = $em->getRepository('MesdHelpWikiBundle:Permission')->find($id);
 
-            if ( !$entity ) {
-                throw $this->createNotFoundException( 'Unable to find Permission entity.' );
+            if (!$entity) {
+                throw $this->createNotFoundException('Unable to find Permission entity.');
             }
 
-            $em->remove( $entity );
+            $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect( $this->generateUrl( 'permission')
-        );
+        return $this->redirect($this->generateUrl('permission')
+       );
     }
 
     /**
@@ -248,12 +257,12 @@ class PermissionController extends Controller
      * @param mixed   $id The entity id
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm( $id )
+    private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-        ->setAction( $this->generateUrl( 'permission_delete', array( 'id' => $id ) ) )
-        ->setMethod( 'DELETE' )
-        ->add( 'submit', 'submit', array( 'label' => 'Delete' ) )
+        ->setAction($this->generateUrl('permission_delete', array('id' => $id)))
+        ->setMethod('DELETE')
+        ->add('submit', 'submit', array('label' => 'Delete'))
         ->getForm()
         ;
     }

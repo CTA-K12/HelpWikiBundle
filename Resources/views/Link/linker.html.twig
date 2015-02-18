@@ -9,13 +9,25 @@
         Help
     </a>
 {% else %}
-    <a
-        href="{{ path('link_new_by_route', { 'route': route|lower }) }}"
-        class="btn btn-xs btn-default pull-right"
-        target="_blank"
-        title="create a new help wiki for this page"
-    >
-        <span class="fa fa-plus-circle"></span>
-        New HelpWiki Page
-    </a>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a
+            href="{{ path('link_new_by_route', { 'route': route|lower }) }}"
+            class="btn btn-xs btn-default pull-right"
+            target="_blank"
+            title="create a new help wiki for this page"
+        >
+            <span class="fa fa-plus-circle"></span>
+            New HelpWiki Page
+        </a>
+    {% else %}
+        <a
+            href="#"
+            class="btn btn-xs btn-default pull-right"
+            title="{{ 'no.help.has.been.defined.for.this.screen'|trans }}"
+            disabled="disabled"
+        >
+            <span class="fa fa-minus-circle"></span>
+            No Help Defined
+        </a>
+    {% endif %}
 {% endif %}

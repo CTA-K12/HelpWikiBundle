@@ -4,8 +4,8 @@ Mesd\HelpWikiBundle\Entity\Link:
     repositoryClass: Mesd\HelpWikiBundle\Entity\LinkRepository
     id:
         id:
-            type: integer
             id:   true
+            type: integer
             generator:
                 strategy: AUTO
             sequenceGenerator:

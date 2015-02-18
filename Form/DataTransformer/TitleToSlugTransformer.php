@@ -24,7 +24,7 @@ class HeadingToPermalinkTransformer implements DataTransformerInterface
     {
         // data from database
         // don't do anything. i don't give a shit
-        // return $html;
+        //return $html;
 
         $html = '';
         $slug = empty($slug) ? '' : self::camelCase($slug);

@@ -1,12 +1,21 @@
 <?php
 /**
- * /tmp/phptidy-sublime-buffer.php
+ * LinkController.php file
  *
- * @author Morgan Estes <morgan.estes@gmail.com>
- * @package default
+ * File that contains the page link controller class
+ *
+ * Licence MIT
+ * Copyright (c) 2014 Multnomah Education Service District <http://www.mesd.k12.or.us>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ * 
+ * @filesource /src/Mesd/HelpWikiBundle/Controller/LinkController.php
+ * @package    Mesd\HelpWikiBundle\Controller
+ * @copyright  2014 (c) Multnomah Education Service District <http://www.mesd.k12.or.us>
+ * @license    <http://opensource.org/licenses/MIT> MIT
+ * @author     Curtis G Hanson <chanson@mesd.k12.or.us>
+ * @version    0.1.0
  */
-
-
 namespace Mesd\HelpWikiBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -285,19 +294,19 @@ class LinkController extends Controller
      * @param unknown $route
      * @return unknown
      */
-    public function isLinkedAction( $route )
+    public function isLinkedAction($route)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $link = $em->getRepository( 'MesdHelpWikiBundle:Link' )->findOneByRouteAlias( $route );
+        $link = $em->getRepository('MesdHelpWikiBundle:Link')->findOneByRouteAlias($route);
 
-        if ( !$link ) {
-            return $this->render( 'MesdHelpWikiBundle:Link:linker.html.twig', array(
+        if (!$link) {
+            return $this->render('MesdHelpWikiBundle:Link:linker.html.twig', array(
                     'route' => $route,
                 )
             );
         }
-        return $this->render( 'MesdHelpWikiBundle:Link:linker.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Link:linker.html.twig', array(
                 'route' => $route,
                 'link' => $link,
             )

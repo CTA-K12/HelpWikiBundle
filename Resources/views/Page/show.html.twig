@@ -1,25 +1,17 @@
-{% extends 'MesdHelpWikiBundle:Default:index.html.twig' %}
+{% extends '::index.html.twig' %}
+{% set pageTitle = entity.title %}
 
 {% block contentBody %}
 
-    <hr />
     {{ entity.body|raw }}
 
-    <hr />
-    <section class="page-detail" id ="page-detail">
-        <h2>Page Details</h2>
-        <dl class="dl-horizontal">
-            <dt>Last Updated</dt>
-            <dd>{{ entity.dateTime|date('m/d/Y') ~ ' at ' ~ entity.dateTime|date('h:i a') }}</dd>
-            <dt>Updated By</dt>
-            <dd>{{ entity.user }}</dd>
-            <dt>Revision</dt>
-            <dd>{{ entity.revision }}</dd>
-            <dt>Chapter Page</dt>
-            <dd>{{ entity.parent }}</dd>
-            <dt>Page Number</dt>
-            <dd>{{ entity.printOrder }}</dd>
-        </dl>
+    <section class="page-detail text-right" id ="page-detail">
+        <em>
+            <small>
+                Updated by <strong>{{ entity.user }}</strong> on <strong>{{ entity.dateTime|date('Y-m-d h:i a') }}</strong>.
+                Revision <strong>{{ entity.revision }}</strong>; Chapter <strong>{{ entity.parent }}</strong>; Page <strong>{{ entity.printOrder }}</strong>.
+            </small>
+        </em>
     </section>
     <hr />
     <section class="comments" id="comments">
@@ -73,3 +65,64 @@
         <a href="" title="" class="btn btn-default btn-xs" title="Next"><span class="fa fa-arrow-circle-right"></span></a>
     </div>
 {% endblock toolbarBottomContent %}
+
+{% block sidebarInner %}
+    {% if is_granted('ROLE_ADMIN') %}
+        {{ render(controller('MesdPresentationBundle:Default:sidebar',
+            { 'route': app.request.get('_route'),
+              'options': { 'type': '' },
+              'menu': {
+                'Pages': {
+                    'text': 'pages'|trans,
+                    'path': path('page'),
+                    'title': 'Help Wiki Pages',
+                    'icon': 'fa-files-o'
+                },
+                'Comments': {
+                    'text': 'comments'|trans,
+                    'path': path('comment'),
+                    'title': 'Help Wiki Comments',
+                    'icon': 'fa-comments-o'
+                },
+                'Links': {
+                    'text': 'links'|trans,
+                    'path': path('link'),
+                    'title': 'Help Wiki Links',
+                    'icon': 'fa-link'
+                },
+                'History': {
+                    'text': 'history'|trans,
+                    'path': path('history'),
+                    'title': 'Help Wiki History',
+                    'icon': 'fa-clock-o'
+                },
+                'Permissions': {
+                    'text': 'permissions'|trans,
+                    'path': path('permission'),
+                    'title': 'Help Wiki Permissions',
+                    'icon': 'fa-ban'
+                },
+                'Permission Types': {
+                    'text': 'types'|trans,
+                    'path': path('permissiontype'),
+                    'title': 'Help Wiki Permission Types',
+                    'icon': 'fa-tags'
+                },
+            }
+        })) }}
+    {% else %}
+        {{ render(controller('MesdPresentationBundle:Default:sidebar',
+            { 'route': app.request.get('_route'),
+              'options': { 'type': '' },
+              'menu': {
+                'Table of Contents': {
+                    'text':   't.o.c'|trans,
+                    'path':   path('page'),
+                    'title':  'Help Wiki Table of Contents',
+                    'icon':   'fa-files-o',
+                    'active': true
+                },
+            }
+        })) }}
+    {% endif %}
+{% endblock sidebarInner %}

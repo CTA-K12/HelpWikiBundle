@@ -4,8 +4,8 @@ Mesd\HelpWikiBundle\Entity\PermissionType:
     repositoryClass: Mesd\HelpWikiBundle\Entity\PermissionTypeRepository
     id:
         id:
-            type: integer
             id:   true
+            type: integer
             generator:
                 strategy: AUTO
             sequenceGenerator:
