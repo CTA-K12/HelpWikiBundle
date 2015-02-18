@@ -1,10 +1,11 @@
 parameters:
-    mesd_help_wiki.page_listener.class:        Mesd\HelpWikiBundle\Listener\PageListener
-    mesd_help_wiki.comment_listener.class:     Mesd\HelpWikiBundle\Listener\CommentListener
-    mesd_help_wiki.form.type.page.class:       Mesd\HelpWikiBundle\Form\PageType
-    #mesd_help_wiki.form.type.pageselect.class: Mesd\HelpWikiBundle\Form\Type\CKEditorType
-    mesd_help_wiki.form.type.ckeditor.class:   Mesd\HelpWikiBundle\Form\Type\CKEditorType
-    #mesd_help_wiki.form.type.select2.class:  Mesd\HelpWikiBundle\Form\Type\Select2Type
+    mesd_help_wiki.page_listener.class:              Mesd\HelpWikiBundle\Listener\PageListener
+    mesd_help_wiki.comment_listener.class:           Mesd\HelpWikiBundle\Listener\CommentListener
+    mesd_help_wiki.form.type.page.class:             Mesd\HelpWikiBundle\Form\PageType
+    mesd_help_wiki.form.type.ckeditor.class:         Mesd\HelpWikiBundle\Form\Type\CKEditorType
+    mesd_help_wiki.security_access.page_voter.class: Mesd\HelpWikiBundle\Security\PageVoter
+    #mesd_help_wiki.form.type.pageselect.class:       Mesd\HelpWikiBundle\Form\Type\PageSelectType
+    #mesd_help_wiki.form.type.select2.class:          Mesd\HelpWikiBundle\Form\Type\Select2Type
 
 services:
     mesd_help_wiki.page_listener:
@@ -32,6 +33,11 @@ services:
         class:     %mesd_help_wiki.form.type.ckeditor.class%
         tags:
             - { name: form.type, alias: mesd_help_wiki_ckeditor }
+    mesd_help_wiki.security_access.page_voter:
+        class:      %mesd_help_wiki.security_access.page_voter.class%
+        public:     false
+        tags:
+           - { name: security.voter }
     #mesd_help_wiki.form.type.select2:
     #    class: %mesd_help_wiki.form.type.select2.class%
     #    tags:

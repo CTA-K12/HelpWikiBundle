@@ -18,16 +18,11 @@ class PageType extends AbstractType
 
     private $page;
 
-<<<<<<< HEAD
-    public function __construct(Page $page) {
-        $this->page = $page;
-=======
     private $formType;
 
     public function __construct($formType)
     {
         $this->formType = $formType;
->>>>>>> a245e9aa27f96e4a47604f5a25bfbdfbef798f09
     }
 
     /**
@@ -38,52 +33,23 @@ class PageType extends AbstractType
      * @param FormBuilderInterface $builder
      * @param array   $options
      */
-<<<<<<< HEAD
-    public function buildForm(FormBuilderInterface $builder, array $options) {
-        $transformer = new HeadingToPermalinkTransformer();
-
-        $builder
-            ->add('title')
-            ->add('slug')
-            ->add(
-                $builder
-                    ->create('body', 'mesd_form_type_ckeditor', array())
-                    ->addModelTransformer($transformer)
-                )
-        ;
-=======
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $transformer = new HeadingToPermalinkTransformer();
 
         $builder
-        ->add('title')
-        ->add('slug')
-        ->add(
-            $builder
+            ->add('title')
+            ->add('slug')
+            ->add($builder
                 ->create( 'body', $this->formType, array())
                 ->addModelTransformer($transformer)
-        );
->>>>>>> a245e9aa27f96e4a47604f5a25bfbdfbef798f09
+            )
+        ;
 
         $this->page = $options['data'];
         $pageId = $this->page->getId();
 
         if (!$pageId) {
-<<<<<<< HEAD
-            $builder
-                ->add('parent')
-                ->add(
-                    $builder
-                        ->create('body', 'mesd_form_type_ckeditor', array())
-                        ->addModelTransformer($transformer)
-                )
-            ;
-        } else {
-            $builder->add(
-                $builder
-                    ->create('body', 'mesd_form_type_ckeditor', array())
-=======
             $builder->add('parent')
             ->add(
                 $builder
@@ -94,7 +60,6 @@ class PageType extends AbstractType
             $builder->add(
                 $builder
                     ->create('body', $this->formType, array())
->>>>>>> a245e9aa27f96e4a47604f5a25bfbdfbef798f09
                     ->addModelTransformer($transformer, $this->page->getSlug())
             );
 
@@ -133,12 +98,8 @@ class PageType extends AbstractType
      *
      * @param OptionsResolverInterface $resolver
      */
-<<<<<<< HEAD
-    public function setDefaultOptions(OptionsResolverInterface $resolver) {
-=======
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
->>>>>>> a245e9aa27f96e4a47604f5a25bfbdfbef798f09
         $resolver->setDefaults(array(
             'data_class' => 'Mesd\HelpWikiBundle\Entity\Page'
         ));
