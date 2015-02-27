@@ -87,8 +87,12 @@ doctrine:
     <doctrine:config>
         <doctrine:orm>
             <!-- ... -->
-            <doctrine:resolve-target-entity interface="Mesd\HelpWikiBundle\Model\UserSubjectInterface">Mesd\Acme\DemoBundle\Entity\AppUser</resolve-target-entity>
-            <doctrine:resolve-target-entity interface="Mesd\HelpWikiBundle\Model\RoleSubjectInterface">Mesd\UserBundle\Entity\AuthRole</resolve-target-entity>
+            <doctrine:resolve-target-entity interface="Mesd\HelpWikiBundle\Model\UserSubjectInterface">
+              Mesd\Acme\DemoBundle\Entity\AppUser
+            </resolve-target-entity>
+            <doctrine:resolve-target-entity interface="Mesd\HelpWikiBundle\Model\RoleSubjectInterface">
+              Mesd\UserBundle\Entity\AuthRole
+            </resolve-target-entity>
         </doctrine:orm>
     </doctrine:config>
 </container>
@@ -109,7 +113,7 @@ $container->loadFromExtension('doctrine', array(
 
 # Showing 'No Help Defined' Button
 
-Add the following config:
+Add the following to the application's config.yml:
 
 ```yaml
 mesd_help_wiki:
