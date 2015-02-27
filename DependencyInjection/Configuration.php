@@ -8,7 +8,7 @@
  * Copyright (c) 2014 Multnomah Education Service District <http://www.mesd.k12.or.us>
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- * 
+ *
  * @filesource /src/Mesd/HelpWikiBundle/DependencyInjection/Configuration.php
  * @package    Mesd\HelpWikiBundle\DependencyInjection
  * @copyright  2014 (c) Multnomah Education Service District <http://www.mesd.k12.or.us>
@@ -47,7 +47,7 @@ class Configuration implements ConfigurationInterface
                     view_pages:
                     view_page_metadata:
                     view_comments:
-                serivces:
+                services:
                     jquery:
                     jquery_ui:
                     select_box:
@@ -105,7 +105,7 @@ class Configuration implements ConfigurationInterface
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for
         // more information on that topic.
-        // 
+        //
         // Configuration Options
         // ---------------------
         // jquery_lib:
@@ -123,6 +123,9 @@ class Configuration implements ConfigurationInterface
                             ->defaultValue('mesd_help_wiki_select2')
                         ->end()
                     ->end()
+                ->end()
+                ->booleanNode('show_no_help')
+                    ->defaultValue(false)
                 ->end()
             ->end()
         ;

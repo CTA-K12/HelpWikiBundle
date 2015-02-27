@@ -3,7 +3,7 @@ HelpWikiBundle
 
 Wiki bundle for adding documentation to pages in an application.
 
-version: `0.0.1`
+version: `0.0.2`
 
 Description
 -----------
@@ -107,6 +107,17 @@ $container->loadFromExtension('doctrine', array(
 ));
 ```
 
+# Showing 'No Help Defined' Button
+
+Add the following config:
+
+```yaml
+mesd_help_wiki:
+    show_no_help: true
+```
+
+The default is faule
+
 # Configure Form Types
 
 ## Configure Select 2 Form Type
@@ -117,7 +128,7 @@ $container->loadFromExtension('doctrine', array(
 
 # Integrating Wiki Pages Into Your Application
 
-The HelpWikiBundle associates 
+The HelpWikiBundle associates
 
 Updating
 --------

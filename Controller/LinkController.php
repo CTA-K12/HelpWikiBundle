@@ -8,7 +8,7 @@
  * Copyright (c) 2014 Multnomah Education Service District <http://www.mesd.k12.or.us>
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- * 
+ *
  * @filesource /src/Mesd/HelpWikiBundle/Controller/LinkController.php
  * @package    Mesd\HelpWikiBundle\Controller
  * @copyright  2014 (c) Multnomah Education Service District <http://www.mesd.k12.or.us>
@@ -300,15 +300,19 @@ class LinkController extends Controller
 
         $link = $em->getRepository('MesdHelpWikiBundle:Link')->findOneByRouteAlias($route);
 
+        $show = $this->container->getParameter('mesd_help_wiki.show_no_help');
+
         if (!$link) {
             return $this->render('MesdHelpWikiBundle:Link:linker.html.twig', array(
-                    'route' => $route,
+                    'route'        => $route,
+                    'show_no_help' => $show,
                 )
             );
         }
         return $this->render('MesdHelpWikiBundle:Link:linker.html.twig', array(
-                'route' => $route,
-                'link' => $link,
+                'route'        => $route,
+                'link'         => $link,
+                'show_no_help' => $show,
             )
         );
     }
