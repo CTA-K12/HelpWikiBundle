@@ -1,6 +1,6 @@
 <?php
 // src/MesdHelpWikiBundle/Security/PageVoter.php
-namespace MesdHelpWikiBundle\Voter;
+namespace Mesd\HelpWikiBundle\Security;
 
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
