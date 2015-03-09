@@ -2,7 +2,7 @@
 
 Wiki bundle for adding documentation to pages in an application.
 
-version: `0.0.1`
+version: `0.0.2`
 
 ## Description
 
@@ -91,8 +91,12 @@ doctrine:
     <doctrine:config>
         <doctrine:orm>
             <!-- ... -->
-            <doctrine:resolve-target-entity interface="Mesd\HelpWikiBundle\Model\UserSubjectInterface">Mesd\Acme\DemoBundle\Entity\AppUser</resolve-target-entity>
-            <doctrine:resolve-target-entity interface="Mesd\HelpWikiBundle\Model\RoleSubjectInterface">Mesd\UserBundle\Entity\AuthRole</resolve-target-entity>
+            <doctrine:resolve-target-entity interface="Mesd\HelpWikiBundle\Model\UserSubjectInterface">
+              Mesd\Acme\DemoBundle\Entity\AppUser
+            </resolve-target-entity>
+            <doctrine:resolve-target-entity interface="Mesd\HelpWikiBundle\Model\RoleSubjectInterface">
+              Mesd\UserBundle\Entity\AuthRole
+            </resolve-target-entity>
         </doctrine:orm>
     </doctrine:config>
 </container>
@@ -110,7 +114,6 @@ $container->loadFromExtension('doctrine', array(
     ),
 ));
 ```
-
 REMEMBER! Permission are tied to the entities by both roles and users. Your application
 must have entities for both and either implement the Symfony interfaces for
 those entities or contain the minimum methods:
@@ -119,6 +122,8 @@ those entities or contain the minimum methods:
   + `User::getUsername()`
   + `Role::getId()`
   + `Role::getRole()`
+
+# Configure Form Types
 
 ### Form Types
 

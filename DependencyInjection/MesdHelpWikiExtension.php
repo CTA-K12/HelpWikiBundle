@@ -8,7 +8,7 @@
  * Copyright (c) 2014 Multnomah Education Service District <http://www.mesd.k12.or.us>
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- * 
+ *
  * @filesource /src/Mesd/HelpWikiBundle/DependencyInjection/MesdHelpWikiExtension.php
  * @package    Mesd\HelpWikiBundle\DependencyInjection
  * @copyright  2014 (c) Multnomah Education Service District <http://www.mesd.k12.or.us>
