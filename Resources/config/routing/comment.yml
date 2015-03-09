@@ -1,30 +1,40 @@
-comment:
+MesdHelpWikiBundle_comment_index:
     pattern:  /
     defaults: { _controller: "MesdHelpWikiBundle:Comment:index" }
 
-comment_show:
+MesdHelpWikiBundle_comment_show:
     pattern:  /{id}/show
     defaults: { _controller: "MesdHelpWikiBundle:Comment:show" }
 
-comment_new:
+MesdHelpWikiBundle_comment_new:
     pattern:  /new
     defaults: { _controller: "MesdHelpWikiBundle:Comment:new" }
 
-comment_create:
+MesdHelpWikiBundle_comment_create:
     pattern:  /{pageId}/create
     defaults: { _controller: "MesdHelpWikiBundle:Comment:create" }
     requirements: { _method: post }
 
-comment_edit:
+MesdHelpWikiBundle_comment_edit:
     pattern:  /{id}/edit
     defaults: { _controller: "MesdHelpWikiBundle:Comment:edit" }
 
-comment_update:
+MesdHelpWikiBundle_comment_update:
     pattern:  /{id}/update
     defaults: { _controller: "MesdHelpWikiBundle:Comment:update" }
     requirements: { _method: post|put }
 
-comment_delete:
+MesdHelpWikiBundle_comment_flag:
+    pattern:  /{id}/flag
+    defaults: { _controller: "MesdHelpWikiBundle:Comment:flag" }
+    requirements: { _method: post|put }
+
+MesdHelpWikiBundle_comment_approve:
+    pattern:  /{id}/approve
+    defaults: { _controller: "MesdHelpWikiBundle:Comment:approve" }
+    requirements: { _method: post|put }
+
+MesdHelpWikiBundle_comment_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "MesdHelpWikiBundle:Comment:delete" }
     requirements: { _method: post|delete }

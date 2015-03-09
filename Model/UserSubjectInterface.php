@@ -1,13 +1,35 @@
 <?php
-// src/Mesd/HelpWikiBundle/Model/UserSubjectInterface.php
-
+/**
+ * UserSubjectInterface.php file
+ *
+ * File that contains the help wiki user subject interface class
+ *
+ * Licence MIT
+ * Copyright (c) 2014 Multnomah Education Service District <http://www.mesd.k12.or.us>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ * 
+ * @filesource /src/Mesd/HelpWikiBundle/Model/UserSubjectInterface.php
+ * @package    Mesd\HelpWikiBundle\Model
+ * @copyright  2014 (c) Multnomah Education Service District <http://www.mesd.k12.or.us>
+ * @license    <http://opensource.org/licenses/MIT> MIT
+ * @author     Curtis G Hanson <chanson@mesd.k12.or.us>
+ * @version    0.1.0
+ */
 namespace Mesd\HelpWikiBundle\Model;
 
 /**
- * An interface that the invoice Subject object should implement.
- * In most circumstances, only a single object should implement
- * this interface as the ResolveTargetEntityListener can only
- * change the target to a single object.
+ * User Subject Interface
+ *
+ * The interface the user subject should implement.
+ * This links the application's user interface with help wiki bundle.
+ * See the installation documentation for more information on it's use.
+ *
+ * @package    Mesd\HelpWikiBundle\Model
+ * @copyright  2015 (c) Multnomah Education Service District <http://www.mesd.k12.or.us>
+ * @license    <http://opensource.org/licenses/MIT> MIT
+ * @author     Curtis G Hanson <chanson@mesd.k12.or.us>
+ * @since      0.2.0
  */
 interface UserSubjectInterface
 {

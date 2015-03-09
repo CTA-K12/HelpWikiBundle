@@ -1,9 +1,26 @@
 <?php
-
+/**
+ * Page.php file
+ *
+ * File that contains the help wiki comment page class
+ *
+ * Licence MIT
+ * Copyright (c) 2014 Multnomah Education Service District <http://www.mesd.k12.or.us>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ * 
+ * @filesource /src/Mesd/HelpWikiBundle/Entity/Page.php
+ * @package    Mesd\HelpWikiBundle\Entity
+ * @copyright  2014 (c) Multnomah Education Service District <http://www.mesd.k12.or.us>
+ * @license    <http://opensource.org/licenses/MIT> MIT
+ * @author     Curtis G Hanson <chanson@mesd.k12.or.us>
+ * @version    0.1.0
+ */
 namespace Mesd\HelpWikiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Mesd\HelpWikiBundle\Entity\History;
+use Mesd\HelpWikiBundle\Model\UserSubjectInterface;
 
 /**
  * Page
@@ -515,10 +532,10 @@ class Page
     /**
      * Set user
      *
-     * @param \Mesd\Orcase\AppBundle\Entity\OrcaseUser $user
+     * @param \Mesd\HelpWikiBundle\Model\UserSubjectInterface $user
      * @return Page
      */
-    public function setUser(\Mesd\Orcase\AppBundle\Entity\OrcaseUser $user = null)
+    public function setUser(\Mesd\HelpWikiBundle\Model\UserSubjectInterface $user = null)
     {
         $this->user = $user;
     
@@ -528,7 +545,7 @@ class Page
     /**
      * Get user
      *
-     * @return \Mesd\Orcase\AppBundle\Entity\OrcaseUser 
+     * @return \Mesd\HelpWikiBundle\Model\UserSubjectInterface 
      */
     public function getUser()
     {
@@ -545,4 +562,27 @@ class Page
         return $this->getTitle();
     }
 
+
+    /**
+     * Add histories
+     *
+     * @param \Mesd\HelpWikiBundle\Entity\History $histories
+     * @return Page
+     */
+    public function addHistories(\Mesd\HelpWikiBundle\Entity\History $histories)
+    {
+        $this->histories[] = $histories;
+    
+        return $this;
+    }
+
+    /**
+     * Remove histories
+     *
+     * @param \Mesd\HelpWikiBundle\Entity\History $histories
+     */
+    public function removeHistories(\Mesd\HelpWikiBundle\Entity\History $histories)
+    {
+        $this->histories->removeElement($histories);
+    }
 }

@@ -1,0 +1,47 @@
+{% block mesd_help_wiki_linker %}
+{% if link.page.slug is defined %}
+    <a
+        href="{{ path('MesdHelpWikiBundle_page_show', {'slug': link.page.slug}) }}"
+        class="btn btn-xs btn-default pull-right"
+        target="_blank"
+        title="{{ 'view.help.documentation.for.page'|trans }}"
+    >
+        <span class="fa fa-question-circle"></span>&nbsp; {{ 'help'|trans }}
+    </a>
+{% else %}
+    {% if is_granted('CREATE', link) %}
+        <a
+            href="{{ path('MesdHelpWikiBundle_link_new_by_route', {'route': route|lower}) }}"
+            class="btn btn-xs btn-default pull-right"
+            target="_blank"
+            title="{{ 'create.help.documentation.for.page'|trans }}"
+        >
+            <span class="fa fa-plus-circle"></span>&nbsp; {{ 'new.help.wiki.page'|trans }}
+        </a>
+    {% else %}
+        <a
+            href="#"
+            class="btn btn-xs btn-default pull-right"
+            title="{{ 'no.help.defined.for.screen'|trans }}"
+            disabled
+        >
+            <span class="fa fa-minus-circle"></span>&nbsp; {{ 'no.help.defined'|trans }}
+        </a>
+    {% endif %}
+{% endif %}
+{% endblock mesd_help_wiki_linker %}
+
+{% block mesd_help_wiki_page %}
+{% if page.slug is defined %}
+    <a
+        href="{{ path('MesdHelpWikiBundle_page_show', {'slug': page.slug}) }}"
+        class="{{ attr.class is defined ? attr.class : '' }}"
+        target="{{ attr.target is defined ? attr.target : '_blank' }}"
+        title="{{ attr.title is defined ? attr.title|trans : page.title }}"
+    >
+    {{ label is defined ? label|trans : page.title }}
+    </a>
+{% else %}
+    <p>{{ 'no.page.defined'|trans }}
+{% endif %}
+{% endblock mesd_help_wiki_page %}

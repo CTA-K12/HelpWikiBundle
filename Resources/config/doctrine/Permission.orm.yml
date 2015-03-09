@@ -3,12 +3,8 @@ Mesd\HelpWikiBundle\Entity\Permission:
     table:           mesd_helpwiki_permission
     repositoryClass: Mesd\HelpWikiBundle\Entity\PermissionRepository
     indexes:
-        mesd_helpwiki_permission_page_id_idx:
-            columns: [page_id]
         mesd_helpwiki_permission_role_id_idx:
             columns: [role_id]
-        mesd_helpwiki_permission_permission_type_id_idx:
-            columns: [permission_type_id]
     id:
         id:
             id:   true
@@ -20,20 +16,24 @@ Mesd\HelpWikiBundle\Entity\Permission:
                 initialValue:   1
                 allocationSize: 1
     fields:
+        object:
+            column:   object
+            type:     string
+            length:   16
+            nullable: false
+            unique:   false
+        type:
+            column:   type
+            type:     string
+            length:   8
+            nullable: false
+            unique:   false
+    uniqueConstraints:
+        mesd_helpwiki_permission_object_role_type_unique_idx:
+            columns: [object, type, role_id]
     manyToOne:
-        page:
-            targetEntity: Page
-            inversedBy:   permissions
-            joinColumn:
-                name:                 page_id
-                referencedColumnName: id
         role:
             targetEntity: Mesd\HelpWikiBundle\Model\RoleSubjectInterface
             joinColumn:
                 name:                 role_id
-                referencedColumnName: id
-        permissionType:
-            targetEntity: PermissionType
-            joinColumn:
-                name:                 permission_type_id
                 referencedColumnName: id

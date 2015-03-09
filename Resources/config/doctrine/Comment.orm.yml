@@ -28,11 +28,29 @@ Mesd\HelpWikiBundle\Entity\Comment:
             type:     datetime
             nullable: false
             unique:   false
+        status:
+            column:   status
+            type:     string
+            length:   16
+            nullable: false
+            unique:   false
+            options:
+                comment: 'Available types: flagged, unapproved, approved'
+        statusDateTime:
+            column:   status_date_time
+            type:     datetime
+            nullable: false
+            unique:   false
     manyToOne:
         user:
             targetEntity: Mesd\HelpWikiBundle\Model\UserSubjectInterface
             joinColumn:
                 name:                 user_id
+                referencedColumnName: id
+        statusBy:
+            targetEntity: Mesd\HelpWikiBundle\Model\UserSubjectInterface
+            joinColumn:
+                name:                 status_by_id
                 referencedColumnName: id
         page:
             targetEntity: Page

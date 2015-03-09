@@ -1,0 +1,59 @@
+parameters:
+    mesd_help_wiki.security.access.comment_voter.class:         Mesd\HelpWikiBundle\Security\CommentVoter
+    mesd_help_wiki.security.access.history_voter.class:         Mesd\HelpWikiBundle\Security\HistoryVoter
+    mesd_help_wiki.security.access.link_voter.class:            Mesd\HelpWikiBundle\Security\LinkVoter
+    mesd_help_wiki.security.access.page_voter.class:            Mesd\HelpWikiBundle\Security\PageVoter
+    mesd_help_wiki.security.access.page_permission_voter.class: Mesd\HelpWikiBundle\Security\PagePermissionVoter
+    mesd_help_wiki.security.access.permission_voter.class:      Mesd\HelpWikiBundle\Security\PermissionVoter
+    mesd_help_wiki.security.access.tag_voter.class:             Mesd\HelpWikiBundle\Security\TagVoter
+    mesd_help_wiki.security.access.menu_voter.class:            Mesd\HelpWikiBundle\Security\MenuVoter
+
+services:
+    mesd_help_wiki.security.access.comment_voter:
+        class:     %mesd_help_wiki.security.access.comment_voter.class%
+        public:    false
+        arguments: [@service_container, @doctrine.orm.entity_manager]
+        tags:
+           - { name: security.voter }
+    mesd_help_wiki.security.access.history_voter:
+        class:     %mesd_help_wiki.security.access.history_voter.class%
+        public:    false
+        arguments: [@service_container, @doctrine.orm.entity_manager]
+        tags:
+           - { name: security.voter }
+    mesd_help_wiki.security.access.link_voter:
+        class:     %mesd_help_wiki.security.access.link_voter.class%
+        public:    false
+        arguments: [@service_container, @doctrine.orm.entity_manager]
+        tags:
+           - { name: security.voter }
+    mesd_help_wiki.security.access.page_voter:
+        class:     %mesd_help_wiki.security.access.page_voter.class%
+        public:    false
+        arguments: [@service_container, @doctrine.orm.entity_manager]
+        tags:
+           - { name: security.voter }
+    mesd_help_wiki.security.access.page_permission_voter:
+        class:     %mesd_help_wiki.security.access.page_permission_voter.class%
+        public:    false
+        arguments: [@service_container, @doctrine.orm.entity_manager]
+        tags:
+           - { name: security.voter }
+    mesd_help_wiki.security.access.permission_voter:
+        class:     %mesd_help_wiki.security.access.permission_voter.class%
+        public:    false
+        arguments: [@service_container, @doctrine.orm.entity_manager]
+        tags:
+           - { name: security.voter }
+    mesd_help_wiki.security.access.tag_voter:
+        class:     %mesd_help_wiki.security.access.tag_voter.class%
+        public:    false
+        arguments: [@service_container, @doctrine.orm.entity_manager]
+        tags:
+           - { name: security.voter }
+    mesd_help_wiki.security.access.menu_voter:
+        class:     %mesd_help_wiki.security.access.menu_voter.class%
+        public:    false
+        arguments: [@service_container, @doctrine.orm.entity_manager]
+        tags:
+           - { name: security.voter }

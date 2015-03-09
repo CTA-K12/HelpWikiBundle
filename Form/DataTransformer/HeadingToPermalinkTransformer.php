@@ -1,5 +1,21 @@
 <?php
-// src/Mesd/HelpWikiBundle/Form/DataTransformer/HeadingToPermalinkTransformer.php
+/**
+ * HeadingToPermalinkTransformer.php file
+ *
+ * File that contains the heading to permalink transformer file
+ *
+ * Licence MIT
+ * Copyright (c) 2014 Multnomah Education Service District <http://www.mesd.k12.or.us>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ * 
+ * @filesource /src/Mesd/HelpWikiBundle/Form/DataTransformer/HeadingToPermalinkTransformer.php
+ * @package    Mesd\HelpWikiBundle\Form\DataTransformer
+ * @copyright  2014 (c) Multnomah Education Service District <http://www.mesd.k12.or.us>
+ * @license    <http://opensource.org/licenses/MIT> MIT
+ * @author     Curtis G Hanson <chanson@mesd.k12.or.us>
+ * @version    0.1.0
+ */
 namespace Mesd\HelpWikiBundle\Form\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
@@ -90,12 +106,12 @@ class HeadingToPermalinkTransformer implements DataTransformerInterface
         $str = preg_replace('/[^a-z0-9' . implode("", $exclude) . ']+/i', ' ', $str);
         // uppercase the first character of each word
         $str = ucwords(trim($str));
-        return str_replace(" ", "", $str);
+        return str_replace(' ', '', $str);
     }
      
     public static function replaceAccents($str) {
-        $search  = explode(",","ç,æ,œ,á,é,í,ó,ú,à,è,ì,ò,ù,ä,ë,ï,ö,ü,ÿ,â,ê,î,ô,û,å,ø,Ø,Å,Á,À,Â,Ä,È,É,Ê,Ë,Í,Î,Ï,Ì,Ò,Ó,Ô,Ö,Ú,Ù,Û,Ü,Ÿ,Ç,Æ,Œ");
-        $replace = explode(",","c,ae,oe,a,e,i,o,u,a,e,i,o,u,a,e,i,o,u,y,a,e,i,o,u,a,o,O,A,A,A,A,A,E,E,E,E,I,I,I,I,O,O,O,O,U,U,U,U,Y,C,AE,OE");
+        $search  = explode(',', "ç,æ,œ,á,é,í,ó,ú,à,è,ì,ò,ù,ä,ë,ï,ö,ü,ÿ,â,ê,î,ô,û,å,ø,Ø,Å,Á,À,Â,Ä,È,É,Ê,Ë,Í,Î,Ï,Ì,Ò,Ó,Ô,Ö,Ú,Ù,Û,Ü,Ÿ,Ç,Æ,Œ");
+        $replace = explode(',', "c,ae,oe,a,e,i,o,u,a,e,i,o,u,a,e,i,o,u,y,a,e,i,o,u,a,o,O,A,A,A,A,A,E,E,E,E,I,I,I,I,O,O,O,O,U,U,U,U,Y,C,AE,OE");
 
         return str_replace($search, $replace, $str);
     }

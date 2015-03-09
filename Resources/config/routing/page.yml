@@ -1,42 +1,45 @@
-page:
-    pattern:  /
-    defaults: { _controller: "MesdHelpWikiBundle:Page:index" }
+# @todo this is only here until breadcrumbs are fixed
+# this path prevents users from going to a 403 page
+MesdHelpWikiBundle_page_index:
+    pattern:      /
+    defaults:     { _controller: "MesdHelpWikiBundle:Page:toc" }
 
-page_new:
-    pattern:  /new
-    defaults: { _controller: "MesdHelpWikiBundle:Page:new" }
+MesdHelpWikiBundle_page_new:
+    pattern:      /new
+    defaults:     { _controller: "MesdHelpWikiBundle:Page:new" }
 
-page_create:
-    pattern:  /create
-    defaults: { _controller: "MesdHelpWikiBundle:Page:create" }
+MesdHelpWikiBundle_page_create:
+    pattern:      /create
+    defaults:     { _controller: "MesdHelpWikiBundle:Page:create" }
     requirements: { _method: post }
 
-page_show:
-    pattern:  /{slug}/show
-    defaults: { _controller: "MesdHelpWikiBundle:Page:show" }
+MesdHelpWikiBundle_page_show:
+    pattern:      /{slug}/show
+    defaults:     { _controller: "MesdHelpWikiBundle:Page:show" }
 
-page_edit:
-    pattern:  /{id}/edit
-    defaults: { _controller: "MesdHelpWikiBundle:Page:edit" }
+MesdHelpWikiBundle_page_edit:
+    pattern:      /{id}/edit
+    defaults:     { _controller: "MesdHelpWikiBundle:Page:edit" }
 
-page_update:
-    pattern:  /{id}/update
-    defaults: { _controller: "MesdHelpWikiBundle:Page:update" }
+MesdHelpWikiBundle_page_update:
+    pattern:      /{id}/update
+    defaults:     { _controller: "MesdHelpWikiBundle:Page:update" }
     requirements: { _method: post|put }
 
-page_delete:
-    pattern:  /{id}/delete
-    defaults: { _controller: "MesdHelpWikiBundle:Page:delete" }
+MesdHelpWikiBundle_page_delete:
+    pattern:      /{id}/delete
+    defaults:     { _controller: "MesdHelpWikiBundle:Page:delete" }
     requirements: { _method: post|delete }
 
-page_edit_order:
-    pattern:  /order
-    defaults: { _controller: "MesdHelpWikiBundle:Page:editOrder" }
+MesdHelpWikiBundle_page_edit_order:
+    pattern:      /order
+    defaults:     { _controller: "MesdHelpWikiBundle:Page:editOrder" }
 
-page_update_order:
-    pattern:  /orderUpdate
-    defaults: { _controller: "MesdHelpWikiBundle:Page:updateOrder" }
+MesdHelpWikiBundle_page_update_order:
+    pattern:      /orderupdate
+    defaults:     { _controller: "MesdHelpWikiBundle:Page:updateOrder" }
+    requirements: { _method: post|put }
 
-page_comments:
-    pattern: /{id}/comments/show
-    defaults: { _controller: "MesdHelpWikiBundle:Page:commentsShow" }
+MesdHelpWikiBundle_page_comments:
+    pattern:      /{id}/comments/show
+    defaults:     { _controller: "MesdHelpWikiBundle:Page:commentsShow" }

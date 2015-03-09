@@ -1,0 +1,10 @@
+parameters:
+    mesd_help_wiki.twig.link_extension.class: Mesd\HelpWikiBundle\Twig\LinkExtension
+
+services:
+    mesd_help_wiki.twig.link_extension:
+        class:     %mesd_help_wiki.twig.link_extension.class%
+        arguments: [@service_container, @router, @mesd_help_wiki.page_manager, @mesd_help_wiki.link_manager]
+        tags:
+            - { name: twig.extension }
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }

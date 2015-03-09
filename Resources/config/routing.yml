@@ -1,10 +1,14 @@
-MesdHelpWikiBundle_home:
+MesdHelpWikiBundle_toc:
     pattern:  /
-    defaults: { _controller: MesdHelpWikiBundle:Default:index }
+    defaults: { _controller: "MesdHelpWikiBundle:Page:toc" }
 
 MesdHelpWikiBundle_page:
     resource: "@MesdHelpWikiBundle/Resources/config/routing/page.yml"
     prefix:   /page
+
+MesdHelpWikiBundle_tag:
+    resource: "@MesdHelpWikiBundle/Resources/config/routing/tag.yml"
+    prefix:   /tag
 
 MesdHelpWikiBundle_comment:
     resource: "@MesdHelpWikiBundle/Resources/config/routing/comment.yml"
@@ -22,6 +26,17 @@ MesdHelpWikiBundle_permission:
     resource: "@MesdHelpWikiBundle/Resources/config/routing/permission.yml"
     prefix:   /permission
 
-MesdHelpWikiBundle_permissiontype:
-    resource: "@MesdHelpWikiBundle/Resources/config/routing/permissiontype.yml"
-    prefix:   /permissiontype
+MesdHelpWikiBundle_pagepermission:
+    resource: "@MesdHelpWikiBundle/Resources/config/routing/pagepermission.yml"
+    prefix:   /pagepermission
+
+# CUT & PASTE the following route TO THE END of your routing definitions
+# if you plan to use stand-alone pages with custom top-level routing:
+#     ie. locahost/myapp/about, www.myapp.com/contact
+# Typically, all pages creted in helpwiki fall behind the URL prefix /help.
+# WARNING! If a user types an address that doesn't not exist, this route will
+# pick it up. There is a template that can be overriden for these occurances.
+
+#MesdHelpWikiBundle_stand_alone_show:
+#    pattern:  /{slug}
+#    defaults: { _controller: "MesdHelpWikiBundle:Page:showStandAlone" }

@@ -47,6 +47,11 @@ class History
     private $slug;
 
     /**
+     * @var string
+     */
+    private $status;
+
+    /**
      * @var integer
      */
     private $revision;
@@ -144,6 +149,29 @@ class History
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    /**
+     * Set status
+     *
+     * @param  string $status
+     * @return Page
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 
     /**

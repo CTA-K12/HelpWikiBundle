@@ -1,0 +1,15 @@
+{% extends '::index.html.twig' %}
+
+{% block main %}
+    <h1>PagePermission creation</h1>
+
+    {{ form(form) }}
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('pagepermission') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+{% endblock main %}

@@ -114,6 +114,13 @@ class Configuration implements ConfigurationInterface
         // textarea_form_type:
         $rootNode
             ->children()
+                ->booleanNode('security')
+                    ->defaultValue(false)
+                ->end()
+                ->arrayNode('super_admin_roles')
+                    ->prototype('scalar')->end()
+                    ->defaultValue(array())
+                ->end()
                 ->arrayNode('form_types')
                     ->children()
                         ->scalarNode('wysiwyg_editor')

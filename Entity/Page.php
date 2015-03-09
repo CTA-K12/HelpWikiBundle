@@ -28,54 +28,122 @@ use Mesd\HelpWikiBundle\Model\UserSubjectInterface;
 class Page
 {
     /**
+     * ID
+     * 
      * @var integer
      */
     private $id;
 
     /**
+     * Title
+     *
+     * The title of a page
+     * 
      * @var string
      */
     private $title;
 
     /**
+     * Body
+     *
+     * The twig renderable body making a page
+     * 
      * @var string
      */
     private $body;
 
     /**
+     * Slug
+     *
+     * The url friendly name of a page
+     * 
      * @var string
      */
     private $slug;
 
     /**
+     * Revision
+     *
+     * An incremented integer starting at 0.
+     * Indicated how many changes have been made to a page.
+     * 
      * @var integer
      */
     private $revision;
 
     /**
+     * Print Order
+     *
+     * The order of pages within a heirarchical tree.
+     * Pages are unique in that they will not
+     * have the same ordinal and the same parent
+     *
+     * Print order starts at 0
+     * 
      * @var integer
      */
     private $printOrder;
 
     /**
+     * Date Time
+     *
+     * The date/time of the current version of the page.
+     * When it is changed, the date/time will also be updated.
+     * 
      * @var \DateTime
      */
     private $dateTime;
 
     /**
+     * Is Page Locked
+     *
+     * Users with MANAGE permissions may lock a page from edits.
+     * 
      * @var boolean
      */
-    private $isPageLocked;
+    private $pageLocked;
 
     /**
+     * Comments Locked
+     *
+     * Users with MANAGE permission may lock a page from any additional
+     * or changes to comments.
+     * 
      * @var boolean
      */
-    private $isCommentLocked;
+    private $commentsLocked;
 
     /**
+     * Edit In Progress
+     *
+     * If a page is currently being edited, the edit in progress
+     * flag will be locked. At the session time (configurable option)
+     * expiration, the page will be unlocked. This prevents users
+     * from starting a page edit then leaving their computer
+     * for an indefinite amount of time.
+     * 
      * @var boolean
      */
-    private $isEditInProgress;
+    private $editInProgress;
+
+    /**
+     * Stand Alone
+     *
+     * If a page is stand-alone, it will not show up in the table of contents.
+     * 
+     * @var $standAlone
+     */
+    private $standAlone;
+
+    /**
+     * Status
+     *
+     * Options: DRAFT, PUBLISHED, UNPUBLISHED
+     * varchar(16)
+     * 
+     * @var string
+     */
+    private $status;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -103,6 +171,11 @@ class Page
     private $links;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $tags;
+
+    /**
      * @var \Mesd\HelpWikiBundle\Entity\Page
      */
     private $parent;
@@ -117,11 +190,12 @@ class Page
      */
     public function __construct()
     {
-        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->children    = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->comments    = new \Doctrine\Common\Collections\ArrayCollection();
         $this->permissions = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->histories = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->links = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->histories   = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->links       = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tags        = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -273,105 +347,203 @@ class Page
     }
 
     /**
-     * Set isPageLocked
+     * Set Page Locked
      *
-     * @param boolean $isPageLocked
+     * @param  boolean $pageLocked
      * @return Page
      */
-    public function setIsPageLocked($isPageLocked)
+    public function setPageLocked($pageLocked)
     {
-        $this->isPageLocked = $isPageLocked;
+        $this->pageLocked = $pageLocked;
     
         return $this;
     }
 
     /**
-     * Get isPageLocked
+     * Get Page Locked
      *
      * @return boolean 
      */
-    public function getIsPageLocked()
+    public function getPageLocked()
     {
-        return $this->isPageLocked;
+        return $this->pageLocked;
     }
 
     /**
-     * Set isCommentLocked
-     *
-     * @param boolean $isCommentLocked
-     * @return Page
-     */
-    public function setIsCommentLocked($isCommentLocked)
-    {
-        $this->isCommentLocked = $isCommentLocked;
-    
-        return $this;
-    }
-
-    /**
-     * Get isCommentLocked
+     * Is Page Locked
      *
      * @return boolean 
      */
-    public function getIsCommentLocked()
+    public function isPageLocked()
     {
-        return $this->isCommentLocked;
+        return $this->pageLocked;
     }
 
     /**
-     * Set isEditInProgress
+     * Set Comments Locked
      *
-     * @param boolean $isEditInProgress
-     * @return Page
+     * @param  boolean $commentsLocked
+     * @return Page    $this
      */
-    public function setIsEditInProgress($isEditInProgress)
+    public function setCommentsLocked($commentsLocked)
     {
-        $this->isEditInProgress = $isEditInProgress;
+        $this->commentsLocked = $commentsLocked;
     
         return $this;
     }
 
     /**
-     * Get isEditInProgress
+     * Get Comments Locked
+     *
+     * @return boolean
+     */
+    public function getCommentsLocked()
+    {
+        return $this->commentsLocked;
+    }
+
+    /**
+     * Is Comments Locked
+     *
+     * @return boolean
+     */
+    public function isCommentsLocked()
+    {
+        return $this->commentsLocked;
+    }
+
+    /**
+     * Set Edit in Progress
+     *
+     * @param  boolean $editInProgress
+     * @return Page    $this
+     */
+    public function setEditInProgress($editInProgress)
+    {
+        $this->editInProgress = $editInProgress;
+    
+        return $this;
+    }
+
+    /**
+     * Get Edit in Progress
+     *
+     * @return boolean
+     */
+    public function getEditInProgress()
+    {
+        return $this->editInProgress;
+    }
+
+    /**
+     * Is Edit in Progress
+     *
+     * @return boolean
+     */
+    public function isEditInProgress()
+    {
+        return $this->editInProgress;
+    }
+
+    /**
+     * Set Stand Alone
+     *
+     * @param boolean $standAlone
+     * @return Page
+     */
+    public function setStandAlone($standAlone)
+    {
+        $this->standAlone = $standAlone;
+    
+        return $this;
+    }
+
+    /**
+     * Get Stand Alone
      *
      * @return boolean 
      */
-    public function getIsEditInProgress()
+    public function getStandAlone()
     {
-        return $this->isEditInProgress;
+        return $this->standAlone;
     }
 
     /**
-     * Add children
+     * Is Stand Alone
      *
-     * @param \Mesd\HelpWikiBundle\Entity\Page $children
+     * @return boolean 
+     */
+    public function isStandAlone()
+    {
+        return $this->standAlone;
+    }
+
+    /**
+     * Set status
+     *
+     * @param  string $status
      * @return Page
      */
-    public function addChildren(\Mesd\HelpWikiBundle\Entity\Page $children)
+    public function setStatus($status)
     {
-        $this->children[] = $children;
+        $this->status = $status;
     
         return $this;
     }
 
     /**
-     * Remove children
+     * Get status
      *
-     * @param \Mesd\HelpWikiBundle\Entity\Page $children
+     * @return string
      */
-    public function removeChildren(\Mesd\HelpWikiBundle\Entity\Page $children)
+    public function getStatus()
     {
-        $this->children->removeElement($children);
+        return $this->status;
+    }
+
+    /**
+     * Add child
+     *
+     * @param \Mesd\HelpWikiBundle\Entity\Page $child
+     * @return Page
+     */
+    public function addChild(\Mesd\HelpWikiBundle\Entity\Page $child)
+    {
+        $this->children[] = $child;
+    
+        return $this;
+    }
+
+    /**
+     * Remove child
+     *
+     * @param \Mesd\HelpWikiBundle\Entity\Page $child
+     */
+    public function removeChild(\Mesd\HelpWikiBundle\Entity\Page $child)
+    {
+        $this->children->removeElement($child);
     }
 
     /**
      * Get children
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getChildren()
     {
         return $this->children;
+    }
+
+    /**
+     * Set children
+     *
+     * @return $this
+     */
+    public function setChildren(\Doctrine\Common\Collections\Collection $children)
+    {
+        $this->children = $children;
+
+        return $this;
     }
 
     /**
@@ -441,7 +613,7 @@ class Page
     }
 
     /**
-     * Add histories
+     * Add history
      *
      * @param \Mesd\HelpWikiBundle\Entity\History $histories
      * @return Page
@@ -454,7 +626,7 @@ class Page
     }
 
     /**
-     * Remove histories
+     * Remove history
      *
      * @param \Mesd\HelpWikiBundle\Entity\History $histories
      */
@@ -553,6 +725,39 @@ class Page
     }
 
     /**
+     * Add tag
+     *
+     * @param \Mesd\HelpWikiBundle\Entity\Tag $tag
+     * @return Page
+     */
+    public function addTag(\Mesd\HelpWikiBundle\Entity\Tag $tag)
+    {
+        $this->tags[] = $tag;
+    
+        return $this;
+    }
+
+    /**
+     * Remove tag
+     *
+     * @param \Mesd\HelpWikiBundle\Entity\Tag $tag
+     */
+    public function removeTag(\Mesd\HelpWikiBundle\Entity\Tag $tag)
+    {
+        $this->tags->removeElement($tag);
+    }
+
+    /**
+     * Get tags
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    /**
      * To string
      *
      * @return string shortName
@@ -560,29 +765,5 @@ class Page
     public function __toString()
     {
         return $this->getTitle();
-    }
-
-
-    /**
-     * Add histories
-     *
-     * @param \Mesd\HelpWikiBundle\Entity\History $histories
-     * @return Page
-     */
-    public function addHistories(\Mesd\HelpWikiBundle\Entity\History $histories)
-    {
-        $this->histories[] = $histories;
-    
-        return $this;
-    }
-
-    /**
-     * Remove histories
-     *
-     * @param \Mesd\HelpWikiBundle\Entity\History $histories
-     */
-    public function removeHistories(\Mesd\HelpWikiBundle\Entity\History $histories)
-    {
-        $this->histories->removeElement($histories);
     }
 }

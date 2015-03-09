@@ -1,0 +1,27 @@
+Mesd\HelpWikiBundle\Entity\Tag:
+    type:            entity
+    table:           mesd_helpwiki_tag
+    repositoryClass: Mesd\HelpWikiBundle\Entity\TagRepository
+    id:
+        id:
+            id:   true
+            type: integer
+            generator:
+                strategy: AUTO
+            sequenceGenerator:
+                sequenceName:   mesd_helpwiki_tag_id_seq
+                initialValue:   1
+                allocationSize: 1
+    fields:
+        name:
+            column:   name
+            type:     string
+            length:   255
+            nullable: false
+    uniqueConstraints:
+        mesd_helpwiki_tag_name_unique_idx:
+            columns: [name]
+    manyToMany:
+        pages:
+            targetEntity: Page
+            mappedBy:     tags

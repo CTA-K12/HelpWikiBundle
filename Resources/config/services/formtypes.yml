@@ -1,0 +1,52 @@
+parameters:
+    mesd_help_wiki.form.type.page.class:             Mesd\HelpWikiBundle\Form\PageType
+    mesd_help_wiki.form.type.permission_type.class:  Mesd\HelpWikiBundle\Form\Type\PermissionType
+    mesd_help_wiki.form.type.object_type.class:      Mesd\HelpWikiBundle\Form\Type\ObjectType
+    mesd_help_wiki.form.type.page_status_type.class: Mesd\HelpWikiBundle\Form\Type\PageStatusType
+    mesd_help_wiki.form.type.routealias_type.class:  Mesd\HelpWikiBundle\Form\Type\RouteAliasType
+    mesd_help_wiki.form.type.tag_type.class:         Mesd\HelpWikiBundle\Form\Type\TagType
+    mesd_help_wiki.form.type.ckeditor.class:         Mesd\HelpWikiBundle\Form\Type\CKEditorType
+    mesd_help_wiki.form.type.selectize_choice.class: Mesd\HelpWikiBundle\Form\Type\SelectizeChoiceType
+    mesd_help_wiki.form.type.selectize_text.class:   Mesd\HelpWikiBundle\Form\Type\SelectizeTextType
+    #mesd_help_wiki.form.type.pageselect.class:       Mesd\HelpWikiBundle\Form\Type\PageSelectType
+
+services:
+    mesd_help_wiki.form.type.page:
+        class:     %mesd_help_wiki.form.type.page.class%
+        arguments: [%mesd_help_wiki.form_types.wysiwyg_editor%]
+        tags:
+            - { name: form.type, alias: mesd_help_wiki_page }
+    mesd_help_wiki.form.type.permission_type:
+        class:     %mesd_help_wiki.form.type.permission_type.class%
+        tags:
+            - { name: form.type, alias: mesd_help_wiki_permission_type }
+    mesd_help_wiki.form.type.object_type:
+        class:     %mesd_help_wiki.form.type.object_type.class%
+        tags:
+            - { name: form.type, alias: mesd_help_wiki_object_type }
+    mesd_help_wiki.form.type.page_status_type:
+        class:     %mesd_help_wiki.form.type.page_status_type.class%
+        tags:
+            - { name: form.type, alias: mesd_help_wiki_page_status_type }
+    mesd_help_wiki.form.type.routealias_type:
+        class:     %mesd_help_wiki.form.type.routealias_type.class%
+        arguments: [@router]
+        tags:
+            - { name: form.type, alias: mesd_help_wiki_routealias_type }
+    mesd_help_wiki.form.type.tag_type:
+        class:     %mesd_help_wiki.form.type.tag_type.class%
+        arguments: [@doctrine]
+        tags:
+            - { name: form.type, alias: mesd_help_wiki_tag_type }
+    mesd_help_wiki.form.type.ckeditor:
+        class:     %mesd_help_wiki.form.type.ckeditor.class%
+        tags:
+            - { name: form.type, alias: mesd_help_wiki_ckeditor }
+    mesd_help_wiki.form.type.selectize_choice:
+        class:     %mesd_help_wiki.form.type.selectize_choice.class%
+        tags:
+            - { name: form.type, alias: mesd_help_wiki_selectize_choice }
+    mesd_help_wiki.form.type.selectize_text:
+        class:     %mesd_help_wiki.form.type.selectize_text.class%
+        tags:
+            - { name: form.type, alias: mesd_help_wiki_selectize_text }

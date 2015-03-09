@@ -1,40 +1,139 @@
-{% extends 'MesdHelpWikiBundle:Default:index.html.twig' %}
+{% extends '::index.html.twig' %}
+{% set pageTitle = 'comment'|trans %}
+{% set pageSubtitle = 'list'|trans %}
 
 {% block contentBody %}
-
-    <table class="table table-bordered table-condensed table-hover table-striped">
-        <thead>
-            <tr>
-                <th>Actions</th>
-                <th>User</th>
-                <th>Page</th>
-                <th>Date/Time</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td data-role-th="Actions">
-                    <div class="btn-group">
-                        <a class="btn btn-default btn-xs" href="{{ path('comment_show', { 'id': entity.id }) }}" title="view"><span class="fa fa-search"></span></a>
-                        <a class="btn btn-default btn-xs" href="{{ path('comment_edit', { 'id': entity.id }) }}" title="edit"><span class="fa fa-pencil"></span></a>
-                    </div>
-                </td>
-                <td data-role-th="User">{{ entity.user }}</td>
-                <td data-role-th="Page">{{ entity.page }}</td>
-                <td data-role-th="Date/Time">{% if entity.dateTime %}{{ entity.dateTime|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <div class="row">
-        <div class="col-sm-2-12 col-sm-offset-10">
-            <a href="{{ path('comment_new') }}" class="btn btn-default form-control">
-                <span class="fa fa-plus"></span>
-                New
-            </a>
-        </div>
-    </div>
-
+<table class="table table-bordered table-condensed table-hover table-striped">
+    <thead>
+        <tr>
+            <th>{{ 'actions'|trans }}</th>
+            <th>{{ 'page'|trans }}</th>
+            <th>{{ 'user'|trans }}</th>
+            <th>{{ 'date.time'|trans }}</th>
+            <th>{{ 'status'|trans }}</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td data-role-th="{{ 'actions'|trans }}">
+                <div class="btn-group">
+                    <a class="btn btn-default btn-xs" href="{{ path('MesdHelpWikiBundle_comment_show', { 'id': entity.id }) }}" title="view"><span class="fa fa-search"></span></a>
+                    <a class="btn btn-default btn-xs" href="{{ path('MesdHelpWikiBundle_comment_edit', { 'id': entity.id }) }}" title="edit"><span class="fa fa-pencil"></span></a>
+                    {% set approve_form = approve_forms[entity.id] %}
+                    {{ form_start(approve_form, {'attr': {'class': 'input-group'}}) }}
+                        {{ form_widget(approve_form.approve, {
+                            'label': ' ',
+                            'icon':  'fa-thumbs-o-up',
+                            'attr': {
+                                'class': 'btn btn-xs btn-default',
+                                'tabindex': 3,
+                            }
+                        }) }}
+                        {{ form_rest(approve_form) }}
+                    {{ form_end(approve_form) }}
+                    {% set flag_form = flag_forms[entity.id] %}
+                    {{ form_start(flag_form, {'attr': {'class': 'input-group'}}) }}
+                        {{ form_widget(flag_form.flag, {
+                            'label': ' ',
+                            'icon':  'fa-flag-o',
+                            'attr': {
+                                'class': 'btn btn-xs btn-default',
+                                'tabindex': 3,
+                            },
+                        }) }}
+                        {{ form_rest(flag_form) }}
+                    {{ form_end(flag_form) }}
+                    {% set delete_form = delete_forms[entity.id] %}
+                    {{ form_start(delete_form, {'attr': {'class': 'input-group'}}) }}
+                        {{ form_widget(delete_form.delete, {
+                            'label': ' ',
+                            'icon':  'fa-remove',
+                            'attr': {
+                                'class':    'btn btn-xs btn-danger',
+                                'tabindex': 3,
+                            },
+                        }) }}
+                        {{ form_rest(delete_form) }}
+                    {{ form_end(delete_form) }}
+                    {#}
+                    {#}
+                    <!--
+                    <a class="btn btn-xs btn-default" href="#" title="approve"><span class="fa fa-thumbs-up"></span></a>
+                    <a class="btn btn-xs btn-danger" href="#" title="delete"><span class="fa fa-close"></span></a>
+                    -->
+                </div>
+            </td>
+            <td data-role-th="{{ 'page'|trans }}">{{ entity.page }}</td>
+            <td data-role-th="{{ 'user'|trans }}">{{ entity.user }}</td>
+            <td data-role-th="{{ 'date.time'|trans }}">{% if entity.dateTime %}{{ entity.dateTime|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td data-role-th="{{ 'status'|trans }}">
+                {% if constant('Mesd\\HelpWikiBundle\\Entity\\Comment::UNAPPROVED') == entity.status %}
+                    <span class="label label-warning">{{ entity.status }}</span>
+                {% elseif constant('Mesd\\HelpWikiBundle\\Entity\\Comment::FLAGGED') == entity.status %}
+                    <span class="label label-danger">{{ entity.status }}</span>
+                {% elseif constant('Mesd\\HelpWikiBundle\\Entity\\Comment::APPROVED') == entity.status %}
+                    <span class="label label-success">{{ entity.status }}</span>
+                {% else %}
+                    <span class="label label-default">{{ 'undefined'|trans }}</span>
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
 {% endblock contentBody %}
+
+{% block sidebarInner %}
+<nav>
+    <ul class="nav">
+        <li>
+            <a href="{{ path('MesdHelpWikiBundle_toc') }}" title="{{ 'table.of.contents'|trans }}">
+                <span class="sidebar-item-icon fa fa-files-o"></span>
+                <span class="sidebar-item-label">{{ 't.o.c'|trans }}</span>
+            </a>
+        </li>
+        {% if is_granted('MANAGE', menu) %}
+            <li>
+                <a href="{{ path('MesdHelpWikiBundle_tag_index') }}" title="{{ 'manage.tags'|trans }}">
+                    <span class="sidebar-item-icon fa fa-tags"></span>
+                    <span class="sidebar-item-label">{{ 'tags'|trans }}</span>
+                </a>
+             </li>
+            <li class="active">
+                <a href="{{ path('MesdHelpWikiBundle_comment_index') }}" title="{{ 'moderate.comments'|trans }}">
+                    <span class="sidebar-item-icon fa fa-comments-o"></span>
+                    <span class="sidebar-item-label">{{ 'comments'|trans }}</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('MesdHelpWikiBundle_link_index') }}" title="{{ 'manage.links'|trans }}">
+                    <span class="sidebar-item-icon fa fa-link"></span>
+                    <span class="sidebar-item-label">{{ 'links'|trans }}</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('MesdHelpWikiBundle_history_index') }}" title="{{ 'view.restore.history'|trans }}">
+                    <span class="sidebar-item-icon fa fa-clock-o"></span>
+                    <span class="sidebar-item-label">{{ 'history'|trans }}</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('MesdHelpWikiBundle_permission_index') }}" title="{{ 'permissions'|trans }}">
+                    <span class="sidebar-item-icon fa fa-ban"></span>
+                    <span class="sidebar-item-label">{{ 'permissions'|trans }}</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('MesdHelpWikiBundle_pagepermission_index') }}" title="{{ 'page.permissions'|trans }}">
+                    <span class="sidebar-item-icon fa fa-lock"></span>
+                    <span class="sidebar-item-label">{{ 'page.permissions'|trans }}</span>
+                </a>
+            </li>
+        {% endif %}
+        <div id="sidebar-toggle" class="sidebar-item-toggle" title="toggle.sidebar" style="">
+            <span class="fa fa-chevron-circle-left"></span>
+        </div>
+    </ul>
+</nav>
+{% endblock sidebarInner %}

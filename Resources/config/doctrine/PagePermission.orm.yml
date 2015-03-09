@@ -1,0 +1,46 @@
+Mesd\HelpWikiBundle\Entity\PagePermission:
+    type:            entity
+    table:           mesd_helpwiki_page_permission
+    repositoryClass: Mesd\HelpWikiBundle\Entity\PagePermissionRepository
+    indexes:
+        mesd_helpwiki_page_permission_page_id_idx:
+            columns: [page_id]
+        mesd_helpwiki_page_permission_role_id_idx:
+            columns: [role_id]
+    id:
+        id:
+            id:   true
+            type: integer
+            generator:
+                strategy: AUTO
+            sequenceGenerator:
+                sequenceName:   mesd_helpwiki_page_permission_id_seq
+                initialValue:   1
+                allocationSize: 1
+    fields:
+        type:
+            column:   type
+            type:     string
+            length:   8
+            nullable: false
+            unique:   false
+        cascade:
+            column:   is_cascade
+            type:     boolean
+            nullable: true
+            unique:   false
+    uniqueConstraints:
+        mesd_helpwiki_page_permission_page_role_type_unique_idx:
+            columns: [type, page_id, role_id]
+    manyToOne:
+        page:
+            targetEntity: Page
+            inversedBy:   permissions
+            joinColumn:
+                name:                 page_id
+                referencedColumnName: id
+        role:
+            targetEntity: Mesd\HelpWikiBundle\Model\RoleSubjectInterface
+            joinColumn:
+                name:                 role_id
+                referencedColumnName: id

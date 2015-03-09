@@ -48,21 +48,42 @@ Mesd\HelpWikiBundle\Entity\Page:
             type:     datetime
             nullable: false
             unique:   false
-        isPageLocked:
-            column:   is_page_locked
+        pageLocked:
+            column:   page_locked
+            type:     boolean
+            nullable: true
+            unique:   false
+            options:
+                default: false
+        standAlone:
+            column:   stand_alone
+            type:     boolean
+            nullable: true
+            unique:   false
+            options:
+                default: false
+        commentsLocked:
+            column:   comments_locked
             type:     boolean
             nullable: false
             unique:   false
-        isCommentLocked:
-            column:   is_comment_locked
-            type:     boolean
-            nullable: false
-            unique:   false
-        isEditInProgress:
-            column:   is_edit_in_progress
+            options:
+                default: false
+        editInProgress:
+            column:   edit_in_progress
             type:     boolean
             nullable: true  
             unique:   false
+            options:
+                default: false
+        status:
+            column:   status
+            type:     string
+            length:   16
+            nullable: false
+            unique:   false
+            options:
+                comment: 'Available types: DRAFT, UNPUBLISHED, PUBLISHED'
     uniqueConstraints:
         mesd_helpwiki_page_title_unique_idx:
             columns: [title]
@@ -76,7 +97,7 @@ Mesd\HelpWikiBundle\Entity\Page:
             targetEntity: Comment
             mappedBy:     page
         permissions:
-            targetEntity: Permission
+            targetEntity: PagePermission
             mappedBy:     page
         histories:
             targetEntity: History
@@ -96,4 +117,16 @@ Mesd\HelpWikiBundle\Entity\Page:
             joinColumn:
                 name:                 parent_id
                 referencedColumnName: id
+    manyToMany:
+        tags:
+            targetEntity: Tag
+            inversedBy:   pages
+            joinTable:
+                name: mesd_helpwiki_page_tag
+                joinColumns:
+                    page_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    tag_id:
+                        referencedColumnName: id
     lifecycleCallbacks:

@@ -1,17 +1,36 @@
 <?php
-// src/MesdHelpWikiBundle/Security/PageVoter.php
-namespace MesdHelpWikiBundle\Voter;
+/**
+ * PageVoter.php file
+ *
+ * File that contains the help wiki page voter class
+ *
+ * Licence MIT
+ * Copyright (c) 2014 Multnomah Education Service District <http://www.mesd.k12.or.us>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ * 
+ * @filesource /src/Mesd/HelpWikiBundle/Security/PageVoter.php
+ * @package    Mesd\HelpWikiBundle\Security
+ * @copyright  2014 (c) Multnomah Education Service District <http://www.mesd.k12.or.us>
+ * @license    <http://opensource.org/licenses/MIT> MIT
+ * @author     Curtis G Hanson <chanson@mesd.k12.or.us>
+ * @version    0.1.0
+ */
+namespace Mesd\HelpWikiBundle\Security;
 
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Doctrine\ORM\EntityManager;
+
 class PageVoter implements VoterInterface
 {
     const CREATE   = 'CREATE';
-    const SHOW     = 'SHOW';
+    const VIEW     = 'VIEW';
     const EDIT     = 'EDIT';
-    const REMOVE   = 'REMOVE';
+    const DELETE   = 'DELETE';
     const RESTORE  = 'RESTORE';
     const FLAG     = 'FLAG';
     const APPROVE  = 'APPROVE';
@@ -19,15 +38,23 @@ class PageVoter implements VoterInterface
     const UPLOAD   = 'UPLOAD';
     const MANAGE   = 'MANAGE';
 
+    private $container;
+
+    private $entityManager;
+
+    public function __construct(ContainerInterface $container, EntityManager $entityManager)
+    {
+        $this->container     = $container;
+        $this->entityManager = $entityManager;
+    }
+
     public function supportsAttribute($attribute)
     {
         return in_array($attribute, array(
+            self::CREATE,
             self::VIEW,
             self::EDIT,
-            self::CREATE,
-            self::SHOW,
-            self::EDIT,
-            self::REMOVE,
+            self::DELETE,
             self::RESTORE,
             self::FLAG,
             self::APPROVE,
@@ -39,7 +66,7 @@ class PageVoter implements VoterInterface
 
     public function supportsClass($class)
     {
-        $supportedClass = 'MesdHelpWikiBundle\Entity\Page';
+        $supportedClass = 'Mesd\HelpWikiBundle\Entity\Page';
 
         return $supportedClass === $class || is_subclass_of($class, $supportedClass);
     }
@@ -52,6 +79,12 @@ class PageVoter implements VoterInterface
         // check if class of this object is supported by this voter
         if (!$this->supportsClass(get_class($page))) {
             return VoterInterface::ACCESS_ABSTAIN;
+        }
+
+        // check whether security is turned on or off
+        // if it's off, bypass the whole voter and grant access
+        if(!$this->container->getParameter('mesd_help_wiki.security')) {
+            return VoterInterface::ACCESS_GRANTED;
         }
 
         // check if the voter is used correct, only allow one attribute
@@ -79,22 +112,27 @@ class PageVoter implements VoterInterface
             return VoterInterface::ACCESS_DENIED;
         }
 
-        switch($attribute) {
-            case self::VIEW:
-                // the data object could have for example a method isPrivate()
-                // which checks the Boolean attribute $private
-                if (!$post->isPrivate()) {
-                    return VoterInterface::ACCESS_GRANTED;
-                }
-                break;
+        // get if a super role was entered
+        if ($this->container->hasParameter('mesd_help_wiki.super_admin_roles')) {
+            $roles = $this->container->getParameter('mesd_help_wiki.super_admin_roles');
+        }
 
-            case self::EDIT:
-                // we assume that our data object has a method getOwner() to
-                // get the current owner user entity for this data object
-                if ($user->getId() === $post->getOwner()->getId()) {
+        if (isset($roles)) {
+            foreach ($roles as $role) {
+                if (in_array($role, $user->getRoles())) {
                     return VoterInterface::ACCESS_GRANTED;
                 }
-                break;
+            }
+        }
+
+        $permissions = $this->entityManager->getRepository('MesdHelpWikiBundle:Permission')->findByObject('PAGE');
+
+        foreach ($permissions as $permission) {
+            if (in_array($permission->getRole()->getRole(), $user->getRoles())) {
+                if ($attribute === $permission->getType()) {
+                    return VoterInterface::ACCESS_GRANTED;
+                }
+            }
         }
 
         return VoterInterface::ACCESS_DENIED;

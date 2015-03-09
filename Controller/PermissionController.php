@@ -24,6 +24,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Mesd\HelpWikiBundle\Entity\Permission;
 use Mesd\HelpWikiBundle\Form\PermissionType;
 
+use Mesd\HelpWikiBundle\Model\Menu;
 /**
  * Permission controller.
  *
@@ -43,9 +44,9 @@ class PermissionController extends Controller
         $entities = $em->getRepository('MesdHelpWikiBundle:Permission')->findAll();
 
         return $this->render('MesdHelpWikiBundle:Permission:index.html.twig', array(
-                'entities' => $entities,
-           )
-       );
+            'entities' => $entities,
+            'menu'     => new Menu(),
+        ));
     }
 
     /**
@@ -57,7 +58,7 @@ class PermissionController extends Controller
     public function createAction(Request $request)
     {
         $entity = new Permission();
-        $form = $this->createCreateForm($entity);
+        $form   = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -65,14 +66,14 @@ class PermissionController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('permission_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('MesdHelpWikiBundle_permission_show', array('id' => $entity->getId())));
         }
 
         return $this->render('MesdHelpWikiBundle:Permission:new.html.twig', array(
-                'entity' => $entity,
-                'form'   => $form->createView(),
-           )
-       );
+            'entity' => $entity,
+            'form'   => $form->createView(),
+            'menu'   => new Menu(),
+        ));
     }
 
     /**
@@ -85,13 +86,11 @@ class PermissionController extends Controller
     private function createCreateForm(Permission $entity)
     {
         $form = $this->createForm(new PermissionType(), $entity, array(
-                'action' => $this->generateUrl('permission_create'),
+                'action' => $this->generateUrl('MesdHelpWikiBundle_permission_create'),
                 'method' => 'POST',
-           )
-       );
+        ));
 
-        $form->add('submit', 'submit', array('label' => 'Create')
-       );
+        $form->add('submit', 'submit', array('label' => 'Create'));
 
         return $form;
     }
@@ -107,10 +106,10 @@ class PermissionController extends Controller
         $form   = $this->createCreateForm($entity);
 
         return $this->render('MesdHelpWikiBundle:Permission:new.html.twig', array(
-                'entity' => $entity,
-                'form'   => $form->createView(),
-           )
-       );
+            'entity' => $entity,
+            'form'   => $form->createView(),
+            'menu'   => new Menu(),
+        ));
     }
 
     /**
@@ -132,10 +131,10 @@ class PermissionController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('MesdHelpWikiBundle:Permission:show.html.twig', array(
-                'entity'      => $entity,
-                'delete_form' => $deleteForm->createView(),
-           )
-       );
+            'entity'      => $entity,
+            'delete_form' => $deleteForm->createView(),
+            'menu'        => new Menu(),
+        ));
     }
 
     /**
@@ -154,15 +153,15 @@ class PermissionController extends Controller
             throw $this->createNotFoundException('Unable to find Permission entity.');
         }
 
-        $editForm = $this->createEditForm($entity);
+        $editForm   = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('MesdHelpWikiBundle:Permission:edit.html.twig', array(
-                'entity'      => $entity,
-                'edit_form'   => $editForm->createView(),
-                'delete_form' => $deleteForm->createView(),
-           )
-       );
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+            'menu'        => new Menu(),
+        ));
     }
 
     /**
@@ -175,13 +174,11 @@ class PermissionController extends Controller
     private function createEditForm(Permission $entity)
     {
         $form = $this->createForm(new PermissionType(), $entity, array(
-                'action' => $this->generateUrl('permission_update', array('id' => $entity->getId())),
-                'method' => 'PUT',
-           )
-       );
+            'action' => $this->generateUrl('MesdHelpWikiBundle_permission_update', array('id' => $entity->getId())),
+            'method' => 'PUT',
+        ));
 
-        $form->add('submit', 'submit', array('label' => 'Update')
-       );
+        $form->add('submit', 'submit', array('label' => 'Update'));
 
         return $form;
     }
@@ -210,16 +207,15 @@ class PermissionController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('permission_edit', array('id' => $id))
-           );
+            return $this->redirect($this->generateUrl('MesdHelpWikiBundle_permission_edit', array('id' => $id)));
         }
 
         return $this->render('MesdHelpWikiBundle:Permission:edit.html.twig', array(
-                'entity'      => $entity,
-                'edit_form'   => $editForm->createView(),
-                'delete_form' => $deleteForm->createView(),
-           )
-       );
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+            'menu'        => new Menu(),
+        ));
     }
 
     /**
@@ -246,8 +242,7 @@ class PermissionController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('permission')
-       );
+        return $this->redirect($this->generateUrl('MesdHelpWikiBundle_permission_index'));
     }
 
     /**
@@ -259,11 +254,12 @@ class PermissionController extends Controller
      */
     private function createDeleteForm($id)
     {
-        return $this->createFormBuilder()
-        ->setAction($this->generateUrl('permission_delete', array('id' => $id)))
-        ->setMethod('DELETE')
-        ->add('submit', 'submit', array('label' => 'Delete'))
-        ->getForm()
+        return $this
+            ->createFormBuilder()
+            ->setAction($this->generateUrl('MesdHelpWikiBundle_permission_delete', array('id' => $id)))
+            ->setMethod('DELETE')
+            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->getForm()
         ;
     }
 }

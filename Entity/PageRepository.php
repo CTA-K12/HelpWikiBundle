@@ -18,6 +18,9 @@
  */
 namespace Mesd\HelpWikiBundle\Entity;
 
+use Doctrine\Common\Collections;
+use Doctrine\Common\Collections\Collection;
+
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -38,6 +41,28 @@ class PageRepository extends EntityRepository
             ->orderBy('p.title')
             ->setParameter(1, $pageId)
         ;
+    }
+
+    public function getAllPagesByPrintOrder($levels = 0, $security = false)
+    {
+        // get all the pages not equal to the page passed
+        // used to create a select box for creating page associations
+        $result = $this
+            ->createQueryBuilder('p')
+            ->where('p.parent is NULL')
+            ->getQuery()
+            ->getResult()
+        ;
+
+        // define our results as an Array Collection
+        // then sort the parent pages
+        $entities = new Collections\ArrayCollection($result);
+        $pages    = $this->sortCollectionByPrintOrder($entities);
+
+        // recursively sort all the nested child pages
+        $this->sortSubCollections($pages);
+
+        return $pages;
     }
 
     public function getParentPage($pageId)
@@ -61,75 +86,149 @@ class PageRepository extends EntityRepository
         return $q->getResult();
     }
 
-    public function getPreviousPage($pageId)
+    public function getPreviousPage(Page $page)
     {
         // the the previous page, like a book
 
         // if there isn't a previous page
         // get the last page of the previous chapter
-        $qb = $this->createQueryBuilder('p');
-        $qb
-            ->innerJoin('\Mesd\HelpWikiBundle\Entity\Page', 'q', 'WITH', 'q.parent = p.id')
-            ->where(
-                $qb->expr()->eq('q.id', ':childId'))
-            ->setParameter('childId', $pageId)
-        ;
-
-        $q = $qb->getQuery();
-
-        return $q->getResult();
-    }
-
-    public function getNextPage(Page $page)
-    {
-        // get the next page, like a book
-
-        // set the printOrder var to the current
-        // printOrder and increment it by 1
-        // that means this is the next page
-        $printOrder = $page->getPrintOrder() + 1;
-        $parentId   = $page->getParent();
-
+        $printOrder = $page->getPrintOrder() - 1;
+        $parent     = $page->getParent();
+        
         $qb = $this->createQueryBuilder('p');
         $qb->where($qb->expr()->eq('p.printOrder', ':printOrder'));
-        
-        // if there isn't a parent page,
-        // then we are at the top level of pages
-        // so we should modify the query as necessary
-        if(empty($parentId)) {
+
+        if(empty($parent)) {
             $qb->andWhere($qb->expr()->isNull('p.parent'));
         } else {
             $qb->andWhere(
                 $qb
                     ->expr()->eq('p.parent', ':parentId'))
-                    ->setParameter('parentId', $parentId);
+                    ->setParameter('parentId', $parent->getId());
+        }
+
+        $qb->setParameter('printOrder', $printOrder);
+
+        $q = $qb->getQuery();
+
+        $result = $q->getOneOrNullResult();
+
+        //var_dump($result->getSlug());exit;
+        if(empty($result) && !empty($parent)) {
+            return $parent;
+        }
+
+        if (!empty($result)) {
+            $children = $result->getChildren();
+            if (0 < $children->count()) {
+                return $this->getLastPageInCollection($children);
+            }
+        }
+
+        return $result;
+    }
+
+    public function getNextPage(Page $page, $ignoreChildren = false)
+    {
+        // get the current printOrder and increment it by 1
+        $printOrder = $page->getPrintOrder() + 1;
+
+        // get the parent page
+        $parent = $page->getParent();
+
+        // get the child pages
+        $children = $page->getChildren();
+
+        // we first start with children
+        if (false === $ignoreChildren) {
+            if(0 < $children->count()) {
+                return $this->getFirstPageInCollection($children);
+            }
+        }
+
+        $qb = $this->createQueryBuilder('p');
+        $qb->where($qb->expr()->eq('p.printOrder', ':printOrder'));
+        
+        // we match the next page based on common parents
+        // and a defined incremental order
+        // if a parent exists, use that parameter, otherwise the parent is null
+        if (empty($parent)) {
+            $qb->andWhere($qb->expr()->isNull('p.parent'));
+        } else {
+            $qb->andWhere(
+                $qb
+                    ->expr()->eq('p.parent', ':parentId'))
+                    ->setParameter('parentId', $parent->getId());
         }
         
         $qb->setParameter('printOrder', $printOrder);
 
         $q = $qb->getQuery();
 
-        $result = $q->getResult();
-
-        // if there isn't another page properly
-        // assigned a printOrder, then we should
-        // look for the next alphabetically,
-        // but this could lead to problems where
-        // there is recursion because to pages
-        // might infinitely lead back to each
-        // other over and over
+        $result = $q->getOneOrNullResult();
 
         // if there isn't another page,
         // lets get the next parent page
-        if(empty($result) && !empty($parentId)) {
-
-            return 'party party foobar';
+        if(empty($result) && !empty($parent)) {
+            return $this->getNextPage($parent, true);
         }
 
         // if there isn't even that,
         // then we're on the last page,
         // we should return false
+        return $q->getOneOrNullResult();
+    }
 
-        return $q->getResult();
+    public function getFirstPageInCollection(Collection $pages)
+    {
+        // this function finds the first page in a collection of pages
+        $iterator = $pages->getIterator();
+
+        $iterator->uasort(function ($a, $b) {
+            return ($a->getPrintOrder() < $b->getPrintOrder()) ? -1 : 1;
+        });
+
+        $collection = new Collections\ArrayCollection(iterator_to_array($iterator));
+
+        return $collection->first();
+    }
+
+    public function getLastPageInCollection(Collection $pages)
+    {
+        // this function finds the first page in a collection of pages
+        $iterator = $pages->getIterator();
+
+        $iterator->uasort(function ($a, $b) {
+            return ($a->getPrintOrder() < $b->getPrintOrder()) ? -1 : 1;
+        });
+
+        $collection = new Collections\ArrayCollection(iterator_to_array($iterator));
+
+        return $collection->last();
+    }
+
+    private function sortSubCollections($entities)
+    {
+        foreach ($entities as $entity) {
+            if (!$entity->getChildren()->isEmpty()) {
+                $children = $this->sortCollectionByPrintOrder($entity->getChildren());
+                $this->sortSubCollections($children);
+
+                $entity->setChildren($children);
+            }
+        }
+    }
+
+    private function sortCollectionByPrintOrder(Collection $collection)
+    {
+        $iterator = $collection->getIterator();
+
+        $iterator->uasort(function ($a, $b) {
+            return ($a->getPrintOrder() < $b->getPrintOrder()) ? -1 : 1;
+        });
+
+        $collection = new Collections\ArrayCollection(iterator_to_array($iterator));
+
+        return $collection;
     }
 }

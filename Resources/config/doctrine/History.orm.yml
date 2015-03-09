@@ -35,6 +35,14 @@ Mesd\HelpWikiBundle\Entity\History:
             length:   255
             nullable: false
             unique:   false
+        status:
+            column:   status
+            type:     string
+            length:   16
+            nullable: false
+            unique:   false
+            options:
+                comment: 'Avaiable options: autosave, draft, unpublished, published, trashed'
         revision:
             column:   revision
             type:     integer

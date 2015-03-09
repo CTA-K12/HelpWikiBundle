@@ -17,6 +17,60 @@
 {% endspaceless %}
 {% endblock submit_widget %}
 
+{% block mesd_help_wiki_permission_type_widget %}
+{% spaceless %}
+    {% if expanded %}
+        <ul {{ block('widget_container_attributes') }}>
+        {% for child in form %}
+            <li>
+                {{ form_widget(child) }}
+                {{ form_label(child) }}
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        {# just let the choice widget render the select tag #}
+        {{ block('choice_widget') }}
+    {% endif %}
+{% endspaceless %}
+{% endblock mesd_help_wiki_permission_type_widget %}
+
+{% block mesd_help_wiki_object_type_widget %}
+{% spaceless %}
+    {% if expanded %}
+        <ul {{ block('widget_container_attributes') }}>
+        {% for child in form %}
+            <li>
+                {{ form_widget(child) }}
+                {{ form_label(child) }}
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        {# just let the choice widget render the select tag #}
+        {{ block('choice_widget') }}
+    {% endif %}
+{% endspaceless %}
+{% endblock mesd_help_wiki_object_type_widget %}
+
+{% block mesd_help_wiki_routealias_type_widget %}
+{% spaceless %}
+    {% if expanded %}
+        <ul {{ block('widget_container_attributes') }}>
+        {% for child in form %}
+            <li>
+                {{ form_widget(child) }}
+                {{ form_label(child) }}
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        {# just let the choice widget render the select tag #}
+        {{ block('choice_widget') }}
+    {% endif %}
+{% endspaceless %}
+{% endblock mesd_help_wiki_routealias_type_widget %}
+
 {% block mesd_help_wiki_ckeditor_widget %}
 {% spaceless %}
     {% set attr = attr|merge({'class': 'ckeditor'}) %}
@@ -27,10 +81,35 @@
     <script type="text/javascript">{% include('MesdHelpWikiBundle:Form:styles.js.twig') %}</script>
 {% endblock mesd_help_wiki_ckeditor_widget %}
 
+{% block mesd_help_wiki_selectize_choice_widget %}
+{% spaceless %}
+    {% if expanded %}
+        <ul {{ block('widget_container_attributes') }}>
+        {% for child in form %}
+            <li>
+                {{ form_widget(child) }}
+                {{ form_label(child) }}
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        {# just let the choice widget render the select tag #}
+        {{ block('choice_widget') }}
+    {% endif %}
+{% endspaceless %}
+    <script type="text/javascript" src="{{ asset('bundles/mesdhelpwiki/vendor/selectize/dist/selectize.js') }}"></script>
+{% endblock mesd_help_wiki_selectize_choice_widget %}
+
+{%- block mesd_help_wiki_selectize_text_widget -%}
+    {%- set attr = attr|merge({'class': 'selectize'}) -%}
+    {%- set type = type|default('text') -%}
+    <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+{%- endblock mesd_help_wiki_selectize_text_widget -%}
+
 {% block upload_widget %}
 {% spaceless %}
     <div class="btn btn-default btn-file">
-        Browse <input {{ block('widget_attributes') }} />
+        {{ 'browse.file'|trans }} <input {{ block('widget_attributes') }} />
     </div>
 {% endspaceless %}
 {% endblock upload_widget %}

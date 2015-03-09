@@ -26,6 +26,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Mesd\HelpWikiBundle\Entity\History;
 use Mesd\HelpWikiBundle\Form\HistoryType;
 
+use Mesd\HelpWikiBundle\Model\Menu;
 /**
  * History Controller
  *
@@ -55,6 +56,7 @@ class HistoryController extends Controller
 
         return $this->render('MesdHelpWikiBundle:History:index.html.twig', array(
             'entities' => $entities,
+            'menu'     => new Menu(),
         ));
     }
 
@@ -74,6 +76,7 @@ class HistoryController extends Controller
 
         return $this->render('MesdHelpWikiBundle:History:index.html.twig', array(
                 'entities' => $entities,
+                'menu'     => new Menu(),
         ));
     }
 
@@ -93,6 +96,7 @@ class HistoryController extends Controller
 
         return $this->render('MesdHelpWikiBundle:History:index.html.twig', array(
             'entities' => $entities,
+            'menu'     => new Menu(),
         ));
     }
 
@@ -116,12 +120,13 @@ class HistoryController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('history_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('MesdHelpWikiBundle_history_show', array('id' => $entity->getId())));
         }
 
         return $this->render('MesdHelpWikiBundle:History:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
+            'menu'   => new Menu(),
         ));
     }
 
@@ -138,7 +143,7 @@ class HistoryController extends Controller
     private function createCreateForm(History $entity)
     {
         $form = $this->createForm(new HistoryType(), $entity, array(
-            'action' => $this->generateUrl('history_create'),
+            'action' => $this->generateUrl('MesdHelpWikiBundle_history_create'),
             'method' => 'POST',
         ));
 
@@ -164,6 +169,7 @@ class HistoryController extends Controller
         return $this->render('MesdHelpWikiBundle:History:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
+            'menu'   => new Menu(),
         ));
     }
 
@@ -190,6 +196,7 @@ class HistoryController extends Controller
         return $this->render('MesdHelpWikiBundle:History:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
+            'menu'        => new Menu(),
         ));
     }
 
@@ -219,6 +226,7 @@ class HistoryController extends Controller
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'menu'        => new Menu(),
         ));
     }
 
@@ -235,7 +243,7 @@ class HistoryController extends Controller
     private function createEditForm(History $entity)
     {
         $form = $this->createForm( new HistoryType(), $entity, array(
-            'action' => $this->generateUrl('history_update', array('id' => $entity->getId())),
+            'action' => $this->generateUrl('MesdHelpWikiBundle_history_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -271,13 +279,14 @@ class HistoryController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('history_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('MesdHelpWikiBundle_history_edit', array('id' => $id)));
         }
 
         return $this->render('MesdHelpWikiBundle:History:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'menu'        => new Menu(),
         ));
     }
 
@@ -309,7 +318,7 @@ class HistoryController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('history'));
+        return $this->redirect($this->generateUrl('MesdHelpWikiBundle_history_index'));
     }
 
     /**
@@ -326,7 +335,7 @@ class HistoryController extends Controller
     {
         return $this
             ->createFormBuilder()
-            ->setAction($this->generateUrl('history_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('MesdHelpWikiBundle_history_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()

@@ -26,6 +26,10 @@ use Mesd\HelpWikiBundle\Model\UserSubjectInterface;
  */
 class Comment
 {
+    const FLAGGED    = 'FLAGGED';
+    const UNAPPROVED = 'UNAPPROVED';
+    const APPROVED   = 'APPROVED';
+    
     /**
      * @var integer
      */
@@ -40,6 +44,21 @@ class Comment
      * @var \DateTime
      */
     private $dateTime;
+
+    /**
+     * @var status
+     */
+    private $status;
+
+    /**
+     * @var status date time
+     */
+    private $statusDateTime;
+
+    /**
+     * @var status by
+     */
+    private $statusBy;
 
     /**
      * @var \Mesd\HelpWikiBundle\Entity\Page
@@ -109,6 +128,52 @@ class Comment
     }
 
     /**
+     * Set status
+     *
+     * @param  string $status
+     * @return Page
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set status date time
+     *
+     * @param  \Date $statusDateTime
+     * @return Page
+     */
+    public function setStatusDateTime($statusDateTime)
+    {
+        $this->statusDateTime = $statusDateTime;
+    
+        return $this;
+    }
+
+    /**
+     * Get status date time
+     *
+     * @return \Date
+     */
+    public function getStatusDateTime()
+    {
+        return $this->statusDateTime;
+    }
+
+    /**
      * Set page
      *
      * @param \Mesd\HelpWikiBundle\Entity\Page $page
@@ -152,6 +217,29 @@ class Comment
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set status by
+     *
+     * @param \Mesd\HelpWikiBundle\Model\UserSubjectInterface $statusBy
+     * @return Comment
+     */
+    public function setStatusBy(\Mesd\HelpWikiBundle\Model\UserSubjectInterface $statusBy = null)
+    {
+        $this->statusBy = $statusBy;
+    
+        return $this;
+    }
+
+    /**
+     * Get status by
+     *
+     * @return \Mesd\HelpWikiBundle\Model\UserSubjectInterface 
+     */
+    public function getStatusBy()
+    {
+        return $this->statusBy;
     }
 
     /**

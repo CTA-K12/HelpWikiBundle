@@ -1,0 +1,30 @@
+MesdHelpWikiBundle_tag_index:
+    pattern:  /
+    defaults: { _controller: "MesdHelpWikiBundle:Tag:index" }
+
+MesdHelpWikiBundle_tag_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "MesdHelpWikiBundle:Tag:show" }
+
+MesdHelpWikiBundle_tag_new:
+    pattern:  /new
+    defaults: { _controller: "MesdHelpWikiBundle:Tag:new" }
+
+MesdHelpWikiBundle_tag_create:
+    pattern:  /create
+    defaults: { _controller: "MesdHelpWikiBundle:Tag:create" }
+    requirements: { _method: post }
+
+MesdHelpWikiBundle_tag_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "MesdHelpWikiBundle:Tag:edit" }
+
+MesdHelpWikiBundle_tag_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "MesdHelpWikiBundle:Tag:update" }
+    requirements: { _method: post|put }
+
+MesdHelpWikiBundle_tag_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "MesdHelpWikiBundle:Tag:delete" }
+    requirements: { _method: post|delete }

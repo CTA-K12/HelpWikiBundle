@@ -1,5 +1,21 @@
 <?php
-
+/**
+ * PageListener.php file
+ *
+ * File that contains the help wiki page listener class
+ *
+ * Licence MIT
+ * Copyright (c) 2014 Multnomah Education Service District <http://www.mesd.k12.or.us>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ * 
+ * @filesource /src/Mesd/HelpWikiBundle/Listener/PageListener.php
+ * @package    Mesd\HelpWikiBundle\Listener
+ * @copyright  2014 (c) Multnomah Education Service District <http://www.mesd.k12.or.us>
+ * @license    <http://opensource.org/licenses/MIT> MIT
+ * @author     Curtis G Hanson <chanson@mesd.k12.or.us>
+ * @version    0.1.0
+ */
 namespace Mesd\HelpWikiBundle\Listener;
 
 use Doctrine\ORM\EntityManager;
@@ -12,7 +28,19 @@ use Mesd\HelpWikiBundle\Entity\History;
 use Mesd\HelpWikiBundle\Entity\Link;
 
 /**
- * Page
+ * Page Listener
+ *
+ * The help wiki page listener.
+ * Updates the user, status, datetime, and revision when persist or update is
+ * invoked. Also updates the history entity on update. On delete, however;
+ * comments, history, tags, and page permissions are all permanently deleted
+ * along with the original entity.
+ *
+ * @package    Mesd\HelpWikiBundle\Listener
+ * @copyright  2015 (c) Multnomah Education Service District <http://www.mesd.k12.or.us>
+ * @license    <http://opensource.org/licenses/MIT> MIT
+ * @author     Curtis G Hanson <chanson@mesd.k12.or.us>
+ * @since      0.2.0
  */
 class PageListener
 {
@@ -40,11 +68,16 @@ class PageListener
         // set is page locked
         // set is comment locked
         $en = $args->getEntity();
-        $em = $args->getEntityManager(); // this should be getManager, not getEntityManager
+        $em = $args->getEntityManager();
         $sc = $this->container->get('security.context');
 
         if ($en instanceof Page) {
             $parent = $en->getParent();
+
+            if ($en->isStandAlone() && !empty($parent))
+            {
+                return false;
+            }
 
             $en->setDateTime(new \DateTime());
             $en->setRevision(0);
@@ -66,8 +99,8 @@ class PageListener
 
     public function postPersist(LifecycleEventArgs $args)
     {
-        $em = $args->getEntityManager();
         $en = $args->getEntity();
+        $em = $args->getEntityManager();
 
         if ($en instanceof Page) {
 
@@ -94,25 +127,35 @@ class PageListener
         // set print order
         // set is page locked
         // set is comment locked
-        $en = $args->getEntity();
-        $em = $args->getEntityManager();
+        $en  = $args->getEntity();
+        $em  = $args->getEntityManager();
         $uow = $em->getUnitOfWork();
-        $sc = $this->container->get('security.context');
+        $sc  = $this->container->get('security.context');
 
         if ($en instanceof Page) {
+
+            $parent   = $en->getParent();
+            $children = $en->getChildren();
+
+            if ($en->isStandAlone() && (!empty($parent) || !$children->empty()))
+            {
+                return false;
+            }
 
             // create new history based on old data
             $this->history = new History();
 
             // look for changed values
-            $title = $args->hasChangedField('title') ? $args->getOldValue('title') : $en->getTitle();
-            $body  = $args->hasChangedField('body')  ? $args->getOldValue('body')  : $en->getBody();
-            $slug  = $args->hasChangedField('slug')  ? $args->getOldValue('slug')  : $en->getSlug();
+            $title  = $args->hasChangedField('title')  ? $args->getOldValue('title')  : $en->getTitle();
+            $body   = $args->hasChangedField('body')   ? $args->getOldValue('body')   : $en->getBody();
+            $slug   = $args->hasChangedField('slug')   ? $args->getOldValue('slug')   : $en->getSlug();
+            $status = $args->hasChangedField('status') ? $args->getOldValue('status') : $en->getStatus();
 
             // set the values to the history
             $this->history->setTitle($title);
             $this->history->setBody($body);
             $this->history->setSlug($slug);
+            $this->history->setStatus($status);
 
             // not modifiable by user
             $this->history->setPage($en);
@@ -159,6 +202,12 @@ class PageListener
                 $em->remove($link);
             }
 
+            // delete all the tags associated with the page
+            //$tags = $em->getRepository('MesdHelpWikiBundle:Tags')->findByPage($en);
+            //foreach ($tags as $tag) {
+            //    $em->remove($tag);
+            //}
+
             // delete all the histories associated with the page
             $histories = $em->getRepository('MesdHelpWikiBundle:History')->findByPage($en);
             foreach ($histories as $history) {
@@ -172,7 +221,7 @@ class PageListener
             }
 
             // delete all the permissions associated with the page
-            $permissions = $em->getRepository('MesdHelpWikiBundle:Permissions')->findByPage($en);
+            $permissions = $em->getRepository('MesdHelpWikiBundle:PagePermission')->findByPage($en);
             foreach ($permissions as $permission) {
                 $em->remove($permission);
             }
@@ -198,7 +247,7 @@ class PageListener
 
         if ('Mesd\HelpWikiBundle\Controller\PageController::editAction' === $_controller) {
 
-            $em = $this->container->get('doctrine')->getManager();
+            $em = $this->container->get('doctrine')->getEntityManager();
             $en = $em->getRepository('MesdHelpWikiBundle:Page')->find(1);
         }
         // All route parameters including the `_controller`

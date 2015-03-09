@@ -1,18 +1,24 @@
-HelpWikiBundle
-==============
+# HelpWikiBundle
 
 Wiki bundle for adding documentation to pages in an application.
 
 version: `0.0.1`
 
-Description
------------
+## Description
 
 HelpWikiBundle is a wiki style documentation project aimed at providing
 front-end assistance in web-applications. HelpWiki pages are created by
 users and administrators. These pages are linked to route aliases which
 allow a user to view specific help documentation based on their location
-in the application. Some of the features of this bundle are:
+in the application.
+
+A problem that plagues many enterprise-level applications is the complete lack
+of end-user documentation. The Help Wiki gives everyone (including developers,
+project managers, administrators, technical-writers, and end-users) the ability
+to contribute to a wiki to help other users better understand the system they
+are using.
+
+Some of the features of this bundle are:
 
   + create, edit, and delete pages
   + page history and revision
@@ -30,8 +36,7 @@ but to pass their knowledge on to others as they use an application.
 
 Screenshot: not yet.
 
-Installing
-----------
+## Installing
 
 How to install.
 
@@ -56,10 +61,9 @@ This bundle has been developed and tested to work on the following broswers:
     $ composer install
 ```
 
-Configuring
------------
+## Configuration
 
-# Configure UserInterface and RoleInterface
+### UserInterface and RoleInterface
 
 Before using this bundle, you will need to set up your users and roles.
 This is done by configuring your `app/config/config.ext` to link the
@@ -73,8 +77,8 @@ doctrine:
     orm:
         # ...
         resolve_target_entities:
-            Mesd\HelpWikiBundle\Model\UserSubjectInterface: Mesd\Acme\DemoBundle\Entity\AppUser
-            Mesd\HelpWikiBundle\Model\RoleSubjectInterface: Mesd\UserBundle\Entity\AuthRole
+            Mesd\HelpWikiBundle\Model\UserSubjectInterface: Acme\DemoBundle\Entity\User
+            Mesd\HelpWikiBundle\Model\RoleSubjectInterface: Acme\DemoBundle\Entity\Role
 ```
 
 ```xml
@@ -107,57 +111,83 @@ $container->loadFromExtension('doctrine', array(
 ));
 ```
 
-# Configure Form Types
+REMEMBER! Permission are tied to the entities by both roles and users. Your application
+must have entities for both and either implement the Symfony interfaces for
+those entities or contain the minimum methods:
 
-## Configure Select 2 Form Type
+  + `User::getId()`
+  + `User::getUsername()`
+  + `Role::getId()`
+  + `Role::getRole()`
 
-## Configure Sortable-Nestable List Form Type
+### Form Types
 
-## Configure WYSIWYG Text Editor
+#### Select Box Form Type
 
-# Integrating Wiki Pages Into Your Application
+#### Sortable-Nestable List Form Type
 
-The HelpWikiBundle associates 
+#### WYSIWYG Text Editor
 
-Updating
---------
+## Integrating Wiki Pages Into Your Application
+
+## Updating
 
 How to update.
 
-Usage
------
+## Usage
 
-How to use.
+Help Wiki uses a combination of twig extensions and templates for output. Any
+template can be overriden by simply copying the template directory into your
+`app/Resources/views` folder. Twig extension blocks are overriden by configuring
+your blocks in your `app/config/config.yml` file.
 
+### Twig Extensions
 
-Code Snippet
-------------
+The following extensions are at your disposal:
 
-```html
-    <body>
-        <h1 class="your-class">code</h1>
-        <p>some code here</p>
-    </body>
+  + `mesd_help_wiki_linker($opts)`
+  + `mesd_help_wiki_page($id, $opts)`
+
+The linker extension is the best way to fully integrate your application with
+the wiki. One of the biggest reasons the bundle was written was to give users
+page specific on-screen documentation. The linker does just that. When
+implemented, a button will display whether or not a help wiki page exists for
+the screen the user is on. If a help wiki page exists, the linker will provide
+a link to that documentation. If it doesn't, the linker will allow a user to
+create one.
+
+screen. 
+### Permissions
+
+By default, all security is turned off. This is easily changed by setting the
+configuration value `security` to true in your `app/config/config.yml` file.
+In addition, you can also set an array of roles with full access. See below:
+
+```yaml
+# Mesd Help Wiki Configuration
+mesd_help_wiki:
+    security: true
+    super_admin_roles: [ROLE_ADMIN]
 ```
 
-Troubleshooting
----------------
+By default, no roles are populated. If you turn security ON and have not
+configured any permissions from the GUI or set a `super_admin_role` you will
+not have access to anything!
 
-This bundle is likely to fail if you attempt to install it.
-I must work on this more.
+The way security works in Help Wiki is that you have no permissions till
+granted. Each action in the bundle is configurable via security.
+
+## Troubleshooting
 
 
-Contributing
-------------
+## Contributing
 
 See the [CONTRIBUTING.md](CONTRIBUTING.md) file for more information.
 
-Changelog
----------
+## Changelog
 
 See the [CHANGELOG.md](CHANGELOG.md) file for more information.
 
-License
--------
+## License
 
 See the [LICENSE.md](LICENSE.md) file for more information.

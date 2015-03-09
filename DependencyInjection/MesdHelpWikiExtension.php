@@ -38,12 +38,20 @@ class MesdHelpWikiExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.yml');
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config/services'));
+        $loader->load('models.yml');
+        $loader->load('listeners.yml');
+        $loader->load('formtypes.yml');
+        $loader->load('securityvoters.yml');
+        $loader->load('twigextensions.yml');
 
-        if (isset($config['form_types'])) {
-            $formTypes = $config['form_types'];
-            foreach ($formTypes as $k => $v) {
+        foreach ($config as $k => $v) {
+            if ('form_types' === $k) {
+                foreach ($v as $j => $u) {
+                    $container->setParameter('mesd_help_wiki.' . $k . '.' . $j, $u);
+                }
+            }
+            else {
                 $container->setParameter('mesd_help_wiki.' . $k, $v);
             }
         }

@@ -134,4 +134,60 @@ class Permission
     {
         return $this->getId();
     }
+    /**
+     * @var string
+     */
+    private $object;
+
+    /**
+     * @var string
+     */
+    private $type;
+
+
+    /**
+     * Set object
+     *
+     * @param string $object
+     * @return Permission
+     */
+    public function setObject($object)
+    {
+        $this->object = $object;
+    
+        return $this;
+    }
+
+    /**
+     * Get object
+     *
+     * @return string 
+     */
+    public function getObject()
+    {
+        return $this->object;
+    }
+
+    /**
+     * Set type
+     *
+     * @param string $type
+     * @return Permission
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string 
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
 }
