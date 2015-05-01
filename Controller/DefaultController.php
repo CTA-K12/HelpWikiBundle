@@ -19,6 +19,10 @@
  */
 namespace Mesd\HelpWikiBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
@@ -49,5 +53,14 @@ class DefaultController extends Controller
     public function indexAction()
     {
         return $this->render('MesdHelpWikiBundle:Default:index.html.twig', array());
+    }
+
+    public function heartbeatAction(Request $request)
+    {
+        $data = $request->request->all();
+
+        $response = new JsonResponse();
+
+        return $response->setData(array($data));
     }
 }

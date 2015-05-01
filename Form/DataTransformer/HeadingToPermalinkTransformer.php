@@ -55,24 +55,25 @@ class HeadingToPermalinkTransformer implements DataTransformerInterface
 
         $dom = new \DomDocument();
         $dom->preserveWhiteSpace = false;
-        $dom->loadHTML($page, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD | LIBXML_NOBLANKS | LIBXML_NOEMPTYTAG);
+        $dom->formatOutput = true;
+        $dom->loadHTML($page, LIBXML_HTML_NODEFDTD | LIBXML_NOBLANKS | LIBXML_NOEMPTYTAG);
 
         $nodes = $dom->getElementsByTagName('*');
-        if($nodes instanceof \DOMNodeList) {
+        if ($nodes instanceof \DOMNodeList) {
             $i = 0;
             foreach ($nodes as $node) {
                 // if there's a header, lets give it a title
-                if(in_array($node->tagName, $headings)){
+                if (in_array($node->tagName, $headings)) {
                     // to ensure a unique but non-random heading id,
                     // we camelCase the slug name, iteration, tag name, and tag inner html
-                    $title = $slug . $node->tagName . $i . self::camelCase($node->nodeValue);
+                    $title = $slug . '-' . $node->tagName . '-' . $i . '-' . self::camelCase($node->nodeValue);
                     $node->setAttribute('id', $title);
                     $i++;
                 }
             }
+
             // save to the dom
             $html .= $dom->saveHTML();
-            //$html .= preg_replace('~<(?:!DOCTYPE|/?(?:html|body))[^>]*>\s*~i', '', $dom->saveHTML());
         }
 
         return $html;

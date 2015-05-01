@@ -133,4 +133,63 @@ The bundle comes with jquery, jquery-ui, and bootstrap-js libraries included.
 But if you already use those libraries, you can point the assets in the bundle
 to the predefined assets to avoid duplicating any unnecessary loading.
 
-### 
+### Heartbeat
+
+The heartbeat api polls the server every 1 to 10 minutes. It is envoked on the:
+
++ create page
++ edit page
++ order pages
++ create link
++ edit link
++ history page
+
+#### Workflow
+
+##### Creating Pages
+
+Upon creating a new page, the autosave feature begins only when the title,
+permalink (or slug), and body have all been modified. In addition, the permalink
+must be unique. If all these criteria are met, the data will be posted to the
+page table as an autosaved page. All subsequent autosaves will overwrite the
+current autosaved page.
+
+The page will be stored in the page table indefinitely until the user deletes or
+publishes it.
+
+If the title or permalink are emptied, autosave will halt until corrected.
+If the permalink is not unique, autosave will halt until corrected.
+
+##### Editing Pages
+
+When editing a page, if the page status is autosaved, normal editing will
+resume following the rules stated for creating new pages.
+
+If the page status is published, not locked, and autosave is not the last
+historical revision in the history table; autosave features will resume when any
+of the title, permalink, or body fields have changed. The autosave is saved to
+the history table, not the page table. All subsequent autosaves will overwrite
+the last autosave in the history table.
+
+The page is locked until a save is made or the user's session idle exceed 1
+hour. If the idle time exceeds the session value, the user is given an option to
+resume editing from the autosave or from the last non-autosaved revision. When
+the autosave is again resumed, the last autosave will be overwritten. Maybe, I
+should explore the uniqueness on users and autosaves, and users and page locks.
+
+If a user suddenly leaves a page without a save, the same rules apply for
+autosave. If the same user enters a locked page, the lock will not apply.
+Autosaves and users, and page locks and users are both unique to each other.
+
+##### Page Ordering
+
+When attempting to change the order of pages, if any page is locked that would
+be affected by the new page order, the page ordering cannot take place.
+
+Maybe, if I remove page hierarchy from the new and edit screens, these edits
+will never affect the page edits. Since page hierarchies are not stored in the
+history table.
+
+If a page order is taking place and a page is deleted, the page should be thrown
+out and ordering will skip the page. If the page has any child pages, all those
+pages will be sent to the highest level of the ordering.

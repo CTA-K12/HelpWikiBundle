@@ -38,13 +38,6 @@ class MesdHelpWikiExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config/services'));
-        $loader->load('models.yml');
-        $loader->load('listeners.yml');
-        $loader->load('formtypes.yml');
-        $loader->load('securityvoters.yml');
-        $loader->load('twigextensions.yml');
-
         foreach ($config as $k => $v) {
             if ('form_types' === $k) {
                 foreach ($v as $j => $u) {
@@ -55,6 +48,13 @@ class MesdHelpWikiExtension extends Extension
                 $container->setParameter('mesd_help_wiki.' . $k, $v);
             }
         }
+
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config/services'));
+        $loader->load('models.yml');
+        $loader->load('listeners.yml');
+        $loader->load('formtypes.yml');
+        $loader->load('securityvoters.yml');
+        $loader->load('twigextensions.yml');
     }
 
 }

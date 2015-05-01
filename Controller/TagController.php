@@ -41,6 +41,8 @@ class TagController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('MesdHelpWikiBundle:Tag')->findAll();
+        //$tag = $entities[0];
+        //var_dump(get_class_methods($tag->getPages()));exit;
 
         return $this->render('MesdHelpWikiBundle:Tag:index.html.twig', array(
             'entities' => $entities,

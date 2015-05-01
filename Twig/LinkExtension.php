@@ -136,13 +136,13 @@ class LinkExtension extends Twig_Extension
     {
         return array(
             new \Twig_SimpleFunction('mesd_help_wiki_linker',
-                array($this, 'LinkerFunction'),
+                array($this, 'linkerFunction'),
                 array(
                     'is_safe' => array('html'),
                     'needs_environment' => true
             )),
             new \Twig_SimpleFunction('mesd_help_wiki_page',
-                array($this, 'PageFunction'),
+                array($this, 'pageFunction'),
                 array(
                     'is_safe' => array('html'),
                     'needs_environment' => true
@@ -150,7 +150,7 @@ class LinkExtension extends Twig_Extension
         );
     }
 
-    public function LinkerFunction(\Twig_Environment $twig, $options = array())
+    public function linkerFunction(\Twig_Environment $twig, $options = array())
     {
         //extract($options);
 
@@ -165,7 +165,7 @@ class LinkExtension extends Twig_Extension
         return $template->renderBlock($this->block, array('link' => $link, 'route' => $routeAlias));
     }
 
-    public function PageFunction(\Twig_Environment $twig, $pageId, $options = array())
+    public function pageFunction(\Twig_Environment $twig, $pageId, $options = array())
     {
         //extract($options);
         $this->block = 'mesd_help_wiki_page';

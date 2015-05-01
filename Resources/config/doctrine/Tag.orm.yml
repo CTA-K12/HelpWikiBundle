@@ -23,5 +23,5 @@ Mesd\HelpWikiBundle\Entity\Tag:
             columns: [name]
     manyToMany:
         pages:
-            targetEntity: Page
+            targetEntity: Mesd\HelpWikiBundle\Entity\Page
             mappedBy:     tags

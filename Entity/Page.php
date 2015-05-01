@@ -766,4 +766,88 @@ class Page
     {
         return $this->getTitle();
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $media;
+
+
+    /**
+     * Add children
+     *
+     * @param \Mesd\HelpWikiBundle\Entity\Page $children
+     * @return Page
+     */
+    public function addChildren(\Mesd\HelpWikiBundle\Entity\Page $children)
+    {
+        $this->children[] = $children;
+    
+        return $this;
+    }
+
+    /**
+     * Remove children
+     *
+     * @param \Mesd\HelpWikiBundle\Entity\Page $children
+     */
+    public function removeChildren(\Mesd\HelpWikiBundle\Entity\Page $children)
+    {
+        $this->children->removeElement($children);
+    }
+
+    /**
+     * Add histories
+     *
+     * @param \Mesd\HelpWikiBundle\Entity\History $histories
+     * @return Page
+     */
+    public function addHistorie(\Mesd\HelpWikiBundle\Entity\History $histories)
+    {
+        $this->histories[] = $histories;
+    
+        return $this;
+    }
+
+    /**
+     * Remove histories
+     *
+     * @param \Mesd\HelpWikiBundle\Entity\History $histories
+     */
+    public function removeHistorie(\Mesd\HelpWikiBundle\Entity\History $histories)
+    {
+        $this->histories->removeElement($histories);
+    }
+
+    /**
+     * Add media
+     *
+     * @param \Mesd\HelpWikiBundle\Entity\Media $media
+     * @return Page
+     */
+    public function addMedia(\Mesd\HelpWikiBundle\Entity\Media $media)
+    {
+        $this->media[] = $media;
+    
+        return $this;
+    }
+
+    /**
+     * Remove media
+     *
+     * @param \Mesd\HelpWikiBundle\Entity\Media $media
+     */
+    public function removeMedia(\Mesd\HelpWikiBundle\Entity\Media $media)
+    {
+        $this->media->removeElement($media);
+    }
+
+    /**
+     * Get media
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMedia()
+    {
+        return $this->media;
+    }
 }

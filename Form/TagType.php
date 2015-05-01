@@ -44,7 +44,12 @@ class TagType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('pages')
+            //->add('pages', 'entity', array(
+            //    'class'    => 'MesdHelpWikiBundle:Page',
+            //    'property' => 'title',
+            //    'multiple' => true,
+            //    'expanded' => false,
+            //))
         ;
     }
     

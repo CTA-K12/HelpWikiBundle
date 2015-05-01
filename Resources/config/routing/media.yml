@@ -1,0 +1,35 @@
+MesdHelpWikiBundle_media_index:
+    pattern:  /
+    defaults: { _controller: "MesdHelpWikiBundle:Media:index" }
+
+MesdHelpWikiBundle_media_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "MesdHelpWikiBundle:Media:show" }
+
+MesdHelpWikiBundle_media_new:
+    pattern:  /new
+    defaults: { _controller: "MesdHelpWikiBundle:Media:new" }
+
+MesdHelpWikiBundle_media_create:
+    pattern:  /create
+    defaults: { _controller: "MesdHelpWikiBundle:Media:create" }
+    requirements: { _method: post }
+
+MesdHelpWikiBundle_media_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "MesdHelpWikiBundle:Media:edit" }
+
+MesdHelpWikiBundle_media_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "MesdHelpWikiBundle:Media:update" }
+    requirements: { _method: post|put }
+
+MesdHelpWikiBundle_media_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "MesdHelpWikiBundle:Media:delete" }
+    requirements: { _method: post|delete }
+
+MesdHelpWikiBundle_media_upload:
+    pattern: /upload
+    defaults: { _controller: "MesdHelpWikiBundle:Media:upload" }
+    requirements: { _method: get|post|put }

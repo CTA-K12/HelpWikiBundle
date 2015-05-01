@@ -247,7 +247,7 @@ class PageListener
 
         if ('Mesd\HelpWikiBundle\Controller\PageController::editAction' === $_controller) {
 
-            $em = $this->container->get('doctrine')->getEntityManager();
+            $em = $this->container->get('doctrine')->getManager();
             $en = $em->getRepository('MesdHelpWikiBundle:Page')->find(1);
         }
         // All route parameters including the `_controller`

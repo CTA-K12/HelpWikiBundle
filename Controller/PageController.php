@@ -22,6 +22,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
+use Mesd\HelpWikiBundle\Form\DataTransformer\HeadingToPermalinkTransformer;
+
 use Doctrine\Common\Collections\ArrayCollection;
 
 use Mesd\HelpWikiBundle\Entity\Page;
@@ -63,9 +65,12 @@ class PageController extends Controller
 
         $entities = $em->getRepository('MesdHelpWikiBundle:Page')->getAllPagesByPrintOrder();
 
-        $entity = $entities->first();
-        
+        $first = $entities->first();
+
+        $entity = new Page();
+
         return $this->render('MesdHelpWikiBundle:Page:toc.html.twig', array(
+            'first'    => $first,
             'entity'   => $entity,
             'entities' => $entities,
             'menu'     => new Menu(),
@@ -83,7 +88,7 @@ class PageController extends Controller
     {
         $entity = new Page();
 
-        if (false === $this->get('security.context')->isGranted('CREATE', $entity)) {
+        if (false === $this->get('security.context')->isGranted(['MANAGE', 'CREATE'], $entity)) {
             throw new AccessDeniedException('Unauthorized access!');
         }
 
@@ -201,6 +206,11 @@ class PageController extends Controller
 
         $deleteForm = $this->createDeleteForm($page->getId());
 
+        $template = $this->render($page->getBody());
+
+        $transformer = new HeadingToPermalinkTransformer();
+        $body = $transformer->transform($template->getContent(), $page->getSlug());
+
         return $this->render('MesdHelpWikiBundle:Page:show.html.twig', array(
             'page'        => $page,
             'delete_form' => $deleteForm->createView(),
@@ -209,6 +219,7 @@ class PageController extends Controller
             'previous'    => $previous,
             'next'        => $next,
             'menu'        => new Menu(),
+            'body'        => $body
         ));
     }
 

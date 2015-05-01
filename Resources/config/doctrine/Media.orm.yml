@@ -1,0 +1,88 @@
+Mesd\HelpWikiBundle\Entity\Media:
+    type:            entity
+    table:           mesd_helpwiki_media
+    repositoryClass: Mesd\HelpWikiBundle\Entity\MediaRepository
+    indexes:
+        mesd_helpwiki_media_user_id_idx:
+            columns: [user_id]
+    id:
+        id:
+            id:   true
+            type: integer
+            generator:
+                strategy: AUTO
+            sequenceGenerator:
+                sequenceName:   mesd_helpwiki_media_id_seq
+                initialValue:   1
+                allocationSize: 1
+    fields:
+        name:
+            column:   name
+            type:     string
+            length:   255
+            nullable: false
+            unique:   false
+        caption:
+            column:   caption
+            type:     string
+            length:   255
+            nullable: true
+            unique:   false
+        alt:
+            column:   alt
+            type:     string
+            length:   255
+            nullable: true
+            unique:   false
+        description:
+            column:   description
+            type:     text
+            nullable: true
+            unique:   false
+        filepath:
+            column:   filepath
+            type:     string
+            length:   255
+            nullable: false
+        filename:
+            column:   filename
+            type:     string
+            length:   255
+        mimetype:
+            column:   mimetype
+            type:     string
+            length:   16
+            nullable: false
+            unique:   false
+        hash:
+            column:   hash
+            type:     string
+            length:   128
+            nullable: false
+        dateTime:
+            column:   date_time
+            type:     datetime
+            nullable: false
+            unique:   false
+    uniqueConstraints:
+        mesd_helpwiki_media_filepath_filename_unique_idx:
+            columns: [filepath, filename]
+        mesd_helpwiki_media_hash_unique_idx:
+            columns: [hash]
+    manyToOne:
+        user:
+            targetEntity: Mesd\HelpWikiBundle\Model\UserSubjectInterface
+            joinColumn:
+                name:                 user_id
+                referencedColumnName: id
+    manyToMany:
+        pages:
+            targetEntity: Mesd\HelpWikiBundle\Entity\Page
+            mappedBy:     media
+    lifecycleCallbacks:
+        prePersist:  [preUpload]
+        preUpdate:   [preUpload]
+        postPersist: [upload]
+        postUpdate:  [upload]
+        preRemove:   [storeFilenameForRemove]
+        postRemove:  [removeUpload]

@@ -26,7 +26,7 @@ Mesd\HelpWikiBundle\Entity\Link:
             columns: [route_alias]
     manyToOne:
         page:
-            targetEntity: Page
+            targetEntity: Mesd\HelpWikiBundle\Entity\Page
             inversedBy:   links
             joinColumn:
                 name:                 page_id

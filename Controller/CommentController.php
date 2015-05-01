@@ -25,6 +25,7 @@ use Mesd\HelpWikiBundle\Entity\Comment;
 use Mesd\HelpWikiBundle\Form\CommentType;
 
 use Mesd\HelpWikiBundle\Model\Menu;
+
 /**
  * Comment Controller
  *

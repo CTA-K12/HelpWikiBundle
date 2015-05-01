@@ -11,16 +11,16 @@
         <div class="btn-group pull-right">
             <a href="{{ path('MesdHelpWikiBundle_page_edit_order') }}" class="btn btn-xs btn-default">
                 <span class="fa fa-align-justify"></span>
-                Order Pages
+                {{ 'order.pages'|trans }}
             </a>
         </div>
     {% endif %}
 {% endblock toolbarTopRight %}
 
 {% block contentFooter %}
-    {% if is_granted('CREATE', entity) %}
+    {% if is_granted(['MANAGE', 'CREATE'], entity) %}
         <div class="row">
-            <div class="col-sm-1-6">
+            <div class="col-md-1-4">
                 <a href="{{ path('MesdHelpWikiBundle_page_new') }}" class="btn btn-default form-control">
                     <span class="fa fa-plus"></span>&nbsp; {{ 'new'|trans }}
                 </a>
@@ -31,24 +31,24 @@
 
 {% block toolbarBottom %}
     <div id="toolbar-bottom" class="toolbar section section-white">
-        <div class="row hidden-xs">
-            <div class="col-sm-1-4">
-                <a href="#" class="btn btn-xs btn-block btn-default" disabled><span class="fa fa-arrow-circle-left"></span> Prev</a>
+        <div class="row hidden-xs hidden-sm">
+            <div class="col-md-1-4">
+                <a href="#" onClick="function(e){e.preventDefault();return false;}" class="btn btn-xs btn-block btn-default" disabled><span class="fa fa-arrow-circle-left"></span>&nbsp; {{ 'previous'|trans }}</a>
             </div>
-            <div class="col-sm-offset-1-2 col-sm-1-4">
-                {% if entity is empty %}
-                    <button type+'button' title="Next Page" class="btn btn-xs btn-block btn-default" disabled>Next <span class="fa fa-arrow-circle-right"></span></button>
+            <div class="col-md-offset-1-2 col-md-1-4">
+                {% if first is defined and first is not empty %}
+                    <a href="{{ path('MesdHelpWikiBundle_page_show', { 'slug': first.slug }) }}" title="" class="btn btn-xs btn-block btn-default"  title="{{ 'first.page'|trans({'page': first.title}) }}">{{ 'first.page'|trans({'page': first.title}) }} &nbsp;<span class="fa fa-arrow-circle-right"></span></a>
                 {% else %}
-                    <a href="{{ path('MesdHelpWikiBundle_page_show', { 'slug': entity.slug }) }}" title="Next Page: {{ entity.title }}" class="btn btn-xs btn-block btn-default">Next <span class="fa fa-arrow-circle-right"></span></a>
+                    <a href="#" onClick="function(e){e.preventDefault();return false;}" class="btn btn-xs btn-block btn-default" disabled>{{ 'next'|trans }} &nbsp;<span class="fa fa-arrow-circle-right"></span></a>
                 {% endif %}
             </div>
         </div>
-        <div class="btn-group btn-group-justified visible-xs">
-            <a href="#" class="btn btn-xs btn-block btn-default" title="Previous" disabled><span class="fa fa-arrow-circle-left"></span></a>
-            {% if entities is empty %}
-                <button type+'button' title="Next Page" class="btn btn-xs btn-block btn-default" disabled>Next <span class="fa fa-arrow-circle-right"></span></button>
+        <div class="btn-group btn-group-justified visible-xs visible-sm">
+            <a href="#" onClick="function(e){e.preventDefault();return false;}" class="btn btn-xs btn-block btn-default" disabled><span class="fa fa-arrow-circle-left"></span>&nbsp; {{ 'previous'|trans }}</a>
+            {% if first is defined and first is not empty %}
+                <a href="{{ path('MesdHelpWikiBundle_page_show', { 'slug': first.slug }) }}" title="" class="btn btn-xs btn-block btn-default"  title="{{ 'first.page'|trans({'page': first.title}) }}">{{ 'first.page'|trans({'page': first.title}) }} &nbsp;<span class="fa fa-arrow-circle-right"></span></a>
             {% else %}
-                <a href="{{ path('MesdHelpWikiBundle_page_show', { 'slug': entities[0].slug }) }}" title="Next Page: {{ entities[0].title }}" class="btn btn-xs btn-block btn-default">Next <span class="fa fa-arrow-circle-right"></span></a>
+                <a href="#" onClick="function(e){e.preventDefault();return false;}" class="btn btn-xs btn-block btn-default" disabled>{{ 'next'|trans }} &nbsp;<span class="fa fa-arrow-circle-right"></span></a>
             {% endif %}
         </div>
     </div>

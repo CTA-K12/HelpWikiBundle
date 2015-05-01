@@ -1,5 +1,5 @@
 {% extends '::index.html.twig' %}
-{% set pageTitle = 'comment'|trans %}
+{% set pageTitle = '<span class="fa fa-list-ul"></span> ' ~ 'comments'|trans %}
 {% set pageSubtitle = 'list'|trans %}
 
 {% block contentBody %}
@@ -20,32 +20,36 @@
                 <div class="btn-group">
                     <a class="btn btn-default btn-xs" href="{{ path('MesdHelpWikiBundle_comment_show', { 'id': entity.id }) }}" title="view"><span class="fa fa-search"></span></a>
                     <a class="btn btn-default btn-xs" href="{{ path('MesdHelpWikiBundle_comment_edit', { 'id': entity.id }) }}" title="edit"><span class="fa fa-pencil"></span></a>
-                    {% set approve_form = approve_forms[entity.id] %}
-                    {{ form_start(approve_form, {'attr': {'class': 'input-group'}}) }}
-                        {{ form_widget(approve_form.approve, {
-                            'label': ' ',
-                            'icon':  'fa-thumbs-o-up',
-                            'attr': {
-                                'class': 'btn btn-xs btn-default',
-                                'tabindex': 3,
-                            }
-                        }) }}
-                        {{ form_rest(approve_form) }}
-                    {{ form_end(approve_form) }}
-                    {% set flag_form = flag_forms[entity.id] %}
-                    {{ form_start(flag_form, {'attr': {'class': 'input-group'}}) }}
-                        {{ form_widget(flag_form.flag, {
-                            'label': ' ',
-                            'icon':  'fa-flag-o',
-                            'attr': {
-                                'class': 'btn btn-xs btn-default',
-                                'tabindex': 3,
-                            },
-                        }) }}
-                        {{ form_rest(flag_form) }}
-                    {{ form_end(flag_form) }}
+                    {% if constant('Mesd\\HelpWikiBundle\\Entity\\Comment::APPROVED') != entity.status %}
+                        {% set approve_form = approve_forms[entity.id] %}
+                        {{ form_start(approve_form, {'attr': {'class': 'btn-form'}}) }}
+                            {{ form_widget(approve_form.approve, {
+                                'label': ' ',
+                                'icon':  'fa-thumbs-o-up',
+                                'attr': {
+                                    'class': 'btn btn-xs btn-default',
+                                    'tabindex': 3,
+                                }
+                            }) }}
+                            {{ form_rest(approve_form) }}
+                        {{ form_end(approve_form) }}
+                    {% endif %}
+                    {% if constant('Mesd\\HelpWikiBundle\\Entity\\Comment::FLAGGED') != entity.status %}
+                        {% set flag_form = flag_forms[entity.id] %}
+                        {{ form_start(flag_form, {'attr': {'class': 'btn-form'}}) }}
+                            {{ form_widget(flag_form.flag, {
+                                'label': ' ',
+                                'icon':  'fa-flag-o',
+                                'attr': {
+                                    'class': 'btn btn-xs btn-default',
+                                    'tabindex': 3,
+                                },
+                            }) }}
+                            {{ form_rest(flag_form) }}
+                        {{ form_end(flag_form) }}
+                    {% endif %}
                     {% set delete_form = delete_forms[entity.id] %}
-                    {{ form_start(delete_form, {'attr': {'class': 'input-group'}}) }}
+                    {{ form_start(delete_form, {'attr': {'class': 'btn-form'}}) }}
                         {{ form_widget(delete_form.delete, {
                             'label': ' ',
                             'icon':  'fa-remove',

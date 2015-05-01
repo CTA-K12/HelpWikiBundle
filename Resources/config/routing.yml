@@ -6,6 +6,10 @@ MesdHelpWikiBundle_page:
     resource: "@MesdHelpWikiBundle/Resources/config/routing/page.yml"
     prefix:   /page
 
+MesdHelpWikiBundle_media:
+    resource: "@MesdHelpWikiBundle/Resources/config/routing/media.yml"
+    prefix:   /media
+
 MesdHelpWikiBundle_tag:
     resource: "@MesdHelpWikiBundle/Resources/config/routing/tag.yml"
     prefix:   /tag
@@ -29,6 +33,10 @@ MesdHelpWikiBundle_permission:
 MesdHelpWikiBundle_pagepermission:
     resource: "@MesdHelpWikiBundle/Resources/config/routing/pagepermission.yml"
     prefix:   /pagepermission
+
+MesdHelpWikiBundle_heartbeat:
+    pattern:      /heartbeat
+    defaults:     { _controller: "MesdHelpWikiBundle:Default:heartbeat" }
 
 # CUT & PASTE the following route TO THE END of your routing definitions
 # if you plan to use stand-alone pages with custom top-level routing:

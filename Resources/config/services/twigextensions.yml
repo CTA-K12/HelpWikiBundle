@@ -2,6 +2,10 @@ parameters:
     mesd_help_wiki.twig.link_extension.class: Mesd\HelpWikiBundle\Twig\LinkExtension
 
 services:
+    twig.stringloader:
+        class: Twig_Loader_String
+        tags:
+            - { name: twig.loader }
     mesd_help_wiki.twig.link_extension:
         class:     %mesd_help_wiki.twig.link_extension.class%
         arguments: [@service_container, @router, @mesd_help_wiki.page_manager, @mesd_help_wiki.link_manager]

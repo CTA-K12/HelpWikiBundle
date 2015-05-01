@@ -1,10 +1,13 @@
-/**
- * @license Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
- */
-
-CKEDITOR.editorConfig = function( config ) {
-    // Define changes to default configuration here. For example:
-    // config.language = 'fr';
-    // config.uiColor = '#AADC6E';
+mesdConfig = {
+    language:         'en',
+    entities:         false,
+    htmlEncodeOutput: false,
+    protectedSource:  [],
+    extraPlugins:     'twig' // Twig Insert Plugin
 };
+
+mesdConfig.protectedSource.push({{ '/\{\{\s.+\s\}\}/g'|raw }});
+mesdConfig.protectedSource.push({{ '/\{%\s.+\s%\}/g'|raw }});
+
+CKEDITOR.replace('{{ id }}', mesdConfig);
+CKEDITOR.instances['{{ id }}'].rawConfig = mesdConfig;

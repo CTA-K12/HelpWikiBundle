@@ -55,7 +55,7 @@ Mesd\HelpWikiBundle\Entity\History:
             unique:   false
     manyToOne:
         page:
-            targetEntity: Page
+            targetEntity: Mesd\HelpWikiBundle\Entity\Page
             inversedBy:   histories
             joinColumn:
                 name:                 page_id

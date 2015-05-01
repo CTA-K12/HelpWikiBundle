@@ -13,37 +13,42 @@
                 <div class="row">
                     <div class="form-group col-sm-1-1">
                         {{ form_label(edit_form.title, 'title'|trans) }}
-                        {{ form_errors(edit_form.title) }}
                         {{ form_widget(edit_form.title, { 'attr': {
                             'class': 'form-control',
                             'placeholder': 'title'|trans,
                             'tabindex': 1,
                         } }) }}
+                        {{ form_errors(edit_form.title) }}
                     </div>
                 </div>
 
-                <div>
+                <div id="page-slug-display">
                     <p>
                         <strong>{{ 'permalink'|trans }}</strong>
                         {{ path('MesdHelpWikiBundle_page_show', {'slug': entity.slug})|highlight(entity.slug) }}
-                        <button class="btn btn-xs btn-default"><span class="fa fa-pencil"></span>&nbsp; {{ 'edit'|trans }}</button>
+                        <button id="page-slug-enable-input" class="btn btn-xs btn-default">
+                            <span class="fa fa-pencil"></span>&nbsp; {{ 'edit'|trans }}
+                        </button>
                     </p>
                 </div>
 
-                <div style="display:none;">
-                    {{ form_row(edit_form.slug, {'attr': {
-                        'class': 'form-control',
-                        'style': 'display:none;',
-                    } }) }}
+                <div id="page-slug-input" class="row" style="display:none;">
+                    <div class="form-group col-sm-1-1">
+                        {{ form_label(edit_form.slug, 'slug'|trans) }}
+                        {{ form_widget(edit_form.slug, {'attr': {
+                            'class': 'form-control',
+                        } }) }}
+                        {{ form_errors(edit_form.slug) }}
+                    </div>
                 </div>
 
                 <div class="row">
                     <div class="form-group col-sm-1-1">
                         {{ form_label(edit_form.body, 'body'|trans) }}
-                        {{ form_errors(edit_form.body) }}
                         {{ form_widget(edit_form.body, { 'attr': {
                             'tabindex': 2,
                         } }) }}
+                        {{ form_errors(edit_form.body) }}
                     </div>
                 </div>
 
@@ -68,20 +73,19 @@
                 <div class="row">
                     <div class="form-group col-sm-1-1">
                         {{ form_label(edit_form.tags, 'tags'|trans) }}
-                        {{ form_errors(edit_form.tags) }}
                         {{ form_widget(edit_form.tags, {
                             'attr': {
                                 'class': 'form-control',
                                 'tabindex': 5,
                             }
                         }) }}
+                        {{ form_errors(edit_form.tags) }}
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="form-group col-sm-1-1">
                         {{ form_label(edit_form.links, 'links'|trans) }}
-                        {{ form_errors(edit_form.links) }}
                         {{ form_widget(edit_form.links, {
                             'empty_value' : 'choose.links'|trans,
                             'attr': {
@@ -89,13 +93,13 @@
                                 'tabindex': 6,
                             }
                         }) }}
+                        {{ form_errors(edit_form.links) }}
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="form-group col-sm-1-1">
                         {{ form_label(edit_form.parent, 'parent.page'|trans) }}
-                        {{ form_errors(edit_form.parent) }}
                         {{ form_widget(edit_form.parent, {
                             'empty_value' : 'choose.parent.page'|trans,
                             'attr': {
@@ -103,12 +107,12 @@
                                 'tabindex': 7,
                             }
                         }) }}
+                        {{ form_errors(edit_form.parent) }}
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="form-group col-sm-1-1">
-                        {{ form_errors(edit_form.standAlone) }}
                         <div class="checkbox">
                             <label for="{{ edit_form.standAlone.vars.id }}">
                                 {{ form_widget(edit_form.standAlone, {
@@ -120,6 +124,7 @@
                                 {{ 'is.stand.alone'|trans }}
                             </label>
                         </div>
+                        {{ form_errors(edit_form.standAlone) }}
                     </div>
                 </div>
 
@@ -147,8 +152,6 @@
                 </a>
             </div>
         </div>
-
-
 {% endblock contentFooter %}
 
 {% block toolbarBottomLeft %}
@@ -217,3 +220,49 @@
     </ul>
 </nav>
 {% endblock sidebarInner %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <!-- GLOBAL HEARTBEAT SETTINGS -->
+    <script type="text/javascript">
+        window.heartbeatSettings = {
+            ajaxurl: "{{ path('MesdHelpWikiBundle_heartbeat') }}",
+            interval: 15
+        }
+    </script>
+    <script type="text/javascript" src="{{ asset('bundles/mesdhelpwiki/js/heartbeat.js') }}"></script>
+    <script type="text/javascript">
+        jQuery(document).ready( function($) {
+            
+            $('#page-slug-enable-input').on('click', function(e) {
+                e.preventDefault();
+                $('#page-slug-display').hide();
+                $('#page-slug-input').show();
+            });
+
+            // Add data to the queue, single event
+            mesd.heartbeat.enqueue(
+                'mesd-data',
+                {
+                    'foo': 'bar',
+                    'wp': 'tuts',
+                }
+            );
+
+            // Hook into the request event
+            $(document).on('heartbeat-send', function(e, data) {
+                data['mesd-dashboard'] = 'dashboard_summary';
+            });
+
+            // Listen for the response event
+            $(document).on('heartbeat-tick.mesd-data', function(event, data) {
+
+                console.log(data);
+                // Look for your object
+                if (data.hasOwnProperty('mesd-data')) {
+                    // Prints to the console { 'curtis' : 'hanson' }
+                }
+            });
+        });
+    </script>
+{% endblock javascripts %}

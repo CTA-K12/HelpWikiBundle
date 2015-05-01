@@ -4,6 +4,9 @@
 {% block contentHeader %}
 <h1 class="page-title">{{ pageTitle }}</h1>
 <div id="more-detail" class="collapse">
+    <div>
+        {% for tag in page.tags %}<span class="label label-primary">{{ tag.name }}</span>&nbsp; {% else %}<em><small>{{ 'no.tags.found'|trans }}</small></em>{% endfor %}
+    </div>
     <em>
         <small>
             {{ 'updated.by.user.on.datetime'|trans({'%user%': page.user, '%datetime%': page.dateTime|date('Y-m-d h:i a')}) }}
@@ -14,7 +17,7 @@
 {% endblock contentHeader %}
 
 {% block contentBody %}
-{{ page.body|raw }}
+{{ body|raw }}
 {% endblock contentBody %}
 
 {% block contentFooter %}
@@ -62,24 +65,32 @@
 {% block toolbarBottom %}
     <div id="toolbar-bottom" class="toolbar section section-white">
         <div class="row hidden-xs">
-            <div class="col-sm-1-4">
-                {% if previous is empty %}
-                    <button type="button" class="btn btn-xs btn-block btn-default" disabled><span class="fa fa-arrow-circle-left"></span>&nbsp; {{ 'previous'|trans }}</button>
-                {% else %}
+            <div class="col-md-1-4">
+                {% if previous is defined and previous is not empty %}
                     <a href="{{ path('MesdHelpWikiBundle_page_show', { 'slug': previous.slug }) }}" class="btn btn-xs btn-block btn-default" title="{{ 'previous.page'|trans({'page': previous.title}) }}"><span class="fa fa-arrow-circle-left"></span>&nbsp; {{ 'previous.page'|trans({'page': previous.title}) }}</a>
+                {% else %}
+                    <a href="#" onClick="function(e){e.preventDefault();return false;}" class="btn btn-xs btn-block btn-default" disabled><span class="fa fa-arrow-circle-left"></span>&nbsp; {{ 'previous'|trans }}</a>
                 {% endif %}
             </div>
-            <div class="col-sm-offset-1-2 col-sm-1-4">
-                {% if next is empty %}
-                    <button type="button" class="btn btn-xs btn-block btn-default" disabled>{{ 'next'|trans }} &nbsp;<span class="fa fa-arrow-circle-right"></span></button>
-                {% else %}
+            <div class="col-md-offset-1-2 col-md-1-4">
+                {% if next is defined and next is not empty %}
                     <a href="{{ path('MesdHelpWikiBundle_page_show', { 'slug': next.slug }) }}" title="" class="btn btn-xs btn-block btn-default"  title="{{ 'next.page'|trans({'page': next.title}) }}">{{ 'next.page'|trans({'page': next.title}) }} &nbsp;<span class="fa fa-arrow-circle-right"></span></a>
+                {% else %}
+                    <a href="#" onClick="function(e){e.preventDefault();return false;}" class="btn btn-xs btn-block btn-default" disabled>{{ 'next'|trans }} &nbsp;<span class="fa fa-arrow-circle-right"></span></a>
                 {% endif %}
             </div>
         </div>
         <div class="btn-group btn-group-justified visible-xs">
-            <a href="#" class="btn btn-xs btn-block btn-default" title="{{ 'previous'|trans }}"><span class="fa fa-arrow-circle-left"></span></a>
-            <a href="" title="" class="btn btn-xs btn-block btn-default" title="{{ 'next'|trans }}"><span class="fa fa-arrow-circle-right"></span></a>
+            {% if previous is defined and previous is not empty %}
+                <a href="{{ path('MesdHelpWikiBundle_page_show', { 'slug': previous.slug }) }}" class="btn btn-xs btn-block btn-default" title="{{ 'previous'|trans }}"><span class="fa fa-arrow-circle-left"></span></a>
+            {% else %}
+                <a href="#" onClick="function(e){e.preventDefault();return false;}" class="btn btn-xs btn-block btn-default" disabled><span class="fa fa-arrow-circle-left"></span>&nbsp; {{ 'previous'|trans }}</a>
+            {% endif %}
+            {% if next is defined and next is not empty %}
+                <a href="{{ path('MesdHelpWikiBundle_page_show', { 'slug': next.slug }) }}" title="" class="btn btn-xs btn-block btn-default"  title="{{ 'next.page'|trans({'page': next.title}) }}">{{ 'next.page'|trans({'page': next.title}) }} &nbsp;<span class="fa fa-arrow-circle-right"></span></a>
+            {% else %}
+                <a href="#" onClick="function(e){e.preventDefault();return false;}" class="btn btn-xs btn-block btn-default" disabled>{{ 'next'|trans }} &nbsp;<span class="fa fa-arrow-circle-right"></span></a>
+            {% endif %}
         </div>
     </div>
 {% endblock toolbarBottom %}

@@ -91,19 +91,19 @@ Mesd\HelpWikiBundle\Entity\Page:
             columns: [slug]
     oneToMany:
         children:
-            targetEntity: Page
+            targetEntity: Mesd\HelpWikiBundle\Entity\Page
             mappedBy:     parent
         comments:
-            targetEntity: Comment
+            targetEntity: Mesd\HelpWikiBundle\Entity\Comment
             mappedBy:     page
         permissions:
-            targetEntity: PagePermission
+            targetEntity: Mesd\HelpWikiBundle\Entity\PagePermission
             mappedBy:     page
         histories:
-            targetEntity: History
+            targetEntity: Mesd\HelpWikiBundle\Entity\History
             mappedBy:     page
         links:
-            targetEntity: Link
+            targetEntity: Mesd\HelpWikiBundle\Entity\Link
             mappedBy:     page
     manyToOne:
         user:
@@ -112,14 +112,14 @@ Mesd\HelpWikiBundle\Entity\Page:
                 name:                 user_id
                 referencedColumnName: id
         parent:
-            targetEntity: Page
+            targetEntity: Mesd\HelpWikiBundle\Entity\Page
             inversedBy:   children
             joinColumn:
                 name:                 parent_id
                 referencedColumnName: id
     manyToMany:
         tags:
-            targetEntity: Tag
+            targetEntity: Mesd\HelpWikiBundle\Entity\Tag
             inversedBy:   pages
             joinTable:
                 name: mesd_helpwiki_page_tag
@@ -128,5 +128,16 @@ Mesd\HelpWikiBundle\Entity\Page:
                         referencedColumnName: id
                 inverseJoinColumns:
                     tag_id:
+                        referencedColumnName: id
+        media:
+            targetEntity: Mesd\HelpWikiBundle\Entity\Media
+            inversedBy:   pages
+            joinTable:
+                name: mesd_helpwiki_page_media
+                joinColumns:
+                    page_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    media_id:
                         referencedColumnName: id
     lifecycleCallbacks:

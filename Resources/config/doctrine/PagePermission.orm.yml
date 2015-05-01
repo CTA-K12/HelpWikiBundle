@@ -34,7 +34,7 @@ Mesd\HelpWikiBundle\Entity\PagePermission:
             columns: [type, page_id, role_id]
     manyToOne:
         page:
-            targetEntity: Page
+            targetEntity: Mesd\HelpWikiBundle\Entity\Page
             inversedBy:   permissions
             joinColumn:
                 name:                 page_id

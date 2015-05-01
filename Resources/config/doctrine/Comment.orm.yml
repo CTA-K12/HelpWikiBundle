@@ -7,6 +7,8 @@ Mesd\HelpWikiBundle\Entity\Comment:
             columns: [page_id]
         mesd_helpwiki_comment_user_id_idx:
             columns: [user_id]
+        mesd_helpwiki_comment_status_by_id_idx:
+            columns: [status_by_id]
     id:
         id:
             id:   true
@@ -53,7 +55,7 @@ Mesd\HelpWikiBundle\Entity\Comment:
                 name:                 status_by_id
                 referencedColumnName: id
         page:
-            targetEntity: Page
+            targetEntity: Mesd\HelpWikiBundle\Entity\Page
             inversedBy:   comments
             joinColumn:
                 name:                 page_id
