@@ -1,6 +1,7 @@
 parameters:
-    mesd_help_wiki.page_listener.class:    Mesd\HelpWikiBundle\Listener\PageListener
-    mesd_help_wiki.comment_listener.class: Mesd\HelpWikiBundle\Listener\CommentListener
+    mesd_help_wiki.page_listener.class:      Mesd\HelpWikiBundle\Listener\PageListener
+    mesd_help_wiki.comment_listener.class:   Mesd\HelpWikiBundle\Listener\CommentListener
+    mesd_help_wiki.listener.heartbeat_listener.class: Mesd\HelpWikiBundle\Listener\HeartbeatListener
 
 services:
     mesd_help_wiki.page_listener:
@@ -19,3 +20,7 @@ services:
         tags:
             - { name: doctrine.event_listener, event: prePersist  }
             - { name: doctrine.event_listener, event: preUpdate   }
+    mesd_help_wiki.listener.heartbeat_listener:
+        class:     %mesd_help_wiki.listener.heartbeat_listener.class%
+        tags:
+            - { name: kernel.event_listener, event: mesd_help_wiki.heartbeat_received, method: populateData }

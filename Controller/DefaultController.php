@@ -14,7 +14,7 @@
  * @copyright  2014 (c) Multnomah Education Service District <http://www.mesd.k12.or.us>
  * @license    <http://opensource.org/licenses/MIT> MIT
  * @author     Curtis G Hanson <chanson@mesd.k12.or.us>
- * @version    0.1.0
+ * @version    {@inheritdoc}
  * @deprecated This file is not used and will be removed in future versions
  */
 namespace Mesd\HelpWikiBundle\Controller;
@@ -57,10 +57,20 @@ class DefaultController extends Controller
 
     public function heartbeatAction(Request $request)
     {
+        /*
         $data = $request->request->all();
 
         $response = new JsonResponse();
 
         return $response->setData(array($data));
+        */
+
+        $data  = $request->request->all();
+        $pulse = $this->get('mesd_help_wiki.heartbeat');
+        $hb    = $pulse->onHeartbeatReceivedAction($data);
+
+        $response = new JsonResponse();
+
+        return $response->setData(array($hb));
     }
 }

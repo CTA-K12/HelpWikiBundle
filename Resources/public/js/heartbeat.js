@@ -8,6 +8,10 @@
  *
  * This file was forked from Wordpress.
  *
+ * PHP Services and Events
+ * - mesd_heartbeat_received
+ * - mesd_heartbeat_send
+ * - mesd_heartbeat_tick
  *
  * Custom jQuery events:
  * - heartbeat-send
@@ -16,8 +20,6 @@
  * - heartbeat-connection-lost
  * - heartbeat-connection-restored
  * - heartbeat-csfr-expired
- *
- * @since 3.6.0
  */
 
 ( function( $, window, undefined ) {

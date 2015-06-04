@@ -1,0 +1,8 @@
+parameters:
+    mesd_help_wiki.event.heartbeat_dispatcher.class: Mesd\HelpWikiBundle\EventDispatcher\HeartbeatEventDispatcher
+
+services:
+    mesd_help_wiki.heartbeat:
+        class: %mesd_help_wiki.event.heartbeat_dispatcher.class%
+        arguments:
+            - @event_dispatcher

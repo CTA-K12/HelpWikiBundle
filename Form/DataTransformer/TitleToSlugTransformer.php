@@ -14,7 +14,7 @@
  * @copyright  2014 (c) Multnomah Education Service District <http://www.mesd.k12.or.us>
  * @license    <http://opensource.org/licenses/MIT> MIT
  * @author     Curtis G Hanson <chanson@mesd.k12.or.us>
- * @version    0.1.0
+ * @version    {@inheritdoc}
  */
 namespace Mesd\HelpWikiBundle\Form\DataTransformer;
 
@@ -25,7 +25,7 @@ use Symfony\Component\DomCrawler\Crawler;
 
 use Mesd\HelpWikiBundle\Entity\Page;
 
-class HeadingToPermalinkTransformer implements DataTransformerInterface
+class TitleToSlugTransformer implements DataTransformerInterface
 {
     /**
      * Transforms a string (html) of headings to headings with permalinks (permalink), also a sting.

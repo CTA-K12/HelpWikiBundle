@@ -14,7 +14,7 @@
  * @copyright  2014 (c) Multnomah Education Service District <http://www.mesd.k12.or.us>
  * @license    <http://opensource.org/licenses/MIT> MIT
  * @author     Curtis G Hanson <chanson@mesd.k12.or.us>
- * @version    0.1.0
+ * @version    {@inheritdoc}
  */
 namespace Mesd\HelpWikiBundle\Entity;
 
@@ -41,7 +41,7 @@ class Permission
     private $role;
 
     /**
-     * @var \Mesd\HelpWikiBundle\Entity\PermissionType
+     * @var string
      */
     private $permissionType;
 
@@ -105,10 +105,10 @@ class Permission
     /**
      * Set permissionType
      *
-     * @param \Mesd\HelpWikiBundle\Entity\PermissionType $permissionType
+     * @param string $permissionType
      * @return Permission
      */
-    public function setPermissionType(\Mesd\HelpWikiBundle\Entity\PermissionType $permissionType = null)
+    public function setPermissionType($permissionType)
     {
         $this->permissionType = $permissionType;
     
@@ -118,7 +118,7 @@ class Permission
     /**
      * Get permissionType
      *
-     * @return \Mesd\HelpWikiBundle\Entity\PermissionType 
+     * @return string
      */
     public function getPermissionType()
     {

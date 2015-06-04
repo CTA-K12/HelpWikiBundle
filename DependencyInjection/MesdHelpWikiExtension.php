@@ -14,7 +14,7 @@
  * @copyright  2014 (c) Multnomah Education Service District <http://www.mesd.k12.or.us>
  * @license    <http://opensource.org/licenses/MIT> MIT
  * @author     Curtis G Hanson <chanson@mesd.k12.or.us>
- * @version    0.1.0
+ * @version    {@inheritdoc}
  */
 namespace Mesd\HelpWikiBundle\DependencyInjection;
 
@@ -51,6 +51,7 @@ class MesdHelpWikiExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config/services'));
         $loader->load('models.yml');
+        $loader->load('events.yml');
         $loader->load('listeners.yml');
         $loader->load('formtypes.yml');
         $loader->load('securityvoters.yml');

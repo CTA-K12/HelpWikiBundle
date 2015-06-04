@@ -241,17 +241,17 @@
             });
 
             // Add data to the queue, single event
-            mesd.heartbeat.enqueue(
-                'mesd-data',
-                {
-                    'foo': 'bar',
-                    'wp': 'tuts',
-                }
-            );
+            //mesd.heartbeat.enqueue(
+            //    'mesd-data',
+            //    {
+            //        'foo': 'bar',
+            //        'wp':  'tuts',
+            //    }
+            //);
 
             // Hook into the request event
             $(document).on('heartbeat-send', function(e, data) {
-                data['mesd-dashboard'] = 'dashboard_summary';
+                data['mesd-data'] = 'is_logged_in';
             });
 
             // Listen for the response event
