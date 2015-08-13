@@ -1,0 +1,30 @@
+MesdHelpWikiBundle_page_permission_list:
+    pattern:  /
+    defaults: { _controller: "MesdHelpWikiBundle:PagePermission:list" }
+
+MesdHelpWikiBundle_page_permission_view:
+    pattern:  /{id}/view
+    defaults: { _controller: "MesdHelpWikiBundle:PagePermission:view" }
+
+MesdHelpWikiBundle_page_permission_new:
+    pattern:  /new
+    defaults: { _controller: "MesdHelpWikiBundle:PagePermission:new" }
+
+MesdHelpWikiBundle_page_permission_create:
+    pattern:  /create
+    defaults: { _controller: "MesdHelpWikiBundle:PagePermission:create" }
+    requirements: { _method: post }
+
+MesdHelpWikiBundle_page_permission_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "MesdHelpWikiBundle:PagePermission:edit" }
+
+MesdHelpWikiBundle_page_permission_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "MesdHelpWikiBundle:PagePermission:update" }
+    requirements: { _method: post|put }
+
+MesdHelpWikiBundle_page_permission_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "MesdHelpWikiBundle:PagePermission:delete" }
+    requirements: { _method: post|delete }

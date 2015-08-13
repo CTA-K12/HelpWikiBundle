@@ -1,0 +1,58 @@
+# messages.en.yml
+# English
+welcome:
+    user:                  Welcome %name%
+actions:               Actions
+add.comment:           Add Comment
+back:                  Back
+body:                  Body
+choose.parent.page:    Choose Parent Page
+comment:               Comment
+comments:              Comments
+create:                Create
+date.time:             Date & Time
+detail:                Detail
+edit:                  Edit
+first.page:            'First: %page%'
+help:                  Help
+help.wiki:             HelpWiki
+help.wiki.home:        HelpWiki Home
+history:               History
+home:                  Home
+index:                 Index
+link:                  Link
+links:                 Links
+list:                  List
+manage:
+    links:                 Manage Links
+    page.permissions:      Manage Page Permissions
+    permissions:           Manage Permissions
+    tags:                  Manage Tags
+moderate.comments:     Moderate Comments
+new:                   New
+new.comment:           New Comment
+new.help.wiki.page:    New HelpWiki Page
+new.tag:               New Tag
+next:                  Next
+no.comments.found:     No comments found
+order.pages:           Order Pages
+page:                  Page
+page.permissions:      Page Permissions
+page.permissions.are.not.yet.implemented: Page permissions are not yet implemented.
+pages:                 Pages
+parent.page:           Parent Page
+permissions:           Permissions
+previous:              Previous
+revision.revnum.chapter.chapternum.page.pagenum: 'Revision: %revnum%, Chapter: %chapternum%, Page: %pagenum%.'
+route.alias:           Route Alias
+slug:                  Slug
+status:                Status
+tag:                   Tag
+tags:                  Tags
+t.o.c:                 TOC
+table.of.contents:     Table of Contents
+title:                 Title
+updated.by.user.on.datetime: Update by %user% on %datetime%.
+user:                  User
+view:                  View
+view.restore.history:  View & Restore History

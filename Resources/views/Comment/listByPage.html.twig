@@ -1,0 +1,59 @@
+<strong>{{ 'comments'|trans }} <small>({{ comments|length }})</small></strong>
+<ul class="media-list">
+    {% for comment in comments %}
+        <li class="media comment">
+            <img src="{{ comment.user.email|gravatar }}" alt="{{ comment.user.email }}" class="pull-left" />
+            <div class="media-body">
+                <div class="media-heading">
+                    <strong>{{ comment.user }}</strong>
+                    <span class="text-muted">{{ comment.dateTime|date('Y-m-d \\a\\t H:i') }}</span>
+                    <div class="pull-right show-on-hover">
+                        {% if is_granted('DELETE', comment) %}
+                            {% set delete_form = delete_forms[comment.id] %}
+                            {{ form_start(delete_form, {'attr': {'class': 'pull-right'}}) }}
+                                {{ form_widget(delete_form.delete, {
+                                    'label': ' ',
+                                    'icon':  'fa-remove',
+                                    'attr': {
+                                        'class': 'btn btn-xs btn-danger btn-icon',
+                                        'title': 'delete.comment'|trans,
+                                    },
+                                }) }}
+                                {{ form_rest(delete_form) }}
+                            {{ form_end(delete_form) }}
+                        {% endif %}
+                        {% if constant('Mesd\\HelpWikiBundle\\Entity\\Comment::APPROVED') != comment.status and is_granted('APPROVE', comment) %}
+                            {% set approve_form = approve_forms[comment.id] %}
+                            {{ form_start(approve_form, {'attr': {'class': 'pull-right'}}) }}
+                                {{ form_widget(approve_form.approve, {
+                                    'label': ' ',
+                                    'icon':  'fa-thumbs-o-up',
+                                    'attr': {
+                                        'class': 'btn btn-xs btn-success btn-icon',
+                                        'title': 'approve.comment'|trans,
+                                    }
+                                }) }}
+                                {{ form_rest(approve_form) }}
+                            {{ form_end(approve_form) }}
+                        {% endif %}
+                        {% if constant('Mesd\\HelpWikiBundle\\Entity\\Comment::FLAGGED') != comment.status and is_granted('FLAG', comment) %}
+                            {% set flag_form = flag_forms[comment.id] %}
+                            {{ form_start(flag_form, {'attr': {'class': 'pull-right'}}) }}
+                                {{ form_widget(flag_form.flag, {
+                                    'label': ' ',
+                                    'icon':  'fa-flag-o',
+                                    'attr': {
+                                        'class': 'btn btn-xs btn-warning btn-icon',
+                                        'title': 'flag.comment'|trans,
+                                    },
+                                }) }}
+                                {{ form_rest(flag_form) }}
+                            {{ form_end(flag_form) }}
+                        {% endif %}
+                    </div>
+                </div>
+                <p>{{ comment.id }} - {{ comment.body }}</p>
+            </div>
+        </li>
+    {% endfor %}
+</ul>
