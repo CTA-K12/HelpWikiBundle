@@ -144,7 +144,10 @@ How to update.
 Help Wiki uses a combination of twig extensions and templates for output. Any
 template can be overriden by simply copying the template directory into your
 `app/Resources/views` folder. Twig extension blocks are overriden by configuring
-your blocks in your `app/config/config.yml` file.
+your blocks in your `app/config/config.yml` file.  
+
+By default all of the bundles templates extend the your application's 
+'::index.html.twig'.
 
 ### Twig Extensions
 
