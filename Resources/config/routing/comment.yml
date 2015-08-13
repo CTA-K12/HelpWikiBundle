@@ -1,10 +1,10 @@
-MesdHelpWikiBundle_comment_index:
+MesdHelpWikiBundle_comment_list:
     pattern:  /
-    defaults: { _controller: "MesdHelpWikiBundle:Comment:index" }
+    defaults: { _controller: "MesdHelpWikiBundle:Comment:list" }
 
-MesdHelpWikiBundle_comment_show:
-    pattern:  /{id}/show
-    defaults: { _controller: "MesdHelpWikiBundle:Comment:show" }
+MesdHelpWikiBundle_comment_view:
+    pattern:  /{id}/view
+    defaults: { _controller: "MesdHelpWikiBundle:Comment:view" }
 
 MesdHelpWikiBundle_comment_new:
     pattern:  /new

@@ -33,11 +33,20 @@ namespace Mesd\HelpWikiBundle\Model;
  */
 interface UserSubjectInterface
 {
-    // List any additional methods that your InvoiceBundle
-    // will need to access on the subject so that you can
-    // be sure that you have access to those methods.
+    /**
+     * Get id
+     *
+     * Return the user id
+     * 
+     * @return integer
+     */
+    public function getId();
 
     /**
+     * Get Username
+     *
+     * Return the username
+     * 
      * @return string
      */
     public function getUsername();

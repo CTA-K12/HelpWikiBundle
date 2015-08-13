@@ -1,10 +1,10 @@
-MesdHelpWikiBundle_media_index:
+MesdHelpWikiBundle_media_list:
     pattern:  /
-    defaults: { _controller: "MesdHelpWikiBundle:Media:index" }
+    defaults: { _controller: "MesdHelpWikiBundle:Media:list" }
 
-MesdHelpWikiBundle_media_show:
-    pattern:  /{id}/show
-    defaults: { _controller: "MesdHelpWikiBundle:Media:show" }
+MesdHelpWikiBundle_media_view:
+    pattern:  /{id}/view
+    defaults: { _controller: "MesdHelpWikiBundle:Media:view" }
 
 MesdHelpWikiBundle_media_new:
     pattern:  /new

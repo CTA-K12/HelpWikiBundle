@@ -1,5 +1,22 @@
 <?php
-
+/**
+ * PagePermissionController.php file
+ *
+ * File that contains the page permissions controller.
+ * Page permissions are ACL for pages.
+ *
+ * Licence MIT
+ * Copyright (c) 2015 Multnomah Education Service District <http://www.mesd.k12.or.us>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ * 
+ * @filesource /src/Mesd/HelpWikiBundle/Controller/HistoryController.php
+ * @package    Mesd\HelpWikiBundle\Controller
+ * @copyright  2014 (c) Multnomah Education Service District <http://www.mesd.k12.or.us>
+ * @license    <http://opensource.org/licenses/MIT> MIT
+ * @author     Curtis G Hanson <chanson@mesd.k12.or.us>
+ * @version    {@inheritdoc}
+ */
 namespace Mesd\HelpWikiBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -7,8 +24,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Mesd\HelpWikiBundle\Entity\PagePermission;
 use Mesd\HelpWikiBundle\Form\PagePermissionType;
-
 use Mesd\HelpWikiBundle\Model\Menu;
+
 /**
  * PagePermission controller.
  *
@@ -20,13 +37,13 @@ class PagePermissionController extends Controller
      * Lists all PagePermission entities.
      *
      */
-    public function indexAction()
+    public function listAction()
     {
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('MesdHelpWikiBundle:PagePermission')->findAll();
 
-        return $this->render('MesdHelpWikiBundle:PagePermission:index.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:PagePermission:list.html.twig', array(
             'entities' => $entities,
             'menu'     => new Menu(),
         ));
@@ -46,7 +63,7 @@ class PagePermissionController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('pagepermission_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('pagepermission_view', array('id' => $entity->getId())));
         }
 
         return $this->render('MesdHelpWikiBundle:PagePermission:new.html.twig', array(
@@ -95,7 +112,7 @@ class PagePermissionController extends Controller
      * Finds and displays a PagePermission entity.
      *
      */
-    public function showAction($id)
+    public function viewAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -107,7 +124,7 @@ class PagePermissionController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('MesdHelpWikiBundle:PagePermission:show.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:PagePermission:view.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
             'menu'        => new Menu(),

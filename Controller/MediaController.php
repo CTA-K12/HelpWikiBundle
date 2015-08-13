@@ -23,12 +23,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Mesd\HelpWikiBundle\Entity\Media;
 use Mesd\HelpWikiBundle\Form\MediaType;
-
 use Mesd\HelpWikiBundle\Model\Menu;
 
 /**
- * Media Controller
+ * Media controller
  *
+ * Controller to create, update, manage, and delete media files
+ * related to pages.
+ *
+ * @package    Mesd\HelpWikiBundle\Controller
+ * @copyright  2015 (c) Multnomah Education Service District <http://www.mesd.k12.or.us>
+ * @license    <http://opensource.org/licenses/MIT> MIT
+ * @author     Curtis G Hanson <chanson@mesd.k12.or.us>
+ * @since      0.1.0
  */
 class MediaController extends Controller
 {
@@ -37,13 +44,13 @@ class MediaController extends Controller
      * Lists all Media entities.
      *
      */
-    public function indexAction()
+    public function listAction()
     {
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('MesdHelpWikiBundle:Media')->findAll();
 
-        return $this->render('MesdHelpWikiBundle:Media:index.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Media:list.html.twig', array(
             'entities' => $entities,
             'menu'     => new Menu(),
         ));
@@ -69,7 +76,7 @@ class MediaController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('MesdHelpWikiBundle_media_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('MesdHelpWikiBundle_media_view', array('id' => $entity->getId())));
         }
 
         return $this->render('MesdHelpWikiBundle:Media:new.html.twig', array(
@@ -123,7 +130,7 @@ class MediaController extends Controller
      * Finds and displays a Media entity.
      *
      */
-    public function showAction($id)
+    public function viewAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -139,7 +146,7 @@ class MediaController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('MesdHelpWikiBundle:Media:show.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Media:view.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
             'menu'        => new Menu(),
@@ -255,7 +262,7 @@ class MediaController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('MesdHelpWikiBundle_media_index'));
+        return $this->redirect($this->generateUrl('MesdHelpWikiBundle_media_list'));
     }
 
     /**
@@ -296,7 +303,7 @@ class MediaController extends Controller
             $em->persist($media);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('MesdHelpWikiBundle_media_show', array('id' => $media->getId())));
+            return $this->redirect($this->generateUrl('MesdHelpWikiBundle_media_view', array('id' => $media->getId())));
         }
 
         return array('form' => $form->createView());

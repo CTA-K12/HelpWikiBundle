@@ -1,4 +1,6 @@
 {% extends '::index.html.twig' %}
+{% trans_default_domain 'mesd_help_wiki' %}
+
 {% set pageTitle = 'media'|trans %}
 {% set pageSubtitle = 'new'|trans %}
 
@@ -7,7 +9,7 @@
 
     {{ form(form) }}
 
-    <a href="{{ path('MesdHelpWikiBundle_media_index') }}">{{ 'back'|trans }}</a>
+    <a href="{{ path('MesdHelpWikiBundle_media_list') }}">{{ 'back'|trans }}</a>
 
 {% endblock contentBody %}
 
@@ -22,43 +24,43 @@
         </li>
         {% if is_granted('MANAGE', menu) %}
             <li>
-                <a href="{{ path('MesdHelpWikiBundle_tag_index') }}" title="{{ 'manage.tags'|trans }}">
+                <a href="{{ path('MesdHelpWikiBundle_tag_list') }}" title="{{ 'manage.tags'|trans }}">
                     <span class="sidebar-item-icon fa fa-tags"></span>
                     <span class="sidebar-item-label">{{ 'tags'|trans }}</span>
                 </a>
              </li>
              <li class="active">
-                <a href="{{ path('MesdHelpWikiBundle_media_index') }}" title="{{ 'manage.media'|trans }}">
+                <a href="{{ path('MesdHelpWikiBundle_media_list') }}" title="{{ 'manage.media'|trans }}">
                     <span class="sidebar-item-icon fa fa-photo"></span>
                     <span class="sidebar-item-label">{{ 'media'|trans }}</span>
                 </a>
              </li>
             <li>
-                <a href="{{ path('MesdHelpWikiBundle_comment_index') }}" title="{{ 'moderate.comments'|trans }}">
+                <a href="{{ path('MesdHelpWikiBundle_comment_list') }}" title="{{ 'moderate.comments'|trans }}">
                     <span class="sidebar-item-icon fa fa-comments-o"></span>
                     <span class="sidebar-item-label">{{ 'comments'|trans }}</span>
                 </a>
             </li>
             <li>
-                <a href="{{ path('MesdHelpWikiBundle_link_index') }}" title="{{ 'manage.links'|trans }}">
+                <a href="{{ path('MesdHelpWikiBundle_link_list') }}" title="{{ 'manage.links'|trans }}">
                     <span class="sidebar-item-icon fa fa-link"></span>
                     <span class="sidebar-item-label">{{ 'links'|trans }}</span>
                 </a>
             </li>
             <li>
-                <a href="{{ path('MesdHelpWikiBundle_history_index') }}" title="{{ 'view.restore.history'|trans }}">
+                <a href="{{ path('MesdHelpWikiBundle_history_list') }}" title="{{ 'view.restore.history'|trans }}">
                     <span class="sidebar-item-icon fa fa-clock-o"></span>
                     <span class="sidebar-item-label">{{ 'history'|trans }}</span>
                 </a>
             </li>
             <li>
-                <a href="{{ path('MesdHelpWikiBundle_permission_index') }}" title="{{ 'permissions'|trans }}">
+                <a href="{{ path('MesdHelpWikiBundle_permission_list') }}" title="{{ 'permissions'|trans }}">
                     <span class="sidebar-item-icon fa fa-ban"></span>
                     <span class="sidebar-item-label">{{ 'permissions'|trans }}</span>
                 </a>
             </li>
             <li>
-                <a href="{{ path('MesdHelpWikiBundle_pagepermission_index') }}" title="{{ 'page.permissions'|trans }}">
+                <a href="{{ path('MesdHelpWikiBundle_page_permission_list') }}" title="{{ 'page.permissions'|trans }}">
                     <span class="sidebar-item-icon fa fa-lock"></span>
                     <span class="sidebar-item-label">{{ 'page.permissions'|trans }}</span>
                 </a>

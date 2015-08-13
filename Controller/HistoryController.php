@@ -16,7 +16,6 @@
  * @license    <http://opensource.org/licenses/MIT> MIT
  * @author     Curtis G Hanson <chanson@mesd.k12.or.us>
  * @version    {@inheritdoc}
- * @deprecated This file is not used and will be removed in future versions
  */
 namespace Mesd\HelpWikiBundle\Controller;
 
@@ -27,6 +26,7 @@ use Mesd\HelpWikiBundle\Entity\History;
 use Mesd\HelpWikiBundle\Form\HistoryType;
 
 use Mesd\HelpWikiBundle\Model\Menu;
+
 /**
  * History Controller
  *
@@ -49,19 +49,19 @@ class HistoryController extends Controller
      * @since  0.1.0
      * @return \Twig $this
      */
-    public function indexAction()
+    public function listAction()
     {
         $em       = $this->getDoctrine()->getManager();
         $entities = $em->getRepository('MesdHelpWikiBundle:History')->findAll();
 
-        return $this->render('MesdHelpWikiBundle:History:index.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:History:list.html.twig', array(
             'entities' => $entities,
             'menu'     => new Menu(),
         ));
     }
 
     /**
-     * Page history index
+     * Page history list
      *
      * List all historical edits for a page
      *
@@ -74,14 +74,14 @@ class HistoryController extends Controller
         $em       = $this->getDoctrine()->getManager();
         $entities = $em->getRepository('MesdHelpWikiBundle:History')->findByPage($id);
 
-        return $this->render('MesdHelpWikiBundle:History:index.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:History:list.html.twig', array(
                 'entities' => $entities,
                 'menu'     => new Menu(),
         ));
     }
 
     /**
-     * User history index
+     * User history list
      *
      * List all historical edits for a user
      *
@@ -94,7 +94,7 @@ class HistoryController extends Controller
         $em       = $this->getDoctrine()->getManager();
         $entities = $em->getRepository('MesdHelpWikiBundle:History')->findByUser($id);
 
-        return $this->render('MesdHelpWikiBundle:History:index.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:History:list.html.twig', array(
             'entities' => $entities,
             'menu'     => new Menu(),
         ));
@@ -120,7 +120,7 @@ class HistoryController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('MesdHelpWikiBundle_history_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('MesdHelpWikiBundle_history_view', array('id' => $entity->getId())));
         }
 
         return $this->render('MesdHelpWikiBundle:History:new.html.twig', array(
@@ -174,7 +174,7 @@ class HistoryController extends Controller
     }
 
     /**
-     * Show History Item
+     * View History Item
      *
      * Displays a page to view a history item
      *
@@ -182,7 +182,7 @@ class HistoryController extends Controller
      * @param      mixed $id   The entity id
      * @return     \Twig $this A twig html output
      */
-    public function showAction($id)
+    public function viewAction($id)
     {
         $em     = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('MesdHelpWikiBundle:History')->find($id);
@@ -193,7 +193,7 @@ class HistoryController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('MesdHelpWikiBundle:History:show.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:History:view.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
             'menu'        => new Menu(),
@@ -318,7 +318,7 @@ class HistoryController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('MesdHelpWikiBundle_history_index'));
+        return $this->redirect($this->generateUrl('MesdHelpWikiBundle_history_list'));
     }
 
     /**

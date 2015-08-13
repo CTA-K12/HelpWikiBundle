@@ -53,29 +53,21 @@ Mesd\HelpWikiBundle\Entity\Page:
             type:     boolean
             nullable: true
             unique:   false
-            options:
-                default: false
         standAlone:
             column:   stand_alone
             type:     boolean
             nullable: true
             unique:   false
-            options:
-                default: false
         commentsLocked:
             column:   comments_locked
             type:     boolean
             nullable: false
             unique:   false
-            options:
-                default: false
         editInProgress:
             column:   edit_in_progress
             type:     boolean
             nullable: true  
             unique:   false
-            options:
-                default: false
         status:
             column:   status
             type:     string

@@ -1,10 +1,10 @@
-MesdHelpWikiBundle_history_index:
+MesdHelpWikiBundle_history_list:
     pattern:  /
-    defaults: { _controller: "MesdHelpWikiBundle:History:index" }
+    defaults: { _controller: "MesdHelpWikiBundle:History:list" }
 
-MesdHelpWikiBundle_history_show:
-    pattern:  /{id}/show
-    defaults: { _controller: "MesdHelpWikiBundle:History:show" }
+MesdHelpWikiBundle_history_view:
+    pattern:  /{id}/view
+    defaults: { _controller: "MesdHelpWikiBundle:History:view" }
 
 MesdHelpWikiBundle_history_page:
     pattern:  /{id}/page

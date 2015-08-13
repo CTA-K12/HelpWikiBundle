@@ -21,18 +21,15 @@ namespace Mesd\HelpWikiBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Doctrine\Common\Collections\ArrayCollection;
 
 use Mesd\HelpWikiBundle\Form\DataTransformer\HeadingToPermalinkTransformer;
 
-use Doctrine\Common\Collections\ArrayCollection;
-
 use Mesd\HelpWikiBundle\Entity\Page;
-use Mesd\HelpWikiBundle\Form\PageType;
-
 use Mesd\HelpWikiBundle\Entity\Comment;
-use Mesd\HelpWikiBundle\Form\CommentType;
-
 use Mesd\HelpWikiBundle\Model\Menu;
+use Mesd\HelpWikiBundle\Form\PageType;
+use Mesd\HelpWikiBundle\Form\CommentType;
 
 /**
  * Page Controller
@@ -112,7 +109,7 @@ class PageController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('MesdHelpWikiBundle_page_show', array(
+            return $this->redirect($this->generateUrl('MesdHelpWikiBundle_page_view', array(
                 'slug' => $entity->getSlug(),
                 'menu' => new Menu(),
             )));
@@ -186,7 +183,7 @@ class PageController extends Controller
      * @param string $slug
      * @return \Symfony\Component\HttpFoundation\Response $this
      */
-    public function showAction($slug)
+    public function viewAction($slug)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -211,7 +208,7 @@ class PageController extends Controller
         $transformer = new HeadingToPermalinkTransformer();
         $body = $transformer->transform($template->getContent(), $page->getSlug());
 
-        return $this->render('MesdHelpWikiBundle:Page:show.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Page:view.html.twig', array(
             'page'        => $page,
             'delete_form' => $deleteForm->createView(),
             'comment'     => $comment,
@@ -229,7 +226,7 @@ class PageController extends Controller
      * @param string $slug
      * @return \Symfony\Component\HttpFoundation\Response $this
      */
-    public function showStandAloneAction($slug)
+    public function viewStandAloneAction($slug)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -285,7 +282,7 @@ class PageController extends Controller
         $title = preg_replace('/\s*?\bpages?\b\s*?$/i', '', $entity->getTitle());
 
 
-        return $this->render('MesdHelpWikiBundle:Page:showStandAlone.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Page:viewStandAlone.html.twig', array(
             'entity' => $entity,
             'menu'   => new Menu(),
         ));
@@ -377,7 +374,7 @@ class PageController extends Controller
 
             $em->flush();
 
-            return $this->redirect($this->generateUrl('MesdHelpWikiBundle_page_show', array('slug' => $entity->getSlug())));
+            return $this->redirect($this->generateUrl('MesdHelpWikiBundle_page_view', array('slug' => $entity->getSlug())));
         }
 
         return $this->render('MesdHelpWikiBundle:Page:edit.html.twig', array(

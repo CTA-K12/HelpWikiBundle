@@ -102,10 +102,6 @@ class Configuration implements ConfigurationInterface
         ;
                 */
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
-        //
         // Configuration Options
         // ---------------------
         // jquery_lib:
@@ -114,6 +110,9 @@ class Configuration implements ConfigurationInterface
         // textarea_form_type:
         $rootNode
             ->children()
+                ->scalarNode('doctrine_orm_entity_manager')
+                    ->defaultValue('default')
+                ->end()
                 ->booleanNode('security')
                     ->defaultValue(false)
                 ->end()

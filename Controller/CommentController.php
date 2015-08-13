@@ -41,34 +41,47 @@ class CommentController extends Controller
 {
 
     /**
-     * Lists all Comment entities.
+     * List comments action
+     *
+     * Display a screen to view a listing of comments
      *
      * @return $this
      */
-    public function indexAction()
+    public function listAction()
     {
-        $em = $this->getDoctrine()->getManager();
+        $mgr = $this->container->getParameter('mesd_help_wiki.doctrine_orm_entity_manager');
+        $em  = $this->getDoctrine()->getManager($mgr);
 
-        $entities = $em->getRepository('MesdHelpWikiBundle:Comment')->findAll();
+        $comments = $em->getRepository('MesdHelpWikiBundle:Comment')->findAll();
 
-        foreach ($entities as $entity) {
-            $flagForms[$entity->getId()]    = $this->createFlagForm($entity->getId())->createView();
-            $deleteForms[$entity->getId()]  = $this->createDeleteForm($entity->getId())->createView();
-            $approveForms[$entity->getId()] = $this->createApproveForm($entity->getId())->createView();
+        foreach ($comments as $en)
+        {
+            $flagForms[$en->getId()]    = $this->createFlagForm($en->getId())->createView();
+            $deleteForms[$en->getId()]  = $this->createDeleteForm($en->getId())->createView();
+            $approveForms[$en->getId()] = $this->createApproveForm($en->getId())->createView();
         }
 
-        return $this->render('MesdHelpWikiBundle:Comment:index.html.twig', array(
-                'entities'      => $entities,
-                'flag_forms'    => $flagForms,
-                'delete_forms'  => $deleteForms,
-                'approve_forms' => $approveForms,
+        if (!$comments)
+        {
+            return $this->render('MesdHelpWikiBundle:Comment:list.html.twig', array(
+                'comments'      => $comments,
                 'menu'          => new Menu(),
-            )
-        );
+            ));
+        }
+
+        return $this->render('MesdHelpWikiBundle:Comment:list.html.twig', array(
+            'comments'      => $comments,
+            'flag_forms'    => $flagForms,
+            'delete_forms'  => $deleteForms,
+            'approve_forms' => $approveForms,
+            'menu'          => new Menu(),
+        ));
     }
 
     /**
-     * Creates a new Comment entity.
+     * Create comment action
+     *
+     * Add a new comment
      *
      * @param  object  $request
      * @param  unknown $pageId
@@ -80,34 +93,37 @@ class CommentController extends Controller
 
         $comment = new Comment();
 
-        if (false === $this->get('security.context')->isGranted('CREATE', $comment)) {
+        if (false === $this->get('security.context')->isGranted('CREATE', $comment))
+        {
             throw new AccessDeniedException('Unauthorized access!');
         }
 
         $comment->setPage($page);
 
         $form = $this->createCreateForm($comment, $pageId);
-
         $form->handleRequest($request);
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+
+        if ($form->isValid())
+        {
+            $mgr = $this->container->getParameter('mesd_help_wiki.doctrine_orm_entity_manager');
+            $em  = $this->getDoctrine()->getManager($mgr);
             $em->persist($comment);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('MesdHelpWikiBundle_page_show', array('slug' => $page->getSlug())));
+            return $this->redirect($this->generateUrl('MesdHelpWikiBundle_page_view', array('slug' => $page->getSlug())));
         }
 
         return $this->render('MesdHelpWikiBundle:Comment:new.html.twig', array(
                 'comment' => $comment,
                 'form'    => $form->createView(),
                 'menu'    => new Menu(),
-            )
-        );
+        ));
     }
 
     /**
-     * Creates a form to create a Comment entity.
+     * Create create form
      *
+     * Create a form to add a comment
      *
      * @param  object  $comment
      * @param  unknown $pageId
@@ -131,7 +147,9 @@ class CommentController extends Controller
     }
 
     /**
-     * Displays a form to create a new Comment entity.
+     * New comment action
+     *
+     * Display a screen to add a comment
      *
      * @param object  $request
      * @param unknown $pageId
@@ -160,29 +178,34 @@ class CommentController extends Controller
     }
 
     /**
-     * Finds and displays a Comment entity.
+     * View comment action
+     *
+     * Display a screen to view a comment
      *
      * @param unknown $id
      * @return unknown
      */
-    public function showAction($id)
+    public function viewAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
+        $mgr = $this->container->getParameter('mesd_help_wiki.doctrine_orm_entity_manager');
+        $em  = $this->getDoctrine()->getManager($mgr);
 
-        $entity = $em->getRepository('MesdHelpWikiBundle:Comment')->find($id);
+        $en = $em->getRepository('MesdHelpWikiBundle:Comment')->find($id);
 
-        if (!$entity) {
+        if (!$en)
+        {
             throw $this->createNotFoundException('Unable to find Comment entity.');
         }
 
-        if (false === $this->get('security.context')->isGranted('VIEW', $entity)) {
+        if (false === $this->get('security.context')->isGranted('VIEW', $en))
+        {
             throw new AccessDeniedException('Unauthorized access!');
         }
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('MesdHelpWikiBundle:Comment:show.html.twig', array(
-                'entity'      => $entity,
+        return $this->render('MesdHelpWikiBundle:Comment:view.html.twig', array(
+                'en'      => $en,
                 'delete_form' => $deleteForm->createView(),
                 'menu'        => new Menu(),
             )
@@ -190,30 +213,33 @@ class CommentController extends Controller
     }
 
     /**
-     * Displays a form to edit an existing Comment entity.
+     * Edit comment action
+     *
+     * Display a screen to edit a comment
      *
      * @param unknown $id
      * @return unknown
      */
     public function editAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
+        $mgr = $this->container->getParameter('mesd_help_wiki.doctrine_orm_entity_manager');
+        $em  = $this->getDoctrine()->getManager($mgr);
 
-        $entity = $em->getRepository('MesdHelpWikiBundle:Comment')->find($id);
+        $en = $em->getRepository('MesdHelpWikiBundle:Comment')->find($id);
 
-        if (!$entity) {
+        if (!$en) {
             throw $this->createNotFoundException('Unable to find Comment entity.');
         }
 
-        if (false === $this->get('security.context')->isGranted('EDIT', $entity)) {
+        if (false === $this->get('security.context')->isGranted('EDIT', $en)) {
             throw new AccessDeniedException('Unauthorized access!');
         }
 
-        $editForm = $this->createEditForm($entity);
+        $editForm   = $this->createEditForm($en);
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('MesdHelpWikiBundle:Comment:edit.html.twig', array(
-                'entity'      => $entity,
+                'en'      => $en,
                 'edit_form'   => $editForm->createView(),
                 'delete_form' => $deleteForm->createView(),
                 'menu'        => new Menu(),
@@ -222,16 +248,17 @@ class CommentController extends Controller
     }
 
     /**
-     * Creates a form to edit a Comment entity.
+     * Create edit form
      *
+     * Create a form to edit a comment
      *
      * @param object  $entity The entity
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createEditForm(Comment $entity)
+    private function createEditForm(Comment $en)
     {
-        $form = $this->createForm(new CommentType(), $entity, array(
-            'action' => $this->generateUrl('MesdHelpWikiBundle_comment_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new CommentType(), $en, array(
+            'action' => $this->generateUrl('MesdHelpWikiBundle_comment_update', array('id' => $en->getId())),
             'method' => 'PUT',
         ));
 
@@ -241,7 +268,9 @@ class CommentController extends Controller
     }
 
     /**
-     * Edits an existing Comment entity.
+     * Update comment action
+     *
+     * Update an edited comment
      *
      * @param object  $request
      * @param unknown $id
@@ -249,20 +278,21 @@ class CommentController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getManager();
+        $mgr = $this->container->getParameter('mesd_help_wiki.doctrine_orm_entity_manager');
+        $em  = $this->getDoctrine()->getManager($mgr);
 
-        $entity = $em->getRepository('MesdHelpWikiBundle:Comment')->find($id);
+        $en = $em->getRepository('MesdHelpWikiBundle:Comment')->find($id);
 
-        if (!$entity) {
+        if (!$en) {
             throw $this->createNotFoundException('Unable to find Comment entity.');
         }
 
-        if (false === $this->get('security.context')->isGranted('EDIT', $entity)) {
+        if (false === $this->get('security.context')->isGranted('EDIT', $en)) {
             throw new AccessDeniedException('Unauthorized access!');
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
+        $editForm   = $this->createEditForm($en);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
@@ -272,7 +302,7 @@ class CommentController extends Controller
         }
 
         return $this->render('MesdHelpWikiBundle:Comment:edit.html.twig', array(
-                'entity'      => $entity,
+                'en'      => $en,
                 'edit_form'   => $editForm->createView(),
                 'delete_form' => $deleteForm->createView(),
                 'menu'        => new Menu(),
@@ -293,22 +323,25 @@ class CommentController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('MesdHelpWikiBundle:Comment')->find($id);
+            $mgr = $this->container->getParameter('mesd_help_wiki.doctrine_orm_entity_manager');
+            $em  = $this->getDoctrine()->getManager($mgr);
+            $en  = $em->getRepository('MesdHelpWikiBundle:Comment')->find($id);
 
-            if (!$entity) {
+            if (!$en)
+            {
                 throw $this->createNotFoundException('Unable to find Comment entity.');
             }
 
-            if (false === $this->get('security.context')->isGranted('DELETE', $entity)) {
+            if (false === $this->get('security.context')->isGranted('DELETE', $en))
+            {
                 throw new AccessDeniedException('Unauthorized access!');
             }
 
-            $em->remove($entity);
+            $em->remove($en);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('MesdHelpWikiBundle_comment_index'));
+        return $this->redirect($this->generateUrl('MesdHelpWikiBundle_comment_list'));
     }
 
     /**
@@ -329,7 +362,7 @@ class CommentController extends Controller
     }
 
     /**
-     * Flags a Comment.
+     * Flags a comment
      *
      * @param  \Symfony\Component\HttpFoundation\Request  $request The request
      * @param  integer                                    $id      The comment id
@@ -341,25 +374,29 @@ class CommentController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('MesdHelpWikiBundle:Comment')->find($id);
+            $mgr = $this->container->getParameter('mesd_help_wiki.doctrine_orm_entity_manager');
+            $em  = $this->getDoctrine()->getManager($mgr);
+            $en  = $em->getRepository('MesdHelpWikiBundle:Comment')->find($id);
 
-            if (!$entity) {
+            if (!$en)
+            {
                 throw $this->createNotFoundException('Unable to find Comment entity.');
             }
 
-            if (false === $this->get('security.context')->isGranted('FLAG', $entity)) {
+            if (false === $this->get('security.context')->isGranted('FLAG', $en))
+            {
                 throw new AccessDeniedException('Unauthorized access!');
             }
-            $entity->setStatus(Comment::FLAGGED);
+            
+            $en->setStatus(Comment::FLAGGED);
 
             $em->flush();
 
             //return $this->redirect($this->generateUrl('MesdHelpWikiBundle_comment_edit', array('id' => $id)));
-            return $this->redirect($this->generateUrl('MesdHelpWikiBundle_comment_index'));
+            return $this->redirect($this->generateUrl('MesdHelpWikiBundle_comment_list'));
         }
 
-        return $this->redirect($this->generateUrl('MesdHelpWikiBundle_comment_index'));
+        return $this->redirect($this->generateUrl('MesdHelpWikiBundle_comment_list'));
     }
 
     /**
@@ -394,25 +431,26 @@ class CommentController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('MesdHelpWikiBundle:Comment')->find($id);
+            $en = $em->getRepository('MesdHelpWikiBundle:Comment')->find($id);
 
-            if (!$entity) {
+            if (!$en) {
                 throw $this->createNotFoundException('Unable to find Comment entity.');
             }
 
-            if (false === $this->get('security.context')->isGranted('APPROVE', $entity)) {
+            if (false === $this->get('security.context')->isGranted('APPROVE', $en))
+            {
                 throw new AccessDeniedException('Unauthorized access!');
             }
 
-            $entity->setStatus(Comment::APPROVED);
+            $en->setStatus(Comment::APPROVED);
 
             $em->flush();
 
             //return $this->redirect($this->generateUrl('MesdHelpWikiBundle_comment_edit', array('id' => $id)));
-            return $this->redirect($this->generateUrl('MesdHelpWikiBundle_comment_index'));
+            return $this->redirect($this->generateUrl('MesdHelpWikiBundle_comment_list'));
         }
 
-        return $this->redirect($this->generateUrl('MesdHelpWikiBundle_comment_index'));
+        return $this->redirect($this->generateUrl('MesdHelpWikiBundle_comment_list'));
     }
 
     /**
@@ -444,7 +482,8 @@ class CommentController extends Controller
 
         $page = $em->getRepository('MesdHelpWikiBundle:Page')->find($pageId);
 
-        if (!$page) {
+        if (!$page)
+        {
             throw $this->createNotFoundException('Unable to find Page.');
         }
 
@@ -457,11 +496,12 @@ class CommentController extends Controller
      * @param  integer                                    $pageId A page id 
      * @return \Symfony\Component\HttpFoundation\Response $this   A response
      */
-    public function indexByPageAction($pageId)
+    public function listByPageAction($pageId)
     {
         $comment  = new Comment();
 
-        if (false === $this->get('security.context')->isGranted('VIEW', $comment)) {
+        if (false === $this->get('security.context')->isGranted('VIEW', $comment))
+        {
             throw new AccessDeniedException('Unauthorized access!');
         }
 
@@ -473,13 +513,14 @@ class CommentController extends Controller
         $deleteForms  = array();
         $approveForms = array();
 
-        foreach ($comments as $comment) {
+        foreach ($comments as $comment)
+        {
             $flagForms[$comment->getId()]    = $this->createFlagForm($comment->getId())->createView();
             $deleteForms[$comment->getId()]  = $this->createDeleteForm($comment->getId())->createView();
             $approveForms[$comment->getId()] = $this->createApproveForm($comment->getId())->createView();
         }
 
-        return $this->render('MesdHelpWikiBundle:Comment:indexByPage.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Comment:listByPage.html.twig', array(
                 'comments'      => $comments,
                 'flag_forms'    => $flagForms,
                 'delete_forms'  => $deleteForms,

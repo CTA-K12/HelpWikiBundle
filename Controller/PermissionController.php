@@ -23,7 +23,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Mesd\HelpWikiBundle\Entity\Permission;
 use Mesd\HelpWikiBundle\Form\PermissionType;
-
 use Mesd\HelpWikiBundle\Model\Menu;
 /**
  * Permission controller.
@@ -37,13 +36,13 @@ class PermissionController extends Controller
      *
      * @return unknown
      */
-    public function indexAction()
+    public function listAction()
     {
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('MesdHelpWikiBundle:Permission')->findAll();
 
-        return $this->render('MesdHelpWikiBundle:Permission:index.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Permission:list.html.twig', array(
             'entities' => $entities,
             'menu'     => new Menu(),
         ));
@@ -66,7 +65,7 @@ class PermissionController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('MesdHelpWikiBundle_permission_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('MesdHelpWikiBundle_permission_view', array('id' => $entity->getId())));
         }
 
         return $this->render('MesdHelpWikiBundle:Permission:new.html.twig', array(
@@ -118,7 +117,7 @@ class PermissionController extends Controller
      * @param unknown $id
      * @return unknown
      */
-    public function showAction($id)
+    public function viewAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -130,7 +129,7 @@ class PermissionController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('MesdHelpWikiBundle:Permission:show.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Permission:view.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
             'menu'        => new Menu(),
@@ -242,7 +241,7 @@ class PermissionController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('MesdHelpWikiBundle_permission_index'));
+        return $this->redirect($this->generateUrl('MesdHelpWikiBundle_permission_list'));
     }
 
     /**

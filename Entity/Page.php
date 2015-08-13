@@ -99,9 +99,9 @@ class Page
      *
      * Users with MANAGE permissions may lock a page from edits.
      * 
-     * @var boolean
+     * @var boolean $pageLocked
      */
-    private $pageLocked;
+    private $pageLocked = false;
 
     /**
      * Comments Locked
@@ -109,9 +109,9 @@ class Page
      * Users with MANAGE permission may lock a page from any additional
      * or changes to comments.
      * 
-     * @var boolean
+     * @var boolean $commentsLocked
      */
-    private $commentsLocked;
+    private $commentsLocked = false;
 
     /**
      * Edit In Progress
@@ -122,18 +122,18 @@ class Page
      * from starting a page edit then leaving their computer
      * for an indefinite amount of time.
      * 
-     * @var boolean
+     * @var boolean $editInProgress
      */
-    private $editInProgress;
+    private $editInProgress = false;
 
     /**
      * Stand Alone
      *
      * If a page is stand-alone, it will not show up in the table of contents.
      * 
-     * @var $standAlone
+     * @var boolean $standAlone
      */
-    private $standAlone;
+    private $standAlone = false;
 
     /**
      * Status

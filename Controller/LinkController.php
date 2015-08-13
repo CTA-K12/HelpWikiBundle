@@ -24,11 +24,18 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 use Mesd\HelpWikiBundle\Entity\Link;
 use Mesd\HelpWikiBundle\Form\LinkType;
-
 use Mesd\HelpWikiBundle\Model\Menu;
+
 /**
- * Link controller.
+ * Link controller
  *
+ * Controller to create, update, manage, and delete links
+ *
+ * @package    Mesd\HelpWikiBundle\Controller
+ * @copyright  2015 (c) Multnomah Education Service District <http://www.mesd.k12.or.us>
+ * @license    <http://opensource.org/licenses/MIT> MIT
+ * @author     Curtis G Hanson <chanson@mesd.k12.or.us>
+ * @since      0.1.0
  */
 class LinkController extends Controller
 {
@@ -38,13 +45,13 @@ class LinkController extends Controller
      *
      * @return unknown
      */
-    public function indexAction()
+    public function listAction()
     {
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('MesdHelpWikiBundle:Link')->findAll();
 
-        return $this->render('MesdHelpWikiBundle:Link:index.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Link:list.html.twig', array(
             'entities' => $entities,
             'menu'     => new Menu(),
         ));
@@ -72,7 +79,7 @@ class LinkController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('MesdHelpWikiBundle_link_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('MesdHelpWikiBundle_link_view', array('id' => $entity->getId())));
         }
 
         return $this->render('MesdHelpWikiBundle:Link:new.html.twig', array(
@@ -147,7 +154,7 @@ class LinkController extends Controller
      * @param  unknown $id
      * @return unknown
      */
-    public function showAction($id)
+    public function viewAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -163,7 +170,7 @@ class LinkController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('MesdHelpWikiBundle:Link:show.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Link:view.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
             'menu'        => new Menu(),
@@ -287,7 +294,7 @@ class LinkController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('MesdHelpWikiBundle_link_index'));
+        return $this->redirect($this->generateUrl('MesdHelpWikiBundle_link_list'));
     }
 
     /**

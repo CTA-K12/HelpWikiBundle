@@ -1,10 +1,10 @@
-MesdHelpWikiBundle_link_index:
+MesdHelpWikiBundle_link_list:
     pattern:  /
-    defaults: { _controller: "MesdHelpWikiBundle:Link:index" }
+    defaults: { _controller: "MesdHelpWikiBundle:Link:list" }
 
-MesdHelpWikiBundle_link_show:
-    pattern:  /{id}/show
-    defaults: { _controller: "MesdHelpWikiBundle:Link:show" }
+MesdHelpWikiBundle_link_view:
+    pattern:  /{id}/view
+    defaults: { _controller: "MesdHelpWikiBundle:Link:view" }
 
 MesdHelpWikiBundle_link_new_by_route:
     pattern:  /new/{route}/new

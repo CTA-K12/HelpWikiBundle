@@ -28,7 +28,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 /**
  * Default Controller
  *
- * This controller directs the default route to an index page
+ * This controller directs the default route to an list page
  *
  * @package    Mesd\HelpWikiBundle\Controller
  * @copyright  2014 (c) Multnomah Education Service District <http://www.mesd.k12.or.us>
@@ -43,16 +43,16 @@ class DefaultController extends Controller
     /**
      * Index Action
      *
-     * Renders the index template from a specified route
+     * Renders the list template from a specified route
      *
      * @author    Curtis G Hanson <chanson@mesd.k12.or.us>
      * @copyright 2014 MESD
      * @version   0.1
-     * @return    Symfony\Component\HttpFoundation\Response $content The index twig response
+     * @return    Symfony\Component\HttpFoundation\Response $content The list twig response
      */
-    public function indexAction()
+    public function listAction()
     {
-        return $this->render('MesdHelpWikiBundle:Default:index.html.twig', array());
+        return $this->render('MesdHelpWikiBundle:Default:list.html.twig', array());
     }
 
     public function heartbeatAction(Request $request)

@@ -1,6 +1,6 @@
 # @todo this is only here until breadcrumbs are fixed
 # this path prevents users from going to a 403 page
-MesdHelpWikiBundle_page_index:
+MesdHelpWikiBundle_page_list:
     pattern:      /
     defaults:     { _controller: "MesdHelpWikiBundle:Page:toc" }
 
@@ -13,9 +13,9 @@ MesdHelpWikiBundle_page_create:
     defaults:     { _controller: "MesdHelpWikiBundle:Page:create" }
     requirements: { _method: post }
 
-MesdHelpWikiBundle_page_show:
-    pattern:      /{slug}/show
-    defaults:     { _controller: "MesdHelpWikiBundle:Page:show" }
+MesdHelpWikiBundle_page_view:
+    pattern:      /{slug}/view
+    defaults:     { _controller: "MesdHelpWikiBundle:Page:view" }
 
 MesdHelpWikiBundle_page_edit:
     pattern:      /{id}/edit
@@ -41,5 +41,5 @@ MesdHelpWikiBundle_page_update_order:
     requirements: { _method: post|put }
 
 MesdHelpWikiBundle_page_comments:
-    pattern:      /{id}/comments/show
-    defaults:     { _controller: "MesdHelpWikiBundle:Page:commentsShow" }
+    pattern:      /{id}/comments/view
+    defaults:     { _controller: "MesdHelpWikiBundle:Page:commentsView" }

@@ -30,9 +30,9 @@ MesdHelpWikiBundle_permission:
     resource: "@MesdHelpWikiBundle/Resources/config/routing/permission.yml"
     prefix:   /permission
 
-MesdHelpWikiBundle_pagepermission:
-    resource: "@MesdHelpWikiBundle/Resources/config/routing/pagepermission.yml"
-    prefix:   /pagepermission
+MesdHelpWikiBundle_page_permission:
+    resource: "@MesdHelpWikiBundle/Resources/config/routing/pagePermission.yml"
+    prefix:   /acl
 
 MesdHelpWikiBundle_heartbeat:
     pattern:      /heartbeat
@@ -45,6 +45,6 @@ MesdHelpWikiBundle_heartbeat:
 # WARNING! If a user types an address that doesn't not exist, this route will
 # pick it up. There is a template that can be overriden for these occurances.
 
-#MesdHelpWikiBundle_stand_alone_show:
+#MesdHelpWikiBundle_stand_alone_view:
 #    pattern:  /{slug}
-#    defaults: { _controller: "MesdHelpWikiBundle:Page:showStandAlone" }
+#    defaults: { _controller: "MesdHelpWikiBundle:Page:viewStandAlone" }

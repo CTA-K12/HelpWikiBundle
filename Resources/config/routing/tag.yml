@@ -1,10 +1,10 @@
-MesdHelpWikiBundle_tag_index:
+MesdHelpWikiBundle_tag_list:
     pattern:  /
-    defaults: { _controller: "MesdHelpWikiBundle:Tag:index" }
+    defaults: { _controller: "MesdHelpWikiBundle:Tag:list" }
 
-MesdHelpWikiBundle_tag_show:
-    pattern:  /{id}/show
-    defaults: { _controller: "MesdHelpWikiBundle:Tag:show" }
+MesdHelpWikiBundle_tag_view:
+    pattern:  /{id}/view
+    defaults: { _controller: "MesdHelpWikiBundle:Tag:view" }
 
 MesdHelpWikiBundle_tag_new:
     pattern:  /new

@@ -23,8 +23,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Mesd\HelpWikiBundle\Entity\Tag;
 use Mesd\HelpWikiBundle\Form\TagType;
-
 use Mesd\HelpWikiBundle\Model\Menu;
+
 /**
  * Tag controller.
  *
@@ -36,7 +36,7 @@ class TagController extends Controller
      * Lists all Tag entities.
      *
      */
-    public function indexAction()
+    public function listAction()
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -44,7 +44,7 @@ class TagController extends Controller
         //$tag = $entities[0];
         //var_dump(get_class_methods($tag->getPages()));exit;
 
-        return $this->render('MesdHelpWikiBundle:Tag:index.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Tag:list.html.twig', array(
             'entities' => $entities,
             'menu'     => new Menu(),
         ));
@@ -69,7 +69,7 @@ class TagController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('MesdHelpWikiBundle_tag_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('MesdHelpWikiBundle_tag_view', array('id' => $entity->getId())));
         }
 
         return $this->render('MesdHelpWikiBundle:Tag:new.html.twig', array(
@@ -123,7 +123,7 @@ class TagController extends Controller
      * Finds and displays a Tag entity.
      *
      */
-    public function showAction($id)
+    public function viewAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -139,7 +139,7 @@ class TagController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('MesdHelpWikiBundle:Tag:show.html.twig', array(
+        return $this->render('MesdHelpWikiBundle:Tag:view.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
             'menu'        => new Menu(),
@@ -255,7 +255,7 @@ class TagController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('MesdHelpWikiBundle_tag_index'));
+        return $this->redirect($this->generateUrl('MesdHelpWikiBundle_tag_list'));
     }
 
     /**

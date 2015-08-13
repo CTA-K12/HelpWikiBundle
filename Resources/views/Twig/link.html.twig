@@ -1,7 +1,9 @@
 {% block mesd_help_wiki_linker %}
+{% trans_default_domain 'mesd_help_wiki' %}
+
 {% if link.page.slug is defined %}
     <a
-        href="{{ path('MesdHelpWikiBundle_page_show', {'slug': link.page.slug}) }}"
+        href="{{ path('MesdHelpWikiBundle_page_view', {'slug': link.page.slug}) }}"
         class="btn btn-xs btn-block btn-default"
         target="_blank"
         title="{{ 'view.help.documentation.for.page'|trans }}"
@@ -32,9 +34,11 @@
 {% endblock mesd_help_wiki_linker %}
 
 {% block mesd_help_wiki_page %}
+{% trans_default_domain 'mesd_help_wiki' %}
+
 {% if page.slug is defined %}
     <a
-        href="{{ path('MesdHelpWikiBundle_page_show', {'slug': page.slug}) }}"
+        href="{{ path('MesdHelpWikiBundle_page_view', {'slug': page.slug}) }}"
         class="{{ attr.class is defined ? attr.class : '' }}"
         target="{{ attr.target is defined ? attr.target : '_blank' }}"
         title="{{ attr.title is defined ? attr.title|trans : page.title }}"
