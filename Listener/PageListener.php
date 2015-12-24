@@ -8,7 +8,7 @@
  * Copyright (c) 2014 Multnomah Education Service District <http://www.mesd.k12.or.us>
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- * 
+ *
  * @filesource /src/Mesd/HelpWikiBundle/Listener/PageListener.php
  * @package    Mesd\HelpWikiBundle\Listener
  * @copyright  2014 (c) Multnomah Education Service District <http://www.mesd.k12.or.us>
@@ -87,13 +87,16 @@ class PageListener
             $en->setEditInProgress(false);
 
             // look for a last page, if there is one
-            $lastPage = $em->getRepository('MesdHelpWikiBundle:Page')->findBy(
-                array('parent' => $parent),
-                array('printOrder' => 'DESC')
-            );
+            if (!$en->isStandAlone())
+            {
+                $lastPage = $em->getRepository('MesdHelpWikiBundle:Page')->findBy(
+                    array('parent' => $parent),
+                    array('right' => null)
+                );
 
-            // check if there is a last page, if not, populate the order with 0
-            $en->setPrintOrder((!empty($lastPage) ? ($lastPage[0]->getPrintOrder() + 1) : (0)));
+                // check if there is a last page, if not, populate the order with 0
+                $en->setLeft(!empty($lastPage) ? $lastPage->getId() : null);
+            }
         }
     }
 

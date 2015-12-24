@@ -65,12 +65,13 @@ class DefaultController extends Controller
         return $response->setData(array($data));
         */
 
-        $data  = $request->request->all();
-        $pulse = $this->get('mesd_help_wiki.heartbeat');
-        $hb    = $pulse->onHeartbeatReceivedAction($data);
+        $data         = $request->request->all();
+        $dispatcher   = $this->get('mesd_help_wiki.heartbeat');
+        $requestData  = $dispatcher->onHeartbeatRequest($data);
+        $responseData = $dispatcher->onHeartbeatResponse($requestData);
 
         $response = new JsonResponse();
 
-        return $response->setData(array($hb));
+        return $response->setData($responseData);
     }
 }

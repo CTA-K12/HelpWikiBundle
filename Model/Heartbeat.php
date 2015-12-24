@@ -44,6 +44,17 @@ class Heartbeat
 
     private $screenId;
 
+    public function __construct($data)
+    {
+        $this->action   = $data['action'];
+        $this->data     = $data['data'];
+        $this->hasFocus = $data['has_focus'];
+        $this->interval = $data['interval'];
+        $this->screenId = $data['screen_id'];
+
+        return $this;
+    }
+
     public function setAction($action)
     {
         $this->action = $action;
@@ -102,5 +113,16 @@ class Heartbeat
     public function getScreenId()
     {
         return $this->screenId;
+    }
+
+    public function normalize()
+    {
+        return array(
+            'action'    => $this->getAction(),
+            'data'      => $this->getData(),
+            'has_focus' => $this->getHasFocus(),
+            'interval'  => $this->getInterval(),
+            'screen_id' => $this->getScreenId(),
+        );
     }
 }

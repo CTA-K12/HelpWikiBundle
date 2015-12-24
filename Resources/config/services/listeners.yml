@@ -1,7 +1,8 @@
 parameters:
-    mesd_help_wiki.page_listener.class:      Mesd\HelpWikiBundle\Listener\PageListener
-    mesd_help_wiki.comment_listener.class:   Mesd\HelpWikiBundle\Listener\CommentListener
-    mesd_help_wiki.listener.heartbeat_listener.class: Mesd\HelpWikiBundle\Listener\HeartbeatListener
+    mesd_help_wiki.page_listener.class:                    Mesd\HelpWikiBundle\Listener\PageListener
+    mesd_help_wiki.comment_listener.class:                 Mesd\HelpWikiBundle\Listener\CommentListener
+    mesd_help_wiki.listener.heartbeat_listener.class:      Mesd\HelpWikiBundle\Listener\HeartbeatListener
+    mesd_help_wiki.subscriber.page_order_subscriber.class: Mesd\HelpWikiBundle\EventListener\PageOrderSubscriber
 
 services:
     mesd_help_wiki.page_listener:
@@ -22,5 +23,11 @@ services:
             - { name: doctrine.event_listener, event: preUpdate   }
     mesd_help_wiki.listener.heartbeat_listener:
         class:     %mesd_help_wiki.listener.heartbeat_listener.class%
+        arguments: [@doctrine.orm.entity_manager, @service_container]
         tags:
-            - { name: kernel.event_listener, event: mesd_help_wiki.heartbeat_received, method: populateData }
+            - { name: kernel.event_listener, event: mesd_help_wiki.heartbeat_request, method: autoSave }
+    #mesd_help_wiki.subscriber.page_order_subscriber:
+    #    class:    %mesd_help_wiki.subscriber.page_order_subscriber.class%
+    #    arguments: [@service_container]
+    #    tags:
+    #        - { name: doctrine.event_subscriber,   connection: orcase }

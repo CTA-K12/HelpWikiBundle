@@ -25,6 +25,17 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\ORM\EntityManager;
 
+/**
+ * Page voter
+ *
+ * Voter for page object permissions
+ *
+ * @package    Mesd\HelpWikiBundle\Security
+ * @copyright  2015 (c) Multnomah Education Service District <http://www.mesd.k12.or.us>
+ * @license    <http://opensource.org/licenses/MIT> MIT
+ * @author     Curtis G Hanson <chanson@mesd.k12.or.us>
+ * @since      0.1.0
+ */
 class PageVoter implements VoterInterface
 {
     const CREATE   = 'CREATE';
@@ -38,16 +49,46 @@ class PageVoter implements VoterInterface
     const UPLOAD   = 'UPLOAD';
     const MANAGE   = 'MANAGE';
 
+    /**
+     * Container
+     * 
+     * @var Symfony\Component\DependencyInjection\ContainerInterface $container
+     */
     private $container;
 
+    /**
+     * Entity manager
+     * 
+     * @var Doctrine\ORM\EntityManager $entityManager
+     */
     private $entityManager;
 
+    /**
+     * Constructor
+     *
+     * @author    Curtis G Hanson <chanson@mesd.k12.or.us>
+     * @copyright 2015 MESD
+     * @since     0.1
+     * @param     ContainerInterface $container     [description]
+     * @param     EntityManager      $entityManager [description]
+     */
     public function __construct(ContainerInterface $container, EntityManager $entityManager)
     {
         $this->container     = $container;
         $this->entityManager = $entityManager;
     }
 
+    /**
+     * Supports attribute
+     *
+     * Test if attribute is supported
+     *
+     * @author    Curtis G Hanson <chanson@mesd.k12.or.us>
+     * @copyright 2015 MESD
+     * @since     0.1
+     * @param     string  $attribute The attribute to test
+     * @return    boolean
+     */
     public function supportsAttribute($attribute)
     {
         return in_array($attribute, array(
@@ -64,6 +105,17 @@ class PageVoter implements VoterInterface
         ));
     }
 
+    /**
+     * Supports class
+     *
+     * Test if class is supported
+     *
+     * @author    Curtis G Hanson <chanson@mesd.k12.or.us>
+     * @copyright 2015 MESD
+     * @since     0.1
+     * @param     string  $class The FQCN
+     * @return    boolean
+     */
     public function supportsClass($class)
     {
         $supportedClass = 'Mesd\HelpWikiBundle\Entity\Page';
@@ -72,6 +124,9 @@ class PageVoter implements VoterInterface
     }
 
     /**
+     * Vote
+     *
+     * 
      * @var \MesdHelpWikiBundle\Entity\Page $page
      */
     public function vote(TokenInterface $token, $page, array $attributes)
@@ -87,21 +142,11 @@ class PageVoter implements VoterInterface
             return VoterInterface::ACCESS_GRANTED;
         }
 
-        // check if the voter is used correct, only allow one attribute
-        // this isn't a requirement, it's just one easy way for you to
-        // design your voter
-        //if (1 !== count($attributes)) {
-        //    throw new \InvalidArgumentException(
-        //        'Only one attribute is allowed.'
-        //    );
-        //}
-
-        // set the attribute to check against
-        $attribute = $attributes[0];
-
-        // check if the given attribute is covered by this voter
-        if (!$this->supportsAttribute($attribute)) {
-            return VoterInterface::ACCESS_ABSTAIN;
+        // check if the given attributes are covered by this voter
+        foreach ($attributes as $attribute) {
+            if (!$this->supportsAttribute($attribute)) {
+                return VoterInterface::ACCESS_ABSTAIN;
+            }
         }
 
         // get current logged in user
@@ -117,6 +162,7 @@ class PageVoter implements VoterInterface
             $roles = $this->container->getParameter('mesd_help_wiki.super_admin_roles');
         }
 
+        // check user has one of the super roles
         if (isset($roles)) {
             foreach ($roles as $role) {
                 if (in_array($role, $user->getRoles())) {
@@ -125,16 +171,19 @@ class PageVoter implements VoterInterface
             }
         }
 
+        // get object permissions
         $permissions = $this->entityManager->getRepository('MesdHelpWikiBundle:Permission')->findByObject('PAGE');
 
+        // check user has permissions as set for object and role
         foreach ($permissions as $permission) {
             if (in_array($permission->getRole()->getRole(), $user->getRoles())) {
-                if ($attribute === $permission->getType()) {
+                if (in_array($permission->getType(), $attributes)) {
                     return VoterInterface::ACCESS_GRANTED;
                 }
             }
         }
 
+        // deny them if all above fail
         return VoterInterface::ACCESS_DENIED;
     }
 }

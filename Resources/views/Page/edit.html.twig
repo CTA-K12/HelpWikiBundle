@@ -252,17 +252,24 @@
             //);
 
             // Hook into the request event
+            //$(document).on('heartbeat-send', function(e, data) {
+            //    data['mesd-data'] = 'is_logged_in';
+            //});
             $(document).on('heartbeat-send', function(e, data) {
-                data['mesd-data'] = 'is_logged_in';
+                data['page'] = {
+                    'id':   3,
+                    'body': CKEDITOR.instances.mesd_help_wiki_page_body.getData()
+                };
             });
 
+
             // Listen for the response event
-            $(document).on('heartbeat-tick.mesd-data', function(event, data) {
+            $(document).on('heartbeat-tick', function(event, data) {
 
                 console.log(data);
                 // Look for your object
-                if (data.hasOwnProperty('mesd-data')) {
-                    // Prints to the console { 'curtis' : 'hanson' }
+                if (data.hasOwnProperty('page-view')) {
+                    alert('page is currently being viewed');
                 }
             });
         });

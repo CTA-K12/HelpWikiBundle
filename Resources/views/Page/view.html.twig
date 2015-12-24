@@ -12,7 +12,7 @@
     <em>
         <small>
             {{ 'updated.by.user.on.datetime'|trans({'%user%': page.user, '%datetime%': page.dateTime|date('Y-m-d h:i a')}) }}
-            {{ 'revision.revnum.chapter.chapternum.page.pagenum'|trans({'%revnum%': page.revision, '%chapternum%': page.parent, '%pagenum%': page.printOrder}) }}
+            {{ 'revision.revnum.chapter.chapternum.page.pagenum'|trans({'%revnum%': page.revision, '%chapternum%': page.parent, '%pagenum%': page.position}) }}
         </small>
     </em>
 </div>

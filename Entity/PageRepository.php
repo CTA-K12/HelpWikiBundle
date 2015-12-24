@@ -23,6 +23,9 @@ use Doctrine\Common\Collections\Collection;
 
 use Doctrine\ORM\EntityRepository;
 
+//use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
+//use Gedmo\Sortable\Entity\Repository\SortableRepository;
+
 /**
  * PageRepository
  *
@@ -31,7 +34,6 @@ use Doctrine\ORM\EntityRepository;
  */
 class PageRepository extends EntityRepository
 {
-
     public function getPagesNotEqualToPage($pageId)
     {
         // get all the pages not equal to the page passed
@@ -43,22 +45,39 @@ class PageRepository extends EntityRepository
         ;
     }
 
-    public function getAllPagesByPrintOrder($levels = 0, $security = false)
+    public function findAllByTree($options = array())
     {
-        // get all the pages not equal to the page passed
-        // used to create a select box for creating page associations
-        $result = $this
+        // $flatten    - default false
+        //               returns array with no children, only parent_id
+        // $levels     - limits recursion,
+        //               only matters for flattened data
+        // $standAlone - default false
+        // $status     - default in('PUBLISHED')
+        // orderBy     - default array(printOrder, ASC)
+        // $security   - not implemented yet
+        $flatten = array_key_exists('flatten', $options) ? $options['flatten'] : false;
+
+        $qb = $this
             ->createQueryBuilder('p')
-            ->where('p.parent is NULL')
-            ->getQuery()
-            ->getResult()
+            ->where('p.status IN (:status)')
+            ->andWhere('p.standAlone = false')
+            ->orderBy('p.position', 'ASC')
+            ->setParameter('status', array('PUBLISHED'))
         ;
+
+        if (false == $flatten)
+        {
+            $qb->andWhere('p.parent IS NULL');
+        }
+
+        $result = $qb->getQuery()->getResult();
 
         // define our results as an Array Collection
         // then sort the parent pages
-        $entities = new Collections\ArrayCollection($result);
-        $pages    = $this->sortCollectionByPrintOrder($entities);
+        $collection = new Collections\ArrayCollection($result);
 
+        $pages      = $this->sortCollectionByPosition($collection);
+        
         // recursively sort all the nested child pages
         $this->sortSubCollections($pages);
 
@@ -92,35 +111,41 @@ class PageRepository extends EntityRepository
 
         // if there isn't a previous page
         // get the last page of the previous chapter
-        $printOrder = $page->getPrintOrder() - 1;
-        $parent     = $page->getParent();
+        $position = $page->getPosition() - 1;
+        $parent   = $page->getParent();
         
         $qb = $this->createQueryBuilder('p');
-        $qb->where($qb->expr()->eq('p.printOrder', ':printOrder'));
+        $qb->where($qb->expr()->eq('p.position', ':position'));
 
-        if(empty($parent)) {
+        if(empty($parent))
+        {
             $qb->andWhere($qb->expr()->isNull('p.parent'));
-        } else {
+        }
+        else
+        {
             $qb->andWhere(
                 $qb
                     ->expr()->eq('p.parent', ':parentId'))
                     ->setParameter('parentId', $parent->getId());
         }
 
-        $qb->setParameter('printOrder', $printOrder);
+        $qb->setParameter('position', $position);
 
         $q = $qb->getQuery();
 
         $result = $q->getOneOrNullResult();
 
         //var_dump($result->getSlug());exit;
-        if(empty($result) && !empty($parent)) {
+        if(empty($result) && !empty($parent))
+        {
             return $parent;
         }
 
-        if (!empty($result)) {
+        if (!empty($result))
+        {
             $children = $result->getChildren();
-            if (0 < $children->count()) {
+            if (0 < $children->count())
+            {
                 return $this->getLastPageInCollection($children);
             }
         }
@@ -130,53 +155,62 @@ class PageRepository extends EntityRepository
 
     public function getNextPage(Page $page, $ignoreChildren = false)
     {
-        // get the current printOrder and increment it by 1
-        $printOrder = $page->getPrintOrder() + 1;
+        if (false === $ignoreChildren)
+        {
+            // if not, we should see if the page has children
+            $children = $page->getChildren();
 
-        // get the parent page
-        $parent = $page->getParent();
-
-        // get the child pages
-        $children = $page->getChildren();
-
-        // we first start with children
-        if (false === $ignoreChildren) {
-            if(0 < $children->count()) {
+            // if the page has children, return the first child
+            if(0 < $children->count())
+            {
                 return $this->getFirstPageInCollection($children);
             }
         }
-
-        $qb = $this->createQueryBuilder('p');
-        $qb->where($qb->expr()->eq('p.printOrder', ':printOrder'));
         
-        // we match the next page based on common parents
-        // and a defined incremental order
-        // if a parent exists, use that parameter, otherwise the parent is null
-        if (empty($parent)) {
-            $qb->andWhere($qb->expr()->isNull('p.parent'));
-        } else {
-            $qb->andWhere(
-                $qb
-                    ->expr()->eq('p.parent', ':parentId'))
-                    ->setParameter('parentId', $parent->getId());
-        }
-        
-        $qb->setParameter('printOrder', $printOrder);
-
-        $q = $qb->getQuery();
-
-        $result = $q->getOneOrNullResult();
-
-        // if there isn't another page,
-        // lets get the next parent page
-        if(empty($result) && !empty($parent)) {
-            return $this->getNextPage($parent, true);
+        // we first determine if the page has a sibling
+        if ($rightPage = $page->getRight())
+        {
+            // if so, lets return it
+            return $rightPage;
         }
 
-        // if there isn't even that,
+        // if not, determine if the page has a parent
+        if ($parentPage = $page->getParent())
+        {
+
+            // if so, determine if parent's right page exists
+            if ($parentRightPage = $parentPage->getRight())
+            {
+                // if so, return it
+                return $parentRightPage;
+            }
+        }
+        
+        // out of curiosity, is there another tick on the position?
+        $nextPosition = $page->getPosition() + 1;
+
+        $qb = $this
+            ->createQueryBuilder('p')
+            ->where('p.position = :position')
+            ->setParameter('position', $nextPosition)
+        ;
+
+        $result = $qb->getQuery()->getResult();
+        
+        // define our results as an Array Collection
+        // then sort the parent pages
+        $collection = new Collections\ArrayCollection($result);
+
+        // if there's only one page
+        if(1 === $collection->count())
+        {
+            return $collection->first();
+        }
+
+        // if there isn't even that
         // then we're on the last page,
         // we should return false
-        return $q->getOneOrNullResult();
+        return false;
     }
 
     public function getFirstPageInCollection(Collection $pages)
@@ -185,7 +219,7 @@ class PageRepository extends EntityRepository
         $iterator = $pages->getIterator();
 
         $iterator->uasort(function ($a, $b) {
-            return ($a->getPrintOrder() < $b->getPrintOrder()) ? -1 : 1;
+            return ($a->getPosition() < $b->getPosition()) ? -1 : 1;
         });
 
         $collection = new Collections\ArrayCollection(iterator_to_array($iterator));
@@ -209,9 +243,11 @@ class PageRepository extends EntityRepository
 
     private function sortSubCollections($entities)
     {
-        foreach ($entities as $entity) {
-            if (!$entity->getChildren()->isEmpty()) {
-                $children = $this->sortCollectionByPrintOrder($entity->getChildren());
+        foreach ($entities as $entity)
+        {
+            if (!$entity->getChildren()->isEmpty())
+            {
+                $children = $this->sortCollectionByPosition($entity->getChildren());
                 $this->sortSubCollections($children);
 
                 $entity->setChildren($children);
@@ -219,12 +255,12 @@ class PageRepository extends EntityRepository
         }
     }
 
-    private function sortCollectionByPrintOrder(Collection $collection)
+    private function sortCollectionByPosition(Collection $collection)
     {
         $iterator = $collection->getIterator();
 
         $iterator->uasort(function ($a, $b) {
-            return ($a->getPrintOrder() < $b->getPrintOrder()) ? -1 : 1;
+            return ($a->getPosition() < $b->getPosition()) ? -1 : 1;
         });
 
         $collection = new Collections\ArrayCollection(iterator_to_array($iterator));

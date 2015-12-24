@@ -2,6 +2,9 @@ Mesd\HelpWikiBundle\Entity\Page:
     type:            entity
     table:           mesd_helpwiki_page
     repositoryClass: Mesd\HelpWikiBundle\Entity\PageRepository
+    gedmo:
+        tree:
+            type: nested
     indexes:
         mesd_helpwiki_page_parent_id_idx:
             columns: [parent_id]
@@ -38,11 +41,6 @@ Mesd\HelpWikiBundle\Entity\Page:
             type:     integer
             nullable: false
             unique:   false
-        printOrder:
-            column:   print_order
-            type:     integer
-            nullable: true
-            unique:   false
         dateTime:
             column:   date_time
             type:     datetime
@@ -76,15 +74,44 @@ Mesd\HelpWikiBundle\Entity\Page:
             unique:   false
             options:
                 comment: 'Available types: DRAFT, UNPUBLISHED, PUBLISHED'
+        level:
+            column:   level
+            type:     integer
+            nullable: true
+        position:
+            column:   position
+            type:     integer
+            nullable: true
     uniqueConstraints:
         mesd_helpwiki_page_title_unique_idx:
             columns: [title]
         mesd_helpwiki_page_slug_unique_idx:
             columns: [slug]
+    oneToOne:
+        left:
+            targetEntity: Mesd\HelpWikiBundle\Entity\Page
+            joinColumn:
+                name:                 left_id
+                referencedColumnName: id
+                cascade:              'ALL'
+                orphanRemoval:        true
+                nullable:             true
+                onDelete:             'CASCADE'
+        right:
+            targetEntity: Mesd\HelpWikiBundle\Entity\Page
+            joinColumn:
+                name:                 right_id
+                referencedColumnName: id
+                cascade:              'ALL'
+                orphanRemoval:        true
+                nullable:             true
+                onDelete:             'CASCADE'
     oneToMany:
         children:
             targetEntity: Mesd\HelpWikiBundle\Entity\Page
             mappedBy:     parent
+            orderBy:
+                position: ASC
         comments:
             targetEntity: Mesd\HelpWikiBundle\Entity\Comment
             mappedBy:     page

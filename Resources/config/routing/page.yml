@@ -20,26 +20,32 @@ MesdHelpWikiBundle_page_view:
 MesdHelpWikiBundle_page_edit:
     pattern:      /{id}/edit
     defaults:     { _controller: "MesdHelpWikiBundle:Page:edit" }
+    requirements:
+        id:  \d+
 
 MesdHelpWikiBundle_page_update:
     pattern:      /{id}/update
     defaults:     { _controller: "MesdHelpWikiBundle:Page:update" }
-    requirements: { _method: post|put }
+    requirements:
+        id:  \d+
+        _method: post|put
 
 MesdHelpWikiBundle_page_delete:
     pattern:      /{id}/delete
     defaults:     { _controller: "MesdHelpWikiBundle:Page:delete" }
-    requirements: { _method: post|delete }
+    requirements:
+        id:  \d+
+        _method: post|delete
 
-MesdHelpWikiBundle_page_edit_order:
-    pattern:      /order
+MesdHelpWikiBundle_page_order_edit:
+    pattern:      /order/edit
     defaults:     { _controller: "MesdHelpWikiBundle:Page:editOrder" }
 
-MesdHelpWikiBundle_page_update_order:
-    pattern:      /orderupdate
+MesdHelpWikiBundle_page_order_update:
+    pattern:      /order/update
     defaults:     { _controller: "MesdHelpWikiBundle:Page:updateOrder" }
     requirements: { _method: post|put }
 
-MesdHelpWikiBundle_page_comments:
+MesdHelpWikiBundle_page_comments_view:
     pattern:      /{id}/comments/view
     defaults:     { _controller: "MesdHelpWikiBundle:Page:commentsView" }

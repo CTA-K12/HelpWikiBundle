@@ -4,7 +4,12 @@ namespace Mesd\HelpWikiBundle\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\Event;
 
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+
 use Mesd\HelpWikiBundle\Event\HeartbeatEvent;
+use Mesd\HelpWikiBundle\Model\Heartbeat;
 
 class HeartbeatEventDispatcher
 {
@@ -15,23 +20,23 @@ class HeartbeatEventDispatcher
         $this->dispatcher = $dispatcher;
     }
 
-    public function onHeartbeatReceivedAction($data)
+    public function onHeartbeatRequest($data)
     {
-        $event = new HeartbeatEvent($data);
-        $this->dispatcher->dispatch('mesd_help_wiki.heartbeat_received', $event);
+        $heartbeat = new Heartbeat($data);
 
-        return $event->getData();
+        $event = new HeartbeatEvent($heartbeat);
+        $this->dispatcher->dispatch('mesd_help_wiki.heartbeat_request', $event);
+
+        return $event->getHeartbeat()->normalize();
     }
 
-    public function onHeartbeatSendAction()
+    public function onHeartbeatResponse($data)
     {
-        $event = new HeartbeatEvent();
-        $this->dispatcher->dispatch('mesd_help_wiki.heartbeat_send', $event);
-    }
+        $heartbeat = new Heartbeat($data);
 
-    public function onHeartbeatTickAction()
-    {
-        $event = new HeartbeatEvent();
-        $this->dispatcher->dispatch('mesd_help_wiki.heartbeat_tick', $event);
+        $event = new HeartbeatEvent($heartbeat);
+        $this->dispatcher->dispatch('mesd_help_wiki.heartbeat_response', $event);
+
+        return $event->getHeartbeat()->normalize();
     }
 }

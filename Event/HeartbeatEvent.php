@@ -2,25 +2,19 @@
 namespace Mesd\HelpWikiBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
+use Mesd\HelpWikiBundle\Model\Heartbeat;
 
 class HeartbeatEvent extends Event
 {
-    private $data;
+    protected $heartbeat;
 
-    public function __construct($data)
+    public function __construct(Heartbeat $heartbeat)
     {
-        $this->data = $data;
+        $this->heartbeat = $heartbeat;
     }
 
-    public function setData($data)
+    public function getHeartbeat()
     {
-        $this->data = $data;
-
-        return $this;
-    }
-
-    public function getData()
-    {
-        return $this->data;
+        return $this->heartbeat;
     }
 }

@@ -72,19 +72,6 @@ class Page
     private $revision;
 
     /**
-     * Print Order
-     *
-     * The order of pages within a heirarchical tree.
-     * Pages are unique in that they will not
-     * have the same ordinal and the same parent
-     *
-     * Print order starts at 0
-     * 
-     * @var integer
-     */
-    private $printOrder;
-
-    /**
      * Date Time
      *
      * The date/time of the current version of the page.
@@ -144,6 +131,11 @@ class Page
      * @var string
      */
     private $status;
+
+    private $level;
+    private $position;
+    private $left;
+    private $right;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -298,29 +290,6 @@ class Page
     public function getRevision()
     {
         return $this->revision;
-    }
-
-    /**
-     * Set printOrder
-     *
-     * @param integer $printOrder
-     * @return Page
-     */
-    public function setPrintOrder($printOrder)
-    {
-        $this->printOrder = $printOrder;
-    
-        return $this;
-    }
-
-    /**
-     * Get printOrder
-     *
-     * @return integer 
-     */
-    public function getPrintOrder()
-    {
-        return $this->printOrder;
     }
 
     /**
@@ -499,6 +468,59 @@ class Page
     public function getStatus()
     {
         return $this->status;
+    }
+
+    public function setLevel($level)
+    {
+        $this->level = $level;
+
+        return $this;
+    }
+
+    public function getLevel()
+    {
+        return $this->level;
+    }
+
+    public function setPosition($position)
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
+    public function setLeft($left)
+    {
+        $this->left = $left;
+
+        return $this;
+    }
+
+    public function getLeft()
+    {
+        return $this->left;
+    }
+
+    public function setRight($right)
+    {
+        $this->right = $right;
+
+        return $this;
+    }
+
+    public function getRight()
+    {
+        return $this->right;
+    }
+
+    public function isRoot()
+    {
+        return $this->parent ? true : false;
     }
 
     /**
@@ -793,29 +815,6 @@ class Page
     public function removeChildren(\Mesd\HelpWikiBundle\Entity\Page $children)
     {
         $this->children->removeElement($children);
-    }
-
-    /**
-     * Add histories
-     *
-     * @param \Mesd\HelpWikiBundle\Entity\History $histories
-     * @return Page
-     */
-    public function addHistorie(\Mesd\HelpWikiBundle\Entity\History $histories)
-    {
-        $this->histories[] = $histories;
-    
-        return $this;
-    }
-
-    /**
-     * Remove histories
-     *
-     * @param \Mesd\HelpWikiBundle\Entity\History $histories
-     */
-    public function removeHistorie(\Mesd\HelpWikiBundle\Entity\History $histories)
-    {
-        $this->histories->removeElement($histories);
     }
 
     /**

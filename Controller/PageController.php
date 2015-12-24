@@ -8,7 +8,7 @@
  * Copyright (c) 2014 Multnomah Education Service District <http://www.mesd.k12.or.us>
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- * 
+ *
  * @filesource /src/Mesd/HelpWikiBundle/Controller/PageController.php
  * @package    Mesd\HelpWikiBundle\Controller
  * @copyright  2014 (c) Multnomah Education Service District <http://www.mesd.k12.or.us>
@@ -31,6 +31,9 @@ use Mesd\HelpWikiBundle\Model\Menu;
 use Mesd\HelpWikiBundle\Form\PageType;
 use Mesd\HelpWikiBundle\Form\CommentType;
 
+use Mesd\HelpWikiBundle\Model\PageOrder;
+use Mesd\HelpWikiBundle\Form\PageOrderCollectionType;
+
 /**
  * Page Controller
  *
@@ -47,7 +50,7 @@ class PageController extends Controller
 
     /**
      * Table of Contents Action
-     * 
+     *
      * Lists all Page entities sorted by chapter and print order.
      * Does not show pages where stand-alone property is true.
      *
@@ -58,21 +61,21 @@ class PageController extends Controller
      */
     public function tocAction()
     {
-        $em = $this->getDoctrine()->getManager();
+        $em    = $this->getDoctrine()->getManager();
+        $pages = $em->getRepository('MesdHelpWikiBundle:Page');
 
-        $entities = $em->getRepository('MesdHelpWikiBundle:Page')->getAllPagesByPrintOrder();
-
-        $first = $entities->first();
+        $tree  = $pages->findAllByTree();
+        $first = $tree->first();
 
         $entity = new Page();
 
         return $this->render('MesdHelpWikiBundle:Page:toc.html.twig', array(
-            'first'    => $first,
-            'entity'   => $entity,
-            'entities' => $entities,
-            'menu'     => new Menu(),
+            'first'  => $first,
+            'tree'   => $tree,
+            'entity' => $entity,
+            'menu'   => new Menu(),
         ));
-        
+
     }
 
     /**
@@ -153,8 +156,8 @@ class PageController extends Controller
     public function newAction()
     {
         $entity = new Page();
-        
-        if (false === $this->get('security.context')->isGranted('CREATE', $entity)) {
+
+        if (false === $this->get('security.context')->isGranted(['MANAGE', 'CREATE'], $entity)) {
             throw new AccessDeniedException('Unauthorized access!');
         }
 
@@ -228,14 +231,13 @@ class PageController extends Controller
      */
     public function viewStandAloneAction($slug)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em   = $this->getDoctrine()->getManager();
+        $page = $em->getRepository('MesdHelpWikiBundle:Page')->findOneBySlug($slug);
 
-        $entity = $em->getRepository('MesdHelpWikiBundle:Page')->findOneBySlug($slug);
-
-        $entities = array();
+        $pages = array();
         $slugs    = array();
 
-        if (!$entity) {
+        if (!$page) {
             if (true === extension_loaded('pspell')) {
                 $pspell = \pspell_new('en');
                 $terms  = preg_split('/[\-\_\.]/', strtolower($slug));
@@ -257,7 +259,75 @@ class PageController extends Controller
 
                         $qb->orWhere(call_user_func_array(array($qb->expr(), 'orx'), $cqb));
                     }
-                    
+
+                    $pages = array_merge($pages, $qb->getQuery()->getResult());
+                }
+            }
+
+            if (!empty($pages)) {
+                foreach ($pages as $k => $v) {
+                    $slugs[] = $v['slug'];
+                }
+                $slugs = array_unique($slugs);
+            }
+
+            return $this->render('MesdHelpWikiBundle:Page:noPage.html.twig', array(
+                'slugs' => $slugs,
+                'menu'  => new Menu(),
+            ));
+        }
+
+        if (false === $this->get('security.context')->isGranted('VIEW', $page)) {
+            throw new AccessDeniedException('Unauthorized access!');
+        }
+
+        $title = preg_replace('/\s*?\bpages?\b\s*?$/i', '', $page->getTitle());
+
+
+        return $this->render('MesdHelpWikiBundle:Page:viewStandAlone.html.twig', array(
+            'page' => $page,
+            'menu' => new Menu(),
+        ));
+    }
+
+    /**
+     * Finds and displays an unsecured stand-alone page entity.
+     *
+     * @param string $slug
+     * @return \Symfony\Component\HttpFoundation\Response $this
+     */
+    public function viewUnsecuredStandAloneAction($slug)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $page = $em->getRepository('MesdHelpWikiBundle:Page')->findOneBySlug($slug);
+
+        $entities = array();
+        $slugs    = array();
+
+        if (!$page) {
+            if (true === extension_loaded('pspell')) {
+                $pspell = \pspell_new('en');
+                $terms  = preg_split('/[\-\_\.]/', strtolower($slug));
+
+                $qb = $em->createQueryBuilder();
+                $qb->select('p.slug')->from('MesdHelpWikiBundle:Page', 'p');
+
+                foreach ($terms as $term) {
+                    $suggestions = pspell_suggest($pspell, strtolower($term));
+
+                    foreach ($suggestions as $suggestion) {
+                        $suggest = preg_replace('/[^\w]/', '', strtolower($suggestion));
+
+                        $cqb = [];
+
+
+                        $cqb[] = $qb->expr()->like("LOWER(CONCAT(p.title, ''))", "'%$suggest%'");
+                        $cqb[] = $qb->expr()->like("LOWER(CONCAT(p.slug, ''))", "'%$suggest%'");
+
+                        $qb->orWhere(call_user_func_array(array($qb->expr(), 'orx'), $cqb));
+                    }
+
                     $entities = array_merge($entities, $qb->getQuery()->getResult());
                 }
             }
@@ -275,16 +345,12 @@ class PageController extends Controller
             ));
         }
 
-        if (false === $this->get('security.context')->isGranted('VIEW', $entity)) {
-            throw new AccessDeniedException('Unauthorized access!');
-        }
-
-        $title = preg_replace('/\s*?\bpages?\b\s*?$/i', '', $entity->getTitle());
+        $title = preg_replace('/\s*?\bpages?\b\s*?$/i', '', $page->getTitle());
 
 
         return $this->render('MesdHelpWikiBundle:Page:viewStandAlone.html.twig', array(
-            'entity' => $entity,
-            'menu'   => new Menu(),
+            'page' => $page,
+            'menu' => new Menu(),
         ));
     }
 
@@ -296,25 +362,29 @@ class PageController extends Controller
      */
     public function editAction($id)
     {
-        $em     = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('MesdHelpWikiBundle:Page')->find($id);
+        $em   = $this->getDoctrine()->getManager();
+        $page = $em->getRepository('MesdHelpWikiBundle:Page')->find($id);
 
-        if (!$entity) {
+        if (!$page)
+        {
             throw $this->createNotFoundException('Unable to find Page entity.');
         }
 
-        if (false === $this->get('security.context')->isGranted('EDIT', $entity)) {
+        if (false === $this->get('security.context')->isGranted('EDIT', $page))
+        {
             throw new AccessDeniedException('Unauthorized access!');
         }
 
-        $editForm   = $this->createEditForm($entity);
+        $history = $em->getRepository('MesdHelpWikiBundle:History')->findOneBy(array('page' => $page, 'status' => 'AUTOSAVE'));
+
+        $editForm   = $this->createEditForm($page);
         $deleteForm = $this->createDeleteForm($id);
 
-        $title = 'Edit ' . preg_replace('/\s*?\bpages?\b\s*?$/i', '', $entity->getTitle()) . ' Page';
+        $title = 'Edit ' . preg_replace('/\s*?\bpages?\b\s*?$/i', '', $page->getTitle()) . ' Page';
 
         return $this->render('MesdHelpWikiBundle:Page:edit.html.twig', array(
             'subtitle'    => $title,
-            'entity'      => $entity,
+            'entity'      => $page,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
             'menu'        => new Menu(),
@@ -443,17 +513,110 @@ class PageController extends Controller
     public function editOrderAction()
     {
         $entity = new Page();
+        $tree   = $this->get('mesd_help_wiki.page_order_model');
 
-        if (false === $this->get('security.context')->isGranted('EDIT', $entity)) {
+        if (false === $this->get('security.context')->isGranted('EDIT', $entity))
+        {
             throw new AccessDeniedException('Unauthorized access!');
         }
-        
+
         $em       = $this->getDoctrine()->getManager();
-        $entities = $em->getRepository('MesdHelpWikiBundle:Page')->getAllPagesByPrintOrder();
+        $entities = $em->getRepository('MesdHelpWikiBundle:Page')->findAllByTree();
+
+        $form = $this->createForm(new PageOrderCollectionType(), $tree, array(
+            'action' => $this->generateUrl('MesdHelpWikiBundle_page_order_update'),
+            'method' => 'PUT',
+        ));
+
+        $form->add('update', 'submit');
 
         return $this->render('MesdHelpWikiBundle:Page:editOrder.html.twig', array(
             'entities' => $entities,
             'menu'     => new Menu(),
+            'form'     => $form->createView(),
+        ));
+    }
+
+    /**
+     * Update page order
+     *
+     * @param  object  $request
+     * @param  integer $id
+     * @return \Symfony\Component\HttpFoundation\Response $this
+     */
+    public function updateOrderAction(Request $request)
+    {
+        $entity = new Page();
+        $tree   = $this->get('mesd_help_wiki.page_order_model');
+
+        if (false === $this->get('security.context')->isGranted('EDIT', $entity))
+        {
+            throw new AccessDeniedException('Unauthorized access!');
+        }
+
+        $em       = $this->getDoctrine()->getManager();
+        $pages    = $em->getRepository('MesdHelpWikiBundle:Page');
+        $entities = $pages->findAllByTree();
+
+        $editForm = $this->createForm(new PageOrderCollectionType(), $tree, array(
+            'action' => $this->generateUrl('MesdHelpWikiBundle_page_order_update'),
+            'method' => 'PUT',
+        ));
+
+        $editForm->add('update', 'submit');
+
+        $editForm->handleRequest($request);
+
+        if ($editForm->isValid())
+        {
+            $pages = $editForm->getData()->getPages();
+
+            $qb = $em->createQueryBuilder();
+
+            $q = $qb
+                ->update('MesdHelpWikiBundle:Page', 'p')
+                ->set('p.left', ':left')
+                ->set('p.right', ':right')
+                ->set('p.parent', ':parent')
+                ->setParameter('left', null)
+                ->setParameter('right', null)
+                ->setParameter('parent', null)
+                ->getQuery()
+            ;
+
+            $q->execute();
+
+            foreach ($pages as $page)
+            {
+                $qb = $em->createQueryBuilder();
+
+                $q = $qb
+                    ->update('MesdHelpWikiBundle:Page', 'p')
+                    ->set('p.left', ':left')
+                    ->set('p.right',':right')
+                    ->set('p.parent', ':parent')
+                    ->set('p.level', ':level')
+                    ->set('p.position', ':position')
+                    ->where('p.id = :id')
+                    ->setParameter('left', $page->getLeft() ? $page->getLeft() : null)
+                    ->setParameter('right', $page->getRight() ? $page->getRight() : null)
+                    ->setParameter('parent', $page->getParent() ? $page->getParent() : null)
+                    ->setParameter('level', $page->getLevel() ? $page->getLevel() : null)
+                    ->setParameter('position', $page->getPosition() ? $page->getPosition() : null)
+                    ->setParameter('id', $page->getId())
+                    ->getQuery()
+                ;
+
+                $q->execute();
+            }
+
+            return $this->redirect($this->generateUrl('MesdHelpWikiBundle_page_list'));
+        }
+
+        return $this->render('MesdHelpWikiBundle:Page:editOrder.html.twig', array(
+            'entities' => $entities,
+            'menu'     => new Menu(),
+            'form'     => $editForm->createView(),
         ));
     }
 

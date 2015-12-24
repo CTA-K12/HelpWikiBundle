@@ -4,12 +4,113 @@
 {% set subtitle = 'order.pages'|trans %}
 
 {% block contentBody %}
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
 
-    <div id="foobar" class="dd">
-        {% set i = 0 %}
-        {{ _self.tree(entities) }}
-    </div>
+        <div id="dd" class="dd col-sm-1-2 col-sm-offset-1-4">
+            <ol class="dd-list">
+                {% for page in form.pages %}
+                    {% if page.vars.data.parent is null %}
+                        <li class="dd-item" data-slug="{{ page.vars.value.slug }}" data-id="{{ page.vars.value.id }}" data-position="{{ page.vars.value.position }}" data-level="{{ page.vars.value.level }}">
+                            <div class="dd-handle"></div>
+                            <div class="dd-content">
+                                {{ page.vars.value.title }}
+                                <a href="{{ path('MesdHelpWikiBundle_page_view', { 'slug': page.vars.value.slug }) }}" title="{{ page.vars.value.title }}">{{ 'view'|trans }}</a>
+                                <div class="dd-form-controls invisible" style="display:inline-block;">
+                                    {{ form_widget(page.parent, { 'attr': {
+                                        'class': 'dd-control-parent',
+                                        'style': 'width:120px;'
+                                    } }) }}
+                                    {{ form_errors(page.parent) }}
+                                    {{ form_widget(page.left, { 'attr': {
+                                        'class': 'dd-control-left',
+                                        'style': 'width:120px;'
+                                    } }) }}
+                                    {{ form_errors(page.left) }}
+                                    {{ form_widget(page.right, { 'attr': {
+                                        'class': 'dd-control-right',
+                                        'style': 'width:120px;'
+                                    } }) }}
+                                    {{ form_errors(page.right) }}
 
+                                    {{ form_widget(page.level, { 'attr': {
+                                        'class': 'dd-control-level',
+                                        'style': 'width:40px;'
+                                    } }) }}
+                                    {{ form_errors(page.level) }}
+                                    {{ form_widget(page.position, { 'attr': {
+                                        'class': 'dd-control-position',
+                                        'style': 'width:40px;'
+                                    } }) }}
+                                    {{ form_errors(page.position) }}
+                                </div>
+                            </div>
+                            {% if page.vars.data.children|length > 0 %}
+                                <ol class="dd-list">
+                                    {{ _self.tree(form.pages, page.vars.data.id) }}
+                                </ol>
+                            {% endif %}
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ol>
+        </div>
+            
+        {{ form_widget(form.update, { 'attr': {
+            'class': 'form-control btn btn-primary',
+        } }) }}
+
+        {{ form_rest(form) }}
+    {{ form_end(form) }}
+
+{% endblock contentBody %}
+
+{% macro tree(pages, parent) %}
+    {% for page in pages %}
+        {% if page.vars.data.parent is not null and page.vars.data.parent.id == parent %}
+            <li class="dd-item" data-slug="{{ page.vars.value.slug }}" data-id="{{ page.vars.value.id }}" data-position="{{ page.vars.value.position }}" data-level="{{ page.vars.value.level }}">
+                <div class="dd-handle"></div>
+                <div class="dd-content">
+                    {{ page.vars.value.title }}
+                    <a href="{{ path('MesdHelpWikiBundle_page_view', { 'slug': page.vars.value.slug }) }}" title="{{ page.vars.value.title }}">{{ 'view'|trans }}</a>
+                    <div class="dd-form-controls invisible" style="display:inline-block;">
+                        {{ form_widget(page.parent, { 'attr': {
+                            'class': 'dd-control-parent',
+                            'style': 'width:120px;'
+                        } }) }}
+                        {{ form_errors(page.parent) }}
+                        {{ form_widget(page.left, { 'attr': {
+                            'class': 'dd-control-left',
+                            'style': 'width:120px;'
+                        } }) }}
+                        {{ form_errors(page.left) }}
+                        {{ form_widget(page.right, { 'attr': {
+                            'class': 'dd-control-right',
+                            'style': 'width:120px;'
+                        } }) }}
+                        {{ form_errors(page.right) }}
+
+                        {{ form_widget(page.level, { 'attr': {
+                            'class': 'dd-control-level',
+                            'style': 'width:40px;'
+                        } }) }}
+                        {{ form_errors(page.level) }}
+                        {{ form_widget(page.position, { 'attr': {
+                            'class': 'dd-control-position',
+                            'style': 'width:40px;'
+                        } }) }}
+                        {{ form_errors(page.position) }}
+                    </div>
+                </div>
+                {% if page.vars.data.children|length > 0 %}
+                    {{ _self.tree(pages, page.vars.data.id) }}
+                {% endif %}
+            </li>
+        {% endif %}
+    {% endfor %}
+{% endmacro %}
+
+{% block contentFooter %}
     <div class="row">
         <div class="col-sm-2-12 col-sm-offset-10">
             <a href="{{ path('MesdHelpWikiBundle_page_new') }}" class="btn btn-default form-control">
@@ -18,32 +119,7 @@
             </a>
         </div>
     </div>
-
-    <h2>Test Tabindex</h2>
-    <p>
-        The move up and down items will only be displayed when javascript is disabled.
-        This requires the use of the .no-js class on the parent.
-    </p>
-    <ul>
-        <li tabindex="1">foo
-            <div class="no-js">
-                <a href="#" tabindex="2">up</a>
-                <a href="#" tabindex="3">dn</a>
-            </div>
-        </li>
-        <li tabindex="4">bar
-            <div class="no-js">
-                <a href="#" tabindex="5">up</a>
-                <a href="#" tabindex="6">dn</a>
-            </div>
-        </li>
-        <li tabindex="7">foo</li>
-        <li tabindex="8">bar</li>
-        <li tabindex="9">foo</li>
-        <li tabindex="10">bar</li>
-    </ul>
-
-{% endblock contentBody %}
+{% endblock contentFooter %}
 
 {% block toolbarBottomContent %}
     <div class="row hidden-xs">
@@ -70,7 +146,58 @@
     <script type="text/javascript" src="{{ asset('bundles/mesdhelpwiki/js/jquery.nestable.js') }}"></script>
     {#<script type="text/javascript" src="{{ asset('bundles/mesdhelpwiki/js/main.js') }}"></script>#}
     <script type="text/javascript">
-        $('#foobar').nestable('serialize');
+        var tree = $('#dd');
+
+        var reorder = function(e)
+        {
+            var data;
+            var depth               = 0;
+            var index               = 0;
+            var list                = e.length ? e : $(e.target);
+            var listNode            = 'ol';
+            var itemNode            = 'li';
+            var controlParentNode   = '.dd-control-parent';
+            var controlLeftNode     = '.dd-control-left';
+            var controlRightNode    = '.dd-control-right';
+            var controlLevelNode    = '.dd-control-level';
+            var controlPositionNode = '.dd-control-position';
+            
+            var step = function(level, depth)
+            {
+                var array = [];
+                var items = level.children(itemNode);
+                var left  = null;
+
+                items.each(function()
+                {
+                    var li   = $(this);
+                    var item = $.extend({}, li.data());
+                    var sub  = li.children(listNode);
+                    
+                    li.find(controlLevelNode).val(depth);
+                    li.find(controlPositionNode).val(index);
+                    li.find(controlParentNode).val(li.parent(listNode).parent(itemNode).data('id'));
+                    li.find(controlLeftNode).val(li.prev(itemNode).data('id'));
+                    li.find(controlRightNode).val(li.next(itemNode).data('id'));
+
+                    index += 1;
+
+                    if (sub.length)
+                    {
+                        item.children = step(sub, depth + 1);
+                    }
+                    
+                    array.push(item);
+                });
+
+                return array;
+            };
+
+            data = step(list.find(listNode).first(), depth);
+            //console.log(data);
+        }
+
+        tree.nestable().on('change', reorder);
     </script>
 
 {% endblock javascripts %}
@@ -139,6 +266,11 @@
 </nav>
 {% endblock sidebarInner %}
 
+{#}
+<div id="foobar" class="dd">
+    {% set i = 0 %}
+    {{ _self.tree(entities) }}
+</div>
 {% macro tree(twigs) %}
 <ol class="dd-list">
     {% for twig in twigs %}
@@ -149,3 +281,4 @@
     {% endfor %}
 </ol>
 {% endmacro %}
+{#}

@@ -1,32 +1,61 @@
 {% extends '::index.html.twig' %}
 {% trans_default_domain 'mesd_help_wiki' %}
 
-{% set pageTitle = entity.title %}
+{% set pageTitle = page.title %}
 
 {% block contentHeader %}
 <h1 class="page-title">{{ pageTitle }}</h1>
+{#}
+<div id="more-detail" class="collapse">
+    <div>
+        {% for tag in page.tags %}<span class="label label-primary">{{ tag.name }}</span>&nbsp; {% else %}<em><small>{{ 'no.tags.found'|trans }}</small></em>{% endfor %}
+    </div>
+    <em>
+        <small>
+            {{ 'updated.by.user.on.datetime'|trans({'%user%': page.user, '%datetime%': page.dateTime|date('Y-m-d h:i a')}) }}
+            {{ 'revision.revnum.chapter.chapternum.page.pagenum'|trans({'%revnum%': page.revision, '%chapternum%': page.parent, '%pagenum%': page.position}) }}
+        </small>
+    </em>
+</div>
+{#}
 {% endblock contentHeader %}
 
 {% block contentBody %}
-{{ entity.body|raw }}
+{{ page.body|raw }}
 {% endblock contentBody %}
 
 {% block contentFooter %}
 {% endblock contentFooter %}
 
-{% block toolbarTopRight %}
-    <div class="btn-group pull-right">
-        <a href="#" class="btn btn-xs btn-default" data-toggle="collapse" data-target="#more-detail" aria-expanded="false" aria-controls="collapseExample">
-            <span class="fa fa-search"></span>&nbsp; {{ 'detail'|trans }}
-        </a>
-        <a href="{{ path('MesdHelpWikiBundle_history_page', { 'id': entity.id }) }}" class="btn btn-xs btn-default">
-            <span class="fa fa-clock-o"></span>&nbsp; {{ 'history'|trans }}
-        </a>
-        <a href="{{ path('MesdHelpWikiBundle_page_edit', { 'id': entity.id }) }}" class="btn btn-xs btn-default">
-            <span class="fa fa-pencil"></span>&nbsp; {{ 'edit'|trans }}
-        </a>
+{% block toolbarTop %}
+    <div class="row">
+        <div class="col-md-offset-2-3 col-md-1-3 col-xs-1-1">
+            {% if app.user.username is defined %}
+            <div class="btn-group btn-group-justified">
+                <div class="btn-group" role="group">
+                    <a href="#" class="btn btn-xs btn-default" data-toggle="collapse" data-target="#more-detail" aria-expanded="false" aria-controls="collapseExample">
+                        <span class="fa fa-search"></span>&nbsp; {{ 'detail'|trans }}
+                    </a>
+                </div>
+                {% if is_granted('MANAGE', page) %}
+                <div class="btn-group" role="group">
+                    <a href="{{ path('MesdHelpWikiBundle_history_page', { 'id': page.id }) }}" class="btn btn-xs btn-default">
+                        <span class="fa fa-clock-o"></span>&nbsp; {{ 'history'|trans }}
+                    </a>
+                </div>
+                {% endif %}
+                {% if is_granted('EDIT', page) %}
+                <div class="btn-group" role="group">
+                    <a href="{{ path('MesdHelpWikiBundle_page_edit', { 'id': page.id }) }}" class="btn btn-xs btn-default">
+                        <span class="fa fa-pencil"></span>&nbsp; {{ 'edit'|trans }}
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
     </div>
-{% endblock toolbarTopRight %}
+{% endblock toolbarTop %}
 
 {% block toolbarBottom %}
 {% endblock toolbarBottom %}

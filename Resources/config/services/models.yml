@@ -1,6 +1,7 @@
 parameters:
-    mesd_help_wiki.page_manager.class: Mesd\HelpWikiBundle\Model\PageManager
-    mesd_help_wiki.link_manager.class: Mesd\HelpWikiBundle\Model\LinkManager
+    mesd_help_wiki.page_manager.class:     Mesd\HelpWikiBundle\Model\PageManager
+    mesd_help_wiki.link_manager.class:     Mesd\HelpWikiBundle\Model\LinkManager
+    mesd_help_wiki.page_order_model.class: Mesd\HelpWikiBundle\Model\PageOrder
 
 services:
     mesd_help_wiki.page_manager:
@@ -8,4 +9,7 @@ services:
         arguments: [@doctrine.orm.entity_manager]
     mesd_help_wiki.link_manager:
         class:     %mesd_help_wiki.link_manager.class%
+        arguments: [@doctrine.orm.entity_manager]
+    mesd_help_wiki.page_order_model:
+        class:     %mesd_help_wiki.page_order_model.class%
         arguments: [@doctrine.orm.entity_manager]
